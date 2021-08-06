@@ -13,10 +13,13 @@
 		"web-vitals": "^1.1.2"
 	},
 	"scripts": {
-		"start": "craco start",
+		"start": "HTTPS=true SSL_CRT_FILE=./.certs/localhost.crt SSL_KEY_FILE=./.certs/localhost.key craco start",
 		"build": "craco build",
 		"test": "craco test",
-		"eject": "react-scripts eject"
+		"eject": "react-scripts eject",
+		"certs": "chmod +x ./generate-certs.sh && ./generate-certs.sh",
+		"http": "craco start",
+		"https": "HTTPS=true craco start"
 	},
 	"eslintConfig": {
 		"extends": [
