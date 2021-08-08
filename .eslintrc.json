@@ -25,6 +25,8 @@
 				"peerDependencies": false,
 				"bundledDependencies": false
 			}
-		]
+		],
+		"no-plusplus": "off",
+		"no-debugger": "warn"
 	}
 }
