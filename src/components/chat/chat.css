@@ -1,0 +1,7 @@
+#search + svg {
+	visibility: hidden;
+}
+
+#search:placeholder-shown + svg {
+	visibility: visible;
+}

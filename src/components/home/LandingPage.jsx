@@ -1,8 +1,9 @@
 import React from 'react';
-import Bubbles from './Bubbles';
+import Bubbles from '../Bubbles';
+import './landingPage.css';
 
 const LandingPage = () => (
-	<div className='flex flex-col h-screen w-screen items-center justify-center bg-gradient-to-r from-red-600 to-purple-700'>
+	<div className='flex flex-col h-screen w-screen items-center justify-center bg-gradient-to-tr from-red-600 to-purple-700'>
 		<Bubbles />
 		<span className='bg-clip-text text-white flex items-center justify-center flex-col z-50'>
 			<h1 className='flex'>RTChat</h1>
