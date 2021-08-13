@@ -1,0 +1,17 @@
+.animate-rise {
+	animation: rise 10s infinite ease-in;
+}
+
+@keyframes rise {
+	0% {
+		bottom: -100px;
+		transform: translateX(0);
+	}
+	50% {
+		transform: translate(100px);
+	}
+	100% {
+		bottom: 1080px;
+		transform: translateX(-200px);
+	}
+}
