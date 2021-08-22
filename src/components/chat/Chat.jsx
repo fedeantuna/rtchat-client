@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import Conversation from '../Conversation';
 import { getLastMessage } from '../../utils/profileUtils';
 import ContactList from '../ContactList';
@@ -6,7 +7,10 @@ import './chat.css';
 import useChat from '../../hooks/useChat';
 
 const Chat = () => {
-	const [chats, currentChat, handlers, textInputRef] = useChat();
+	const [auth0, chats, currentChat, handlers, textInputRef] = useChat();
+
+	if (auth0.isLoading) return <div>Loading...</div>;
+	if (!auth0.isAuthenticated) return <Redirect to='/' />;
 
 	return (
 		<div className='bg-gradient-to-tr from-red-400 to-purple-500'>
@@ -18,6 +22,7 @@ const Chat = () => {
 						lastMessage: getLastMessage(c.messages),
 					}))}
 					onContactSelect={handlers.handleContactSelect}
+					profileImage={auth0.user.picture}
 				/>
 				<div className='flex flex-col flex-1'>
 					<Conversation
