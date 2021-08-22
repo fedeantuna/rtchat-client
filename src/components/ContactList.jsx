@@ -4,7 +4,7 @@ import Contact from './Contact';
 import SearchBar from './SearchBar';
 import useSearch from '../hooks/useSearch';
 
-const ContactList = ({ userProfiles, onContactSelect }) => {
+const ContactList = ({ userProfiles, onContactSelect, profileImage }) => {
 	const [filter, filteredProfiles, setFilter, handlers] = useSearch(
 		userProfiles,
 		onContactSelect
@@ -16,6 +16,7 @@ const ContactList = ({ userProfiles, onContactSelect }) => {
 				onEnter={handlers.handleContactSelectUsingEnter}
 				filter={filter}
 				setFilter={setFilter}
+				profileImage={profileImage}
 			/>
 			{filteredProfiles.map((up) => (
 				<Contact
@@ -46,6 +47,7 @@ ContactList.propTypes = {
 		})
 	).isRequired,
 	onContactSelect: PropTypes.func.isRequired,
+	profileImage: PropTypes.string.isRequired,
 };
 
 export default ContactList;

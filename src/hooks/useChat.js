@@ -1,8 +1,11 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import useMockData from './useMockData';
 
 const useChat = () => {
+	const { user, isAuthenticated, isLoading } = useAuth0();
+
 	const [chats, setChats] = useState([]);
 	const [currentChat, setCurrentChat] = useState({});
 
@@ -47,6 +50,7 @@ const useChat = () => {
 	};
 
 	return [
+		{ user, isAuthenticated, isLoading },
 		chats,
 		currentChat,
 		{ handleContactSelect, handleMessageSend },
