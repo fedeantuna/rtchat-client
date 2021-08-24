@@ -1,8 +1,19 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { useAuth0 } from '@auth0/auth0-react';
 import App from '../App';
 
+jest.mock('@auth0/auth0-react');
+
 describe('App', () => {
+	beforeEach(() => {
+		useAuth0.mockReturnValue({
+			isAuthenticated: false,
+			isLoading: false,
+			loginWithRedirect: () => {},
+		});
+	});
+
 	it('renders RTChat title', () => {
 		// Arrange
 		// Act
@@ -31,15 +42,5 @@ describe('App', () => {
 
 		// Assert
 		expect(signIn).toBeInTheDocument();
-	});
-
-	it('renders Sign Up button', () => {
-		// Arrange
-		// Act
-		render(<App />);
-		const signUp = screen.getByText(/Sign Up/);
-
-		// Assert
-		expect(signUp).toBeInTheDocument();
 	});
 });
