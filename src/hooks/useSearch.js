@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 
-const useSearch = (userProfiles, onContactSelect) => {
-	const [filter, setFilter] = useState('');
+const useSearch = (userProfiles) => {
 	const [filteredProfiles, setFilteredProfiles] = useState([]);
+	const [filter, setFilter] = useState('');
 
 	useEffect(() => {
-		setFilteredProfiles(userProfiles);
+		setFilteredProfiles(userProfiles.slice());
 	}, [userProfiles]);
 
 	useEffect(() => {
@@ -18,21 +18,7 @@ const useSearch = (userProfiles, onContactSelect) => {
 		);
 	}, [filter]);
 
-	const handleContactSelect = (id) => {
-		setFilter('');
-		onContactSelect(id);
-	};
-
-	const handleContactSelectUsingEnter = () => {
-		if (filteredProfiles[0]) handleContactSelect(filteredProfiles[0].id);
-	};
-
-	return [
-		filter,
-		filteredProfiles,
-		setFilter,
-		{ handleContactSelect, handleContactSelectUsingEnter },
-	];
+	return { filter, filteredProfiles, setFilter };
 };
 
 export default useSearch;

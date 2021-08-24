@@ -3,11 +3,12 @@ import { Redirect } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import Bubbles from '../Bubbles';
 import './landingPage.css';
+import Loading from '../Loading';
 
 const LandingPage = () => {
 	const { isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
 
-	if (isLoading) return <div>Loading...</div>;
+	if (isLoading) return <Loading />;
 	if (isAuthenticated) return <Redirect to='/chat' />;
 
 	const handleSignInClick = () => {
