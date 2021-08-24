@@ -8,7 +8,7 @@ const Conversation = React.forwardRef(
 		<div className='bg-gray-900 flex flex-col flex-1 text-white'>
 			{profile && (
 				<>
-					<div className='flex overflow-hidden items-center h-16 px-4 bg-gray-800'>
+					<div className='flex overflow-hidden items-center h-16 px-4 bg-gray-800 border-l border-gray-900'>
 						<ProfilePicture image={profile.image} />
 						<h3 className='ml-2 w-64 whitespace-nowrap overflow-hidden overflow-ellipsis'>
 							{profile.name}

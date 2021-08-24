@@ -1,37 +1,40 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
 import Conversation from '../Conversation';
-import { getLastMessage } from '../../utils/profileUtils';
-import ContactList from '../ContactList';
 import './chat.css';
-import useChat from '../../hooks/useChat';
+import NavigationPanel from '../NavigationPanel';
+import Loading from '../Loading';
+import useMessageBox from '../../hooks/useMessageBox';
+import useConversations from '../../hooks/useConversations';
 
 const Chat = () => {
-	const [auth0, chats, currentChat, handlers, textInputRef] = useChat();
+	const { isLoading } = useAuth0();
 
-	if (auth0.isLoading) return <div>Loading...</div>;
-	if (!auth0.isAuthenticated) return <Redirect to='/' />;
+	const [textInputRef, setFocusOnMessageBox] = useMessageBox();
+	const {
+		userProfiles,
+		currentConversation,
+		handleContactSelect,
+		handleMessageSend,
+	} = useConversations();
+
+	if (isLoading) return <Loading />;
 
 	return (
 		<div className='bg-gradient-to-tr from-red-400 to-purple-500'>
 			<div className='min-h-screen flex max-w-5xl ml-auto mr-auto bg-gray-800'>
-				<ContactList
-					userProfiles={chats.map((c) => ({
-						id: c.id,
-						profile: c.profile,
-						lastMessage: getLastMessage(c.messages),
-					}))}
-					onContactSelect={handlers.handleContactSelect}
-					profileImage={auth0.user.picture}
+				<NavigationPanel
+					userProfiles={userProfiles}
+					onContactSelect={(id) =>
+						handleContactSelect(id, setFocusOnMessageBox)
+					}
 				/>
-				<div className='flex flex-col flex-1'>
-					<Conversation
-						profile={currentChat.profile}
-						messages={currentChat.messages}
-						onSend={handlers.handleMessageSend}
-						ref={textInputRef}
-					/>
-				</div>
+				<Conversation
+					profile={currentConversation.profile}
+					messages={currentConversation.messages}
+					onSend={handleMessageSend}
+					ref={textInputRef}
+				/>
 			</div>
 		</div>
 	);
