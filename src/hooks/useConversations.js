@@ -5,7 +5,7 @@ import useMockData from './useMockData';
 
 const useConversations = () => {
 	const [conversations, setConversations] = useState([]);
-	const [currentConversation, setCurrentConversation] = useState({});
+	const [currentConversation, setCurrentConversation] = useState(null);
 	const [userProfiles, setUserProfiles] = useState([]);
 
 	// TODO: MOCKS, replace with actual data later
@@ -15,7 +15,8 @@ const useConversations = () => {
 		setUserProfiles(
 			conversations.map((c) => ({
 				id: c.id,
-				profile: c.profile,
+				email: c.email,
+				picture: c.picture,
 				lastMessage: getLastMessage(c.messages),
 			}))
 		);
@@ -28,13 +29,13 @@ const useConversations = () => {
 		}
 	};
 
-	const handleMessageSend = (messageContent) => {
+	const handleMessageSend = (content) => {
 		const messages = [
 			...currentConversation.messages,
 			{
 				id: uuidv4(),
 				sender: 'self',
-				content: messageContent,
+				content,
 			},
 		];
 
@@ -43,15 +44,15 @@ const useConversations = () => {
 			messages,
 		});
 
-		const unaffectedChats = conversations.filter(
+		const otherConversations = conversations.filter(
 			(c) => c.id !== currentConversation.id
 		);
-		const updatedChat = conversations.filter(
+		const updatedConversation = conversations.filter(
 			(c) => c.id === currentConversation.id
 		)[0];
-		updatedChat.messages = messages;
+		updatedConversation.messages = messages;
 
-		setConversations([updatedChat, ...unaffectedChats]);
+		setConversations([updatedConversation, ...otherConversations]);
 	};
 
 	return {

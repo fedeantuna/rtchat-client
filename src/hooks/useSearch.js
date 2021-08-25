@@ -13,7 +13,7 @@ const useSearch = (userProfiles) => {
 			userProfiles.filter(
 				(up) =>
 					!filter ||
-					up.profile.name.toUpperCase().includes(filter.toUpperCase())
+					up.email.toUpperCase().includes(filter.toUpperCase())
 			)
 		);
 	}, [filter]);

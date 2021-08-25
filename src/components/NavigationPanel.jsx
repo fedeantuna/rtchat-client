@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import useSearch from '../hooks/useSearch';
 import ContactList from './ContactList';
 import UserBar from './UserBar';
+import userProfilePropType from '../propTypeModels/userProfilePropType';
 
 const NavigationPanel = ({ userProfiles, onContactSelect }) => {
 	const { filter, filteredProfiles, setFilter } = useSearch(userProfiles);
@@ -36,20 +37,7 @@ const NavigationPanel = ({ userProfiles, onContactSelect }) => {
 };
 
 NavigationPanel.propTypes = {
-	userProfiles: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string.isRequired,
-			profile: PropTypes.shape({
-				id: PropTypes.string.isRequired,
-				name: PropTypes.string.isRequired,
-			}).isRequired,
-			lastMessage: PropTypes.shape({
-				id: PropTypes.string.isRequired,
-				sender: PropTypes.string.isRequired,
-				content: PropTypes.string.isRequired,
-			}),
-		})
-	).isRequired,
+	userProfiles: userProfilePropType.isRequired,
 	onContactSelect: PropTypes.func.isRequired,
 };
 

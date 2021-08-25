@@ -30,8 +30,7 @@ const Chat = () => {
 					}
 				/>
 				<Conversation
-					profile={currentConversation.profile}
-					messages={currentConversation.messages}
+					current={currentConversation}
 					onSend={handleMessageSend}
 					ref={textInputRef}
 				/>
