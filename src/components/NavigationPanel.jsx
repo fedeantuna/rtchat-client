@@ -22,7 +22,7 @@ const NavigationPanel = ({ userProfiles, onContactSelect }) => {
 	};
 
 	return (
-		<div className='w-72'>
+		<div className='w-1/3 flex flex-col h-screen'>
 			<UserBar
 				filter={filter}
 				setFilter={setFilter}
@@ -37,7 +37,7 @@ const NavigationPanel = ({ userProfiles, onContactSelect }) => {
 };
 
 NavigationPanel.propTypes = {
-	userProfiles: userProfilePropType.isRequired,
+	userProfiles: PropTypes.arrayOf(userProfilePropType).isRequired,
 	onContactSelect: PropTypes.func.isRequired,
 };
 

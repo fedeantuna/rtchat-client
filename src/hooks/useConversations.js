@@ -8,6 +8,16 @@ const useConversations = () => {
 	const [currentConversation, setCurrentConversation] = useState(null);
 	const [userProfiles, setUserProfiles] = useState([]);
 
+	useEffect(() => {
+		if (currentConversation) {
+			const last = getLastMessage(currentConversation.messages);
+			if (last && document.getElementById(last.id))
+				document
+					.getElementById(last.id)
+					.scrollIntoView({ behavior: 'auto' });
+		}
+	}, [currentConversation]);
+
 	// TODO: MOCKS, replace with actual data later
 	useMockData(setConversations);
 

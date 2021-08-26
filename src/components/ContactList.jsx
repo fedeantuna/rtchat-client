@@ -3,13 +3,20 @@ import PropTypes from 'prop-types';
 import Contact from './Contact';
 import userProfilePropType from '../propTypeModels/userProfilePropType';
 
-const ContactList = ({ filteredProfiles, handleContactSelect }) =>
-	filteredProfiles.map((up) => (
-		<Contact key={up.id} userProfile={up} onSelect={handleContactSelect} />
-	));
+const ContactList = ({ filteredProfiles, handleContactSelect }) => (
+	<div className='overflow-y-auto max-h-screen'>
+		{filteredProfiles.map((up) => (
+			<Contact
+				key={up.id}
+				userProfile={up}
+				onSelect={handleContactSelect}
+			/>
+		))}
+	</div>
+);
 
 ContactList.propTypes = {
-	filteredProfiles: userProfilePropType.isRequired,
+	filteredProfiles: PropTypes.arrayOf(userProfilePropType).isRequired,
 	handleContactSelect: PropTypes.func.isRequired,
 };
 

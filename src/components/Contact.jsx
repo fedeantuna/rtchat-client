@@ -17,8 +17,8 @@ const Contact = ({ userProfile, onSelect }) => (
 	>
 		<ProfilePicture picture={userProfile.picture} />
 		<div className='h-full pt-1 ml-2 text-white min-w-0'>
-			<h3>{userProfile.email}</h3>
-			<p className='whitespace-nowrap overflow-hidden overflow-ellipsis'>
+			<h3 className='truncate'>{userProfile.email}</h3>
+			<p className='truncate'>
 				{userProfile.lastMessage &&
 					userProfile.lastMessage.sender === 'self' &&
 					'You: '}
