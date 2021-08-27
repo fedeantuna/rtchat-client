@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const SearchBox = ({ filter, setFilter, onKeyPress }) => (
-	<div className='w-9/12 flex ml-1 flex-grow mr-2'>
+	<div className='flex ml-1 flex-grow mr-2'>
 		<input
 			className='bg-white w-full h-8 px-2 rounded-lg text-sm focus:outline-none text-gray-800'
 			type='search'
