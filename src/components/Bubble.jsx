@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import bubbleStylePropType from '../propTypeModels/bubbleStylePropType';
 
 const Bubble = ({ style }) => (
 	<div
@@ -9,13 +9,7 @@ const Bubble = ({ style }) => (
 );
 
 Bubble.propTypes = {
-	style: PropTypes.shape({
-		width: PropTypes.string,
-		height: PropTypes.string,
-		left: PropTypes.string,
-		animationDuration: PropTypes.string,
-		animationDelay: PropTypes.string,
-	}).isRequired,
+	style: bubbleStylePropType.isRequired,
 };
 
 export default Bubble;

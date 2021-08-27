@@ -1,47 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProfilePicture from './ProfilePicture';
+import userProfilePropType from '../propTypeModels/userProfilePropType';
 
-const Contact = ({ userId, profile, lastMessage, onSelect }) => (
+const Contact = ({ userProfile, onSelect }) => (
 	<div
 		className='flex items-center h-16 mt-2 bg-gray-800 hover:bg-gray-600 cursor-pointer'
-		onClick={() => onSelect(userId)}
+		onClick={() => onSelect(userProfile.id)}
 		onKeyPress={(e) => {
 			if (e.key === 'Enter' || e.key === ' ') {
-				onSelect(userId);
+				onSelect(userProfile.id);
 			}
 		}}
 		role='button'
 		tabIndex={0}
 	>
-		<ProfilePicture image={profile.image} />
+		<ProfilePicture picture={userProfile.picture} />
 		<div className='h-full pt-1 ml-2 text-white min-w-0'>
-			<h3>{profile.name}</h3>
-			<p className='whitespace-nowrap overflow-hidden overflow-ellipsis'>
-				{lastMessage && lastMessage.sender === 'self' && 'You: '}
-				{lastMessage && lastMessage.content && lastMessage.content}
+			<h3 className='truncate'>{userProfile.email}</h3>
+			<p className='truncate'>
+				{userProfile.lastMessage &&
+					userProfile.lastMessage.sender === 'self' &&
+					'You: '}
+				{userProfile.lastMessage &&
+					userProfile.lastMessage.content &&
+					userProfile.lastMessage.content}
 			</p>
 		</div>
 	</div>
 );
 
 Contact.propTypes = {
-	userId: PropTypes.string.isRequired,
-	profile: PropTypes.shape({
-		id: PropTypes.string.isRequired,
-		name: PropTypes.string.isRequired,
-		image: PropTypes.string.isRequired,
-	}).isRequired,
-	lastMessage: PropTypes.shape({
-		id: PropTypes.string.isRequired,
-		sender: PropTypes.string.isRequired,
-		content: PropTypes.string.isRequired,
-	}),
+	userProfile: userProfilePropType.isRequired,
 	onSelect: PropTypes.func.isRequired,
-};
-
-Contact.defaultProps = {
-	lastMessage: null,
 };
 
 export default Contact;

@@ -29,7 +29,7 @@ const UserProfileButton = () => {
 				aria-controls='profile-menu'
 			>
 				<ProfilePicture
-					image={
+					picture={
 						user.picture ||
 						getGenericProfilePicture(
 							getInitials(user.name),
