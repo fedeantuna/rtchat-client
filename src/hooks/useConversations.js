@@ -69,6 +69,7 @@ const useConversations = (user, connection, getAccessTokenSilently) => {
 
 	useEffect(() => {
 		if (conversations[0] && conversations[0].selectOnLoad) {
+			delete conversations[0].selectOnLoad;
 			setCurrentConversation({ ...conversations[0] });
 		}
 	}, [conversations]);
