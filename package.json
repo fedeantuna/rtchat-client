@@ -24,7 +24,8 @@
 		"eject": "react-scripts eject",
 		"certs": "chmod +x ./generate-certs.sh && ./generate-certs.sh",
 		"http": "craco start",
-		"https": "HTTPS=true craco start"
+		"https": "HTTPS=true craco start",
+		"rustywind": "node_modules/.bin/rustywind --write ."
 	},
 	"eslintConfig": {
 		"extends": [
@@ -57,6 +58,7 @@
 		"eslint-plugin-react-hooks": "^4.2.0",
 		"postcss": "^7.0.36",
 		"prettier": "^2.3.2",
+		"rustywind": "^0.12.2",
 		"tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.7"
 	}
 }

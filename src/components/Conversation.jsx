@@ -6,7 +6,7 @@ import ConversationHeader from './ConversationHeader';
 import ConversationHistory from './ConversationHistory';
 
 const Conversation = React.forwardRef(({ current, onSend }, textInputRef) => (
-	<div className='w-2/3 bg-gray-900 text-white h-screen max-h-screen'>
+	<div className='w-2/3 h-screen max-h-screen text-white bg-gray-900'>
 		{current && (
 			<div className='flex flex-col h-full'>
 				<ConversationHeader

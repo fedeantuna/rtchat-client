@@ -11,9 +11,9 @@ const MessageBox = React.forwardRef(({ onSend }, textInputRef) => {
 	};
 
 	return (
-		<div className='relative flex items-center text-white my-2 mx-2'>
+		<div className='flex relative items-center my-2 mx-2 text-white'>
 			<input
-				className='bg-gray-800 w-9/12 h-10 px-2 rounded-lg text-sm focus:outline-none flex flex-grow mr-2'
+				className='flex flex-grow px-2 mr-2 w-9/12 h-10 text-sm bg-gray-800 rounded-lg focus:outline-none'
 				type='text'
 				name='message-box'
 				id='message-box'
@@ -31,7 +31,7 @@ const MessageBox = React.forwardRef(({ onSend }, textInputRef) => {
 			{(messageContent.length > 0 && (
 				<svg
 					xmlns='http://www.w3.org/2000/svg'
-					className='h-6 w-6 text-blue-500 cursor-pointer transform rotate-90'
+					className='w-6 h-6 text-blue-500 transform rotate-90 cursor-pointer'
 					viewBox='0 0 20 20'
 					fill='currentColor'
 					id='send-icon'
@@ -42,7 +42,7 @@ const MessageBox = React.forwardRef(({ onSend }, textInputRef) => {
 			)) || (
 				<svg
 					xmlns='http://www.w3.org/2000/svg'
-					className='h-6 w-6 text-gray-600 transform rotate-90'
+					className='w-6 h-6 text-gray-600 transform rotate-90'
 					viewBox='0 0 20 20'
 					fill='currentColor'
 					id='send-icon'

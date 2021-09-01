@@ -5,7 +5,7 @@ import userProfilePropType from '../propTypeModels/userProfilePropType';
 
 const Contact = ({ userProfile, onSelect }) => (
 	<div
-		className='flex items-center h-16 mt-2 bg-gray-800 hover:bg-gray-600 cursor-pointer'
+		className='flex items-center mt-2 h-16 bg-gray-800 cursor-pointer hover:bg-gray-600'
 		onClick={() => onSelect(userProfile.id)}
 		onKeyPress={(e) => {
 			if (e.key === 'Enter' || e.key === ' ') {
@@ -16,7 +16,7 @@ const Contact = ({ userProfile, onSelect }) => (
 		tabIndex={0}
 	>
 		<ProfilePicture picture={userProfile.picture} />
-		<div className='h-full pt-1 ml-2 text-white min-w-0'>
+		<div className='pt-1 ml-2 min-w-0 h-full text-white'>
 			<h3 className='truncate'>{userProfile.email}</h3>
 			<p className='truncate'>
 				{userProfile.lastMessage &&
