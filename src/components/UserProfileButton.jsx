@@ -21,7 +21,7 @@ const UserProfileButton = () => {
 	};
 
 	return (
-		<div className='dropdown h-12 w-12 mr-2'>
+		<div className='mr-2 w-12 h-12 dropdown'>
 			<button
 				type='button'
 				aria-haspopup='true'
@@ -38,13 +38,13 @@ const UserProfileButton = () => {
 					}
 				/>
 			</button>
-			<div className='opacity-0 invisible dropdown-menu transition-all duration-300 transform origin-top-right -translate-y-2 scale-95'>
+			<div className='invisible opacity-0 transition-all duration-300 transform origin-top-right scale-95 -translate-y-2 dropdown-menu'>
 				<div
-					className='absolute left-4 w-56 origin-top-right bg-gray-800 border border-gray-900 divide-y divide-gray-100 rounded-sm shadow-lg outline-'
+					className='absolute left-4 w-56 bg-gray-800 rounded-sm border border-gray-900 divide-y divide-gray-100 shadow-lg origin-top-right outline-'
 					id='profile-menu'
 					role='menu'
 				>
-					<div className='px-4 py-3'>
+					<div className='py-3 px-4'>
 						<p className='text-sm leading-5'>Signed in as</p>
 						<p className='text-sm font-medium leading-5 truncate'>
 							{user.email}

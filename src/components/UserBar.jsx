@@ -4,7 +4,7 @@ import UserProfileButton from './UserProfileButton';
 import SearchBox from './SearchBox';
 
 const UserBar = ({ filter, setFilter, onKeyPress }) => (
-	<div className='pt-2 relative flex items-center mb-2 text-white'>
+	<div className='flex relative items-center pt-2 mb-2 text-white'>
 		<UserProfileButton />
 		<SearchBox
 			filter={filter}

@@ -22,7 +22,7 @@ const NavigationPanel = ({ userProfiles, onContactSelect }) => {
 	};
 
 	return (
-		<div className='w-1/3 flex flex-col h-screen'>
+		<div className='flex flex-col w-1/3 h-screen'>
 			<UserBar
 				filter={filter}
 				setFilter={setFilter}

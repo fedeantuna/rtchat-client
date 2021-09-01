@@ -16,16 +16,16 @@ const LandingPage = () => {
 	};
 
 	return (
-		<div className='flex flex-col h-screen w-screen items-center justify-center bg-gradient-to-tr from-red-600 to-purple-700'>
+		<div className='flex flex-col justify-center items-center w-screen h-screen bg-gradient-to-tr from-red-600 to-purple-700'>
 			<Bubbles />
-			<span className='bg-clip-text text-white flex items-center justify-center flex-col z-50'>
+			<span className='flex z-50 flex-col justify-center items-center text-white bg-clip-text'>
 				<h1 className='flex'>RTChat</h1>
 				<p className='flex'>Real Time Chat</p>
 			</span>
-			<div className='flex flex-row items-center justify-center z-50 mt-4'>
+			<div className='flex z-50 flex-row justify-center items-center mt-4'>
 				<button
 					type='button'
-					className='bg-purple-700 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded'
+					className='py-2 px-4 font-bold text-white bg-purple-700 rounded hover:bg-purple-600'
 					onClick={handleSignInClick}
 				>
 					Sign In

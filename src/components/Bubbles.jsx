@@ -7,7 +7,7 @@ const Bubbles = () => {
 	const bubbles = useBubbles();
 
 	return (
-		<div className='absolute w-full h-full z-0 overflow-hidden top-0 left-0'>
+		<div className='overflow-hidden absolute top-0 left-0 z-0 w-full h-full'>
 			{bubbles.map((bs) => (
 				<Bubble key={uuidv4()} style={bs} />
 			))}

@@ -22,7 +22,7 @@ const Chat = () => {
 
 	return (
 		<div className='bg-gradient-to-tr from-red-400 to-purple-500'>
-			<div className='flex max-w-5xl ml-auto mr-auto bg-gray-800'>
+			<div className='flex mr-auto ml-auto max-w-5xl bg-gray-800'>
 				<NavigationPanel
 					userProfiles={userProfiles}
 					onContactSelect={(id) =>

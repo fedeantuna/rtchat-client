@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const SearchBox = ({ filter, setFilter, onKeyPress }) => (
-	<div className='flex ml-1 flex-grow mr-2'>
+	<div className='flex flex-grow mr-2 ml-1'>
 		<input
-			className='bg-white w-full h-8 px-2 rounded-lg text-sm focus:outline-none text-gray-800'
+			className='px-2 w-full h-8 text-sm text-gray-800 bg-white rounded-lg focus:outline-none'
 			type='search'
 			name='search'
 			id='search'
@@ -16,7 +16,7 @@ const SearchBox = ({ filter, setFilter, onKeyPress }) => (
 
 		<svg
 			xmlns='http://www.w3.org/2000/svg'
-			className='absolute right-0 top-0 mt-5 mr-4 h-5 w-5 placeholder text-gray-800'
+			className='absolute top-0 right-0 mt-5 mr-4 w-5 h-5 text-gray-800 placeholder'
 			fill='none'
 			viewBox='0 0 24 24'
 			stroke='currentColor'
