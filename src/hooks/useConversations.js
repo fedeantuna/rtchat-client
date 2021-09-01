@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import getReceiveMessage from '../clientMethods/getReceiveMessage';
+import { topRightNotification } from '../models/toastNotificationConfiguration';
 import { getConversationByUserEmail } from '../services/conversationService';
 
 const useConversations = (user, connection, getAccessTokenSilently) => {
@@ -27,7 +29,10 @@ const useConversations = (user, connection, getAccessTokenSilently) => {
 			};
 			await connection.invoke('SendMessage', message);
 		} catch (error) {
-			console.log('Error');
+			toast.error(
+				'Failed to send message due to connection error. Refresh the page.',
+				topRightNotification
+			);
 		}
 	};
 
@@ -45,7 +50,10 @@ const useConversations = (user, connection, getAccessTokenSilently) => {
 
 			setConversations((prevState) => [conversation, ...prevState]);
 		} catch (error) {
-			console.log(error);
+			toast.error(
+				'Failed to start conversation due to connection error. Refresh the page.',
+				topRightNotification
+			);
 		}
 	};
 

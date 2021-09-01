@@ -1,5 +1,7 @@
 import { HubConnectionBuilder, HubConnectionState } from '@microsoft/signalr';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import { topRightNotification } from '../models/toastNotificationConfiguration';
 
 const useSignalR = (getAccessToken) => {
 	const [connection, setConnection] = useState(null);
@@ -19,7 +21,10 @@ const useSignalR = (getAccessToken) => {
 
 				setConnection(newConnection);
 			} catch (error) {
-				console.log(error);
+				toast.error(
+					'Failed to create connection with server. Refresh the page.',
+					topRightNotification
+				);
 			}
 		};
 
@@ -27,12 +32,19 @@ const useSignalR = (getAccessToken) => {
 	}, []);
 
 	useEffect(() => {
-		const startConnection = () => {
+		const startConnection = async () => {
 			if (
 				connection &&
 				connection.state === HubConnectionState.Disconnected
 			) {
-				connection.start();
+				try {
+					await connection.start();
+				} catch (error) {
+					toast.error(
+						'Failed to start connection with server. Refresh the page.',
+						topRightNotification
+					);
+				}
 			}
 		};
 		const stopConnection = () => {
