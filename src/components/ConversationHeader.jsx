@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ProfilePicture from './ProfilePicture';
 
 const ConversationHeader = ({ picture, email }) => (
@@ -7,5 +8,10 @@ const ConversationHeader = ({ picture, email }) => (
 		<h3 className='ml-2 w-full truncate'>{email}</h3>
 	</div>
 );
+
+ConversationHeader.propTypes = {
+	picture: PropTypes.string.isRequired,
+	email: PropTypes.string.isRequired,
+};
 
 export default ConversationHeader;

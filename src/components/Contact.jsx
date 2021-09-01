@@ -6,10 +6,10 @@ import userProfilePropType from '../propTypeModels/userProfilePropType';
 const Contact = ({ userProfile, onSelect }) => (
 	<div
 		className='flex items-center mt-2 h-16 bg-gray-800 cursor-pointer hover:bg-gray-600'
-		onClick={() => onSelect(userProfile.id)}
+		onClick={() => onSelect(userProfile.userId)}
 		onKeyPress={(e) => {
 			if (e.key === 'Enter' || e.key === ' ') {
-				onSelect(userProfile.id);
+				onSelect(userProfile.userId);
 			}
 		}}
 		role='button'

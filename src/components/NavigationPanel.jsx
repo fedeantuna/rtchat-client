@@ -5,7 +5,11 @@ import ContactList from './ContactList';
 import UserBar from './UserBar';
 import userProfilePropType from '../propTypeModels/userProfilePropType';
 
-const NavigationPanel = ({ userProfiles, onContactSelect }) => {
+const NavigationPanel = ({
+	userProfiles,
+	onContactSelect,
+	initializeConversation,
+}) => {
 	const { filter, filteredProfiles, setFilter } = useSearch(userProfiles);
 
 	const handleContactSelect = (id) => {
@@ -16,7 +20,10 @@ const NavigationPanel = ({ userProfiles, onContactSelect }) => {
 	const handleContactSelectWithKeyPress = (e) => {
 		if (e.key === 'Enter') {
 			if (filteredProfiles[0]) {
-				handleContactSelect(filteredProfiles[0].id);
+				handleContactSelect(filteredProfiles[0].userId);
+			} else {
+				initializeConversation(filter);
+				setFilter('');
 			}
 		}
 	};
@@ -39,6 +46,7 @@ const NavigationPanel = ({ userProfiles, onContactSelect }) => {
 NavigationPanel.propTypes = {
 	userProfiles: PropTypes.arrayOf(userProfilePropType).isRequired,
 	onContactSelect: PropTypes.func.isRequired,
+	initializeConversation: PropTypes.func.isRequired,
 };
 
 export default NavigationPanel;

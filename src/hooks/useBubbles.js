@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getRandomInt } from '../utils/numberUtils';
+import getRandomInt from '../utils/getRandomInt';
 
 const useBubbles = () => {
 	const [bubbles, setBubbles] = useState([]);

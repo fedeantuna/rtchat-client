@@ -1,75 +1,102 @@
 import { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { getLastMessage } from '../utils/profileUtils';
-import useMockData from './useMockData';
+import { toast } from 'react-toastify';
+import getReceiveMessage from '../clientMethods/getReceiveMessage';
+import { topRightNotification } from '../models/toastNotificationConfiguration';
+import { getConversationByUserEmail } from '../services/conversationService';
+import isValidEmail from '../utils/isValidEmail';
 
-const useConversations = () => {
-	const [conversations, setConversations] = useState([]);
+const useConversations = (user, connection, getAccessTokenSilently) => {
 	const [currentConversation, setCurrentConversation] = useState(null);
-	const [userProfiles, setUserProfiles] = useState([]);
+	const [conversations, setConversations] = useState([]);
 
-	useEffect(() => {
-		if (currentConversation) {
-			const last = getLastMessage(currentConversation.messages);
-			if (last && document.getElementById(last.id))
-				document
-					.getElementById(last.id)
-					.scrollIntoView({ behavior: 'auto' });
+	const receiveMessage = getReceiveMessage(
+		user,
+		conversations,
+		currentConversation,
+		setConversations,
+		setCurrentConversation
+	);
+
+	const sendMessage = async (content) => {
+		try {
+			const message = {
+				receiver: {
+					user_id: currentConversation.userId,
+				},
+				sender: {
+					user_id: user.sub,
+				},
+				content,
+			};
+			await connection.invoke('SendMessage', message);
+		} catch (error) {
+			toast.error(
+				'Failed to send message due to connection error. Refresh the page.',
+				topRightNotification
+			);
 		}
-	}, [currentConversation]);
+	};
 
-	// TODO: MOCKS, replace with actual data later
-	useMockData(setConversations);
+	const startConversation = async (filter) => {
+		if (!isValidEmail(filter)) {
+			toast.error(
+				`${filter} is not a valid email.`,
+				topRightNotification
+			);
+			return;
+		}
+		try {
+			const accessToken = await getAccessTokenSilently({
+				audience: process.env.REACT_APP_CHAT_AUDIENCE,
+			});
+
+			const conversation = await getConversationByUserEmail(
+				filter,
+				accessToken
+			);
+
+			if (!conversation) {
+				toast.error(
+					`User with email ${filter} not found or disconnected.`,
+					topRightNotification
+				);
+				return;
+			}
+
+			conversation.selectOnLoad = true;
+
+			setConversations((prevState) => [conversation, ...prevState]);
+		} catch (error) {
+			toast.error(
+				'Failed to start conversation due to connection error. Refresh the page.',
+				topRightNotification
+			);
+		}
+	};
 
 	useEffect(() => {
-		setUserProfiles(
-			conversations.map((c) => ({
-				id: c.id,
-				email: c.email,
-				picture: c.picture,
-				lastMessage: getLastMessage(c.messages),
-			}))
-		);
+		if (connection) {
+			connection.on('ReceiveMessage', receiveMessage);
+		}
+
+		return () => {
+			if (connection) connection.off('ReceiveMessage');
+		};
+	}, [connection, receiveMessage]);
+
+	useEffect(() => {
+		if (conversations[0] && conversations[0].selectOnLoad) {
+			delete conversations[0].selectOnLoad;
+			setCurrentConversation({ ...conversations[0] });
+		}
 	}, [conversations]);
 
-	const handleContactSelect = (id, setFocusOnMessageBox) => {
-		setCurrentConversation(conversations.filter((c) => c.id === id)[0]);
-		if (setFocusOnMessageBox) {
-			setFocusOnMessageBox();
-		}
-	};
-
-	const handleMessageSend = (content) => {
-		const messages = [
-			...currentConversation.messages,
-			{
-				id: uuidv4(),
-				sender: 'self',
-				content,
-			},
-		];
-
-		setCurrentConversation({
-			...currentConversation,
-			messages,
-		});
-
-		const otherConversations = conversations.filter(
-			(c) => c.id !== currentConversation.id
-		);
-		const updatedConversation = conversations.filter(
-			(c) => c.id === currentConversation.id
-		)[0];
-		updatedConversation.messages = messages;
-
-		setConversations([updatedConversation, ...otherConversations]);
-	};
-
 	return {
-		userProfiles,
+		conversations,
 		currentConversation,
-		handleContactSelect,
-		handleMessageSend,
+		setCurrentConversation,
+		sendMessage,
+		startConversation,
 	};
 };
 
