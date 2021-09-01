@@ -36,6 +36,8 @@ const getConversationByUserEmail = async (email, accessToken) => {
 		accessToken
 	);
 
+	if (!user.userId) return null;
+
 	const conversation = getConversation(user);
 
 	return conversation;

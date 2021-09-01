@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import getReceiveMessage from '../clientMethods/getReceiveMessage';
 import { topRightNotification } from '../models/toastNotificationConfiguration';
 import { getConversationByUserEmail } from '../services/conversationService';
+import isValidEmail from '../utils/isValidEmail';
 
 const useConversations = (user, connection, getAccessTokenSilently) => {
 	const [currentConversation, setCurrentConversation] = useState(null);
@@ -37,6 +38,13 @@ const useConversations = (user, connection, getAccessTokenSilently) => {
 	};
 
 	const startConversation = async (filter) => {
+		if (!isValidEmail(filter)) {
+			toast.error(
+				`${filter} is not a valid email.`,
+				topRightNotification
+			);
+			return;
+		}
 		try {
 			const accessToken = await getAccessTokenSilently({
 				audience: process.env.REACT_APP_CHAT_AUDIENCE,
@@ -46,6 +54,15 @@ const useConversations = (user, connection, getAccessTokenSilently) => {
 				filter,
 				accessToken
 			);
+
+			if (!conversation) {
+				toast.error(
+					`User with email ${filter} not found or disconnected.`,
+					topRightNotification
+				);
+				return;
+			}
+
 			conversation.selectOnLoad = true;
 
 			setConversations((prevState) => [conversation, ...prevState]);
