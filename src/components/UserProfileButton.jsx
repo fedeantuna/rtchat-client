@@ -1,11 +1,6 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import ProfilePicture from './ProfilePicture';
-import {
-	getGenericProfilePicture,
-	getInitials,
-	getRandomColor,
-} from '../utils/profileUtils';
 
 const UserProfileButton = () => {
 	const { user, logout } = useAuth0();
@@ -28,15 +23,7 @@ const UserProfileButton = () => {
 				aria-expanded='false'
 				aria-controls='profile-menu'
 			>
-				<ProfilePicture
-					picture={
-						user.picture ||
-						getGenericProfilePicture(
-							getInitials(user.name),
-							getRandomColor()
-						)
-					}
-				/>
+				<ProfilePicture picture={user.picture} />
 			</button>
 			<div className='invisible opacity-0 transition-all duration-300 transform origin-top-right scale-95 -translate-y-2 dropdown-menu'>
 				<div
