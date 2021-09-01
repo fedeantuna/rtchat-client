@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
 
 const useMessageBox = () => {
-	const textInputRef = React.createRef();
+	const messageBoxRef = React.createRef();
 
 	const setFocusOnMessageBox = () => {
-		if (textInputRef && textInputRef.current) textInputRef.current.focus();
+		if (messageBoxRef && messageBoxRef.current)
+			messageBoxRef.current.focus();
 	};
 
 	useEffect(() => {
 		setFocusOnMessageBox();
-	}, [textInputRef]);
+	}, [messageBoxRef]);
 
-	return [textInputRef, setFocusOnMessageBox];
+	return { messageBoxRef };
 };
 
 export default useMessageBox;
