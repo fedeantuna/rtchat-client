@@ -34,7 +34,7 @@ const useConversations = (user, connection, getAccessTokenSilently) => {
 	const startConversation = async (filter) => {
 		try {
 			const accessToken = await getAccessTokenSilently({
-				audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+				audience: process.env.REACT_APP_CHAT_AUDIENCE,
 			});
 
 			const conversation = await getConversationByUserEmail(

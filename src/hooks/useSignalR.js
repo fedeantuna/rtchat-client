@@ -8,7 +8,7 @@ const useSignalR = (getAccessToken) => {
 		const buildConnection = async () => {
 			try {
 				const accessToken = await getAccessToken({
-					audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+					audience: process.env.REACT_APP_CHAT_AUDIENCE,
 				});
 				const newConnection = new HubConnectionBuilder()
 					.withUrl(process.env.REACT_APP_HUB_URL, {
