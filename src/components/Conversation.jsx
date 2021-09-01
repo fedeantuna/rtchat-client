@@ -5,7 +5,7 @@ import conversationPropType from '../propTypeModels/conversationPropType';
 import ConversationHeader from './ConversationHeader';
 import ConversationHistory from './ConversationHistory';
 
-const Conversation = React.forwardRef(({ current, onSend }, textInputRef) => (
+const Conversation = ({ current, onSend }) => (
 	<div className='w-2/3 h-screen max-h-screen text-white bg-gray-900'>
 		{current && (
 			<div className='flex flex-col h-full'>
@@ -14,15 +14,11 @@ const Conversation = React.forwardRef(({ current, onSend }, textInputRef) => (
 					email={current.email}
 				/>
 				<ConversationHistory messages={current.messages} />
-				<MessageBox
-					key={Date.now()}
-					onSend={onSend}
-					ref={textInputRef}
-				/>
+				<MessageBox key={Date.now()} onSend={onSend} />
 			</div>
 		)}
 	</div>
-));
+);
 
 Conversation.propTypes = {
 	current: conversationPropType,
