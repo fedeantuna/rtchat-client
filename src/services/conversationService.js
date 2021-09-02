@@ -11,23 +11,22 @@ const getUser = async (endpoint, accessToken) => {
 
 	const user = await response.json();
 
-	return user;
-};
-
-const getConversation = (user) => {
-	const conversation = { ...user, messages: [] };
-
 	const userIdProperty = {
 		name: 'user_id',
 		newName: 'userId',
 	};
 
-	const conversationWithRenamedProperties = getObjectWithRenamedProperties(
-		conversation,
-		[userIdProperty]
-	);
+	const userWithRenamedProperties = getObjectWithRenamedProperties(user, [
+		userIdProperty,
+	]);
 
-	return conversationWithRenamedProperties;
+	return userWithRenamedProperties;
+};
+
+const getConversation = (user) => {
+	const conversation = { ...user, messages: [] };
+
+	return conversation;
 };
 
 const getConversationByUserEmail = async (email, accessToken) => {
