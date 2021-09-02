@@ -1,11 +1,13 @@
 import { v4 as uuidv4 } from 'uuid';
+import notificationSound from '../sounds/notification_high-intensity.wav';
 
 const getReceiveMessage = (
 	user,
 	conversations,
 	currentConversation,
 	setConversations,
-	setCurrentConversation
+	setCurrentConversation,
+	hasFocus
 ) => {
 	const getTargetUser = (message) => {
 		const targetUser =
@@ -61,18 +63,23 @@ const getReceiveMessage = (
 		return otherConversations;
 	};
 
+	const playNotificationSound = (isCurrentChatReceivingMessages) => {
+		if (!hasFocus.current || !isCurrentChatReceivingMessages) {
+			const notificationAudio = new Audio(notificationSound);
+			notificationAudio.play();
+		}
+	};
+
 	const updateConversations = (
 		targetConversationWithUpdatedMessages,
-		otherConversations
+		otherConversations,
+		isCurrentChatReceivingMessages
 	) => {
 		setConversations([
 			targetConversationWithUpdatedMessages,
 			...otherConversations,
 		]);
-		if (
-			currentConversation.userId ===
-			targetConversationWithUpdatedMessages.userId
-		) {
+		if (isCurrentChatReceivingMessages) {
 			setCurrentConversation(targetConversationWithUpdatedMessages);
 		}
 	};
@@ -83,10 +90,18 @@ const getReceiveMessage = (
 			getTargetConversationWithUpdatedMessages(targetUser, message);
 		const otherConversations = getOtherConversations(targetUser.user_id);
 
+		const isCurrentChatReceivingMessages =
+			currentConversation &&
+			currentConversation.userId ===
+				targetConversationWithUpdatedMessages.userId;
+
 		updateConversations(
 			targetConversationWithUpdatedMessages,
-			otherConversations
+			otherConversations,
+			isCurrentChatReceivingMessages
 		);
+
+		playNotificationSound(isCurrentChatReceivingMessages);
 	};
 
 	return receiveMessage;

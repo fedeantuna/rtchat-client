@@ -4,17 +4,20 @@ import getReceiveMessage from '../clientMethods/getReceiveMessage';
 import { topRightNotification } from '../models/toastNotificationConfiguration';
 import { getConversationByUserEmail } from '../services/conversationService';
 import isValidEmail from '../utils/isValidEmail';
+import useFocus from './useFocus';
 
 const useConversations = (user, connection, getAccessTokenSilently) => {
 	const [currentConversation, setCurrentConversation] = useState(null);
 	const [conversations, setConversations] = useState([]);
+	const hasFocus = useFocus();
 
 	const receiveMessage = getReceiveMessage(
 		user,
 		conversations,
 		currentConversation,
 		setConversations,
-		setCurrentConversation
+		setCurrentConversation,
+		hasFocus
 	);
 
 	const sendMessage = async (content) => {
