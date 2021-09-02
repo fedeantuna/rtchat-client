@@ -22,6 +22,7 @@ const Chat = () => {
 	} = useConversations(user, connection, getAccessTokenSilently);
 	const { userProfiles, selectContact } = useUserProfiles(
 		conversations,
+		currentConversation,
 		setCurrentConversation
 	);
 
