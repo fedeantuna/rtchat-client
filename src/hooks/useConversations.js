@@ -2,7 +2,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import getReceiveMessage from '../clientMethods/getReceiveMessage';
-import getUpdateStatus from '../clientMethods/getUpdateStatus';
+import getUpdateUserStatus from '../clientMethods/getUpdateUserStatus';
 import { topRightNotification } from '../models/toastNotificationConfiguration';
 import { getConversationByUserEmail } from '../services/conversationService';
 import isValidEmail from '../utils/isValidEmail';
@@ -25,7 +25,10 @@ const useConversations = () => {
 		hasFocus
 	);
 
-	const updateStatus = getUpdateStatus(conversations, setConversations);
+	const updateUserStatus = getUpdateUserStatus(
+		conversations,
+		setConversations
+	);
 
 	const sendMessage = async (content) => {
 		try {
@@ -96,13 +99,13 @@ const useConversations = () => {
 
 	useEffect(() => {
 		if (connection) {
-			connection.on('UpdateStatus', updateStatus);
+			connection.on('UpdateUserStatus', updateUserStatus);
 		}
 
 		return () => {
-			if (connection) connection.off('UpdateStatus');
+			if (connection) connection.off('UpdateUserStatus');
 		};
-	}, [connection, updateStatus]);
+	}, [connection, updateUserStatus]);
 
 	useEffect(() => {
 		if (conversations[0] && conversations[0].selectOnLoad) {

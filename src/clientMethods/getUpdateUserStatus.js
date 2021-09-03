@@ -1,7 +1,7 @@
 import userStatus from '../enums/userStatus';
 
-const getUpdateStatus = (conversations, setConversations) => {
-	const updateStatus = (user) => {
+const getUpdateUserStatus = (conversations, setConversations) => {
+	const updateUserStatus = (user) => {
 		const updatedConversations = conversations.map((c) => ({ ...c }));
 
 		const updatedConversation = updatedConversations.find(
@@ -13,7 +13,7 @@ const getUpdateStatus = (conversations, setConversations) => {
 		setConversations([...updatedConversations]);
 	};
 
-	return updateStatus;
+	return updateUserStatus;
 };
 
-export default getUpdateStatus;
+export default getUpdateUserStatus;
