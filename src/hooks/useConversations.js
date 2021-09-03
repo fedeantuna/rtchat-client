@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import getReceiveMessage from '../clientMethods/getReceiveMessage';
 import getUpdateUserStatus from '../clientMethods/getUpdateUserStatus';
+import clientMethod from '../enums/clientMethod';
+import serverMethod from '../enums/serverMethod';
 import { topRightNotification } from '../models/toastNotificationConfiguration';
 import { getConversationByUserEmail } from '../services/conversationService';
 import isValidEmail from '../utils/isValidEmail';
@@ -41,7 +43,7 @@ const useConversations = () => {
 				},
 				content,
 			};
-			await connection.invoke('SendMessage', message);
+			await connection.invoke(serverMethod.sendMessage, message);
 		} catch (error) {
 			toast.error(
 				'Failed to send message due to connection error. Refresh the page.',
@@ -89,21 +91,25 @@ const useConversations = () => {
 
 	useEffect(() => {
 		if (connection) {
-			connection.on('ReceiveMessage', receiveMessage);
+			connection.on(clientMethod.receiveMessage, receiveMessage);
 		}
 
 		return () => {
-			if (connection) connection.off('ReceiveMessage');
+			if (connection) {
+				connection.off(clientMethod.receiveMessage, receiveMessage);
+			}
 		};
 	}, [connection, receiveMessage]);
 
 	useEffect(() => {
 		if (connection) {
-			connection.on('UpdateUserStatus', updateUserStatus);
+			connection.on(clientMethod.updateUserStatus, updateUserStatus);
 		}
 
 		return () => {
-			if (connection) connection.off('UpdateUserStatus');
+			if (connection) {
+				connection.off(clientMethod.updateUserStatus, updateUserStatus);
+			}
 		};
 	}, [connection, updateUserStatus]);
 

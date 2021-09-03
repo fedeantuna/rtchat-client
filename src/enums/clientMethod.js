@@ -1,6 +1,6 @@
 const clientMethod = {
-	receiveMessage: 'receiveMessage',
-	updateUserStatus: 'updateUserStatus',
+	receiveMessage: 'ReceiveMessage',
+	updateUserStatus: 'UpdateUserStatus',
 };
 
 export default clientMethod;
