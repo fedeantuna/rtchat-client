@@ -16,7 +16,7 @@ const UserProfileButton = () => {
 	};
 
 	return (
-		<div className='mr-2 w-12 h-12 dropdown'>
+		<div className='w-12 h-12 mr-2 dropdown'>
 			<button
 				type='button'
 				aria-haspopup='true'
@@ -25,13 +25,13 @@ const UserProfileButton = () => {
 			>
 				<ProfilePicture picture={user.picture} />
 			</button>
-			<div className='invisible opacity-0 transition-all duration-300 transform origin-top-right scale-95 -translate-y-2 dropdown-menu'>
+			<div className='invisible transition-all duration-300 origin-top-right transform scale-95 -translate-y-2 opacity-0 dropdown-menu'>
 				<div
-					className='absolute left-4 w-56 bg-gray-800 rounded-sm border border-gray-900 divide-y divide-gray-100 shadow-lg origin-top-right outline-'
+					className='absolute w-56 origin-top-right bg-gray-800 border border-gray-900 divide-y divide-gray-100 rounded-sm shadow-lg left-4 outline-'
 					id='profile-menu'
 					role='menu'
 				>
-					<div className='py-3 px-4'>
+					<div className='px-4 py-3'>
 						<p className='text-sm leading-5'>Signed in as</p>
 						<p className='text-sm font-medium leading-5 truncate'>
 							{user.email}

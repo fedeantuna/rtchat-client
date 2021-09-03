@@ -12,6 +12,7 @@ const Conversation = ({ current, onSend }) => (
 				<ConversationHeader
 					picture={current.picture}
 					email={current.email}
+					status={current.status}
 				/>
 				<ConversationHistory messages={current.messages} />
 				<MessageBox key={Date.now()} onSend={onSend} />

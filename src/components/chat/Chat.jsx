@@ -4,22 +4,20 @@ import { ToastContainer } from 'react-toastify';
 import Conversation from '../Conversation';
 import NavigationPanel from '../NavigationPanel';
 import Loading from '../Loading';
-import useSignalR from '../../hooks/useSignalR';
 import useConversations from '../../hooks/useConversations';
 import useUserProfiles from '../../hooks/useUserProfiles';
 import './chat.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Chat = () => {
-	const { user, isLoading, getAccessTokenSilently } = useAuth0();
-	const { connection } = useSignalR(getAccessTokenSilently);
+	const { isLoading } = useAuth0();
 	const {
 		conversations,
 		currentConversation,
 		setCurrentConversation,
 		sendMessage,
 		startConversation,
-	} = useConversations(user, connection, getAccessTokenSilently);
+	} = useConversations();
 	const { userProfiles, selectContact } = useUserProfiles(
 		conversations,
 		currentConversation,
