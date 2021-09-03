@@ -40,6 +40,7 @@ const useUserProfiles = (
 				userId: c.userId,
 				email: c.email,
 				picture: c.picture,
+				status: c.status,
 				lastMessage: getLastMessage(c.messages),
 			}))
 		);

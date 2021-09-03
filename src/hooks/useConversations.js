@@ -1,12 +1,17 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import getReceiveMessage from '../clientMethods/getReceiveMessage';
+import getUpdateStatus from '../clientMethods/getUpdateStatus';
 import { topRightNotification } from '../models/toastNotificationConfiguration';
 import { getConversationByUserEmail } from '../services/conversationService';
 import isValidEmail from '../utils/isValidEmail';
 import useFocus from './useFocus';
+import { useSignalR } from './useSignalR';
 
-const useConversations = (user, connection, getAccessTokenSilently) => {
+const useConversations = () => {
+	const { user, getAccessTokenSilently } = useAuth0();
+	const { connection } = useSignalR();
 	const [currentConversation, setCurrentConversation] = useState(null);
 	const [conversations, setConversations] = useState([]);
 	const hasFocus = useFocus();
@@ -19,6 +24,8 @@ const useConversations = (user, connection, getAccessTokenSilently) => {
 		setCurrentConversation,
 		hasFocus
 	);
+
+	const updateStatus = getUpdateStatus(conversations, setConversations);
 
 	const sendMessage = async (content) => {
 		try {
@@ -88,9 +95,29 @@ const useConversations = (user, connection, getAccessTokenSilently) => {
 	}, [connection, receiveMessage]);
 
 	useEffect(() => {
+		if (connection) {
+			connection.on('UpdateStatus', updateStatus);
+		}
+
+		return () => {
+			if (connection) connection.off('UpdateStatus');
+		};
+	}, [connection, updateStatus]);
+
+	useEffect(() => {
 		if (conversations[0] && conversations[0].selectOnLoad) {
 			delete conversations[0].selectOnLoad;
 			setCurrentConversation({ ...conversations[0] });
+		}
+	}, [conversations]);
+
+	useEffect(() => {
+		if (currentConversation) {
+			const updatedCurrentConversation = conversations.find(
+				(c) => c.userId === currentConversation.userId
+			);
+
+			setCurrentConversation({ ...updatedCurrentConversation });
 		}
 	}, [conversations]);
 
