@@ -2,17 +2,16 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import getReceiveMessage from '../clientMethods/getReceiveMessage';
+import getStartConversation from '../clientMethods/getStartConversation';
 import getUpdateUserStatus from '../clientMethods/getUpdateUserStatus';
 import clientMethod from '../enums/clientMethod';
 import serverMethod from '../enums/serverMethod';
 import { topRightNotification } from '../models/toastNotificationConfiguration';
-import { getConversationByUserEmail } from '../services/conversationService';
-import isValidEmail from '../utils/isValidEmail';
 import useFocus from './useFocus';
 import { useSignalR } from './useSignalR';
 
 const useConversations = () => {
-	const { user, getAccessTokenSilently } = useAuth0();
+	const { user } = useAuth0();
 	const { connection } = useSignalR();
 	const [currentConversation, setCurrentConversation] = useState(null);
 	const [conversations, setConversations] = useState([]);
@@ -32,6 +31,8 @@ const useConversations = () => {
 		setConversations
 	);
 
+	const startConversation = getStartConversation(setConversations);
+
 	const sendMessage = async (content) => {
 		try {
 			const message = {
@@ -47,43 +48,6 @@ const useConversations = () => {
 		} catch (error) {
 			toast.error(
 				'Failed to send message due to connection error. Refresh the page.',
-				topRightNotification
-			);
-		}
-	};
-
-	const startConversation = async (filter) => {
-		if (!isValidEmail(filter)) {
-			toast.error(
-				`${filter} is not a valid email.`,
-				topRightNotification
-			);
-			return;
-		}
-		try {
-			const accessToken = await getAccessTokenSilently({
-				audience: process.env.REACT_APP_CHAT_AUDIENCE,
-			});
-
-			const conversation = await getConversationByUserEmail(
-				filter,
-				accessToken
-			);
-
-			if (!conversation) {
-				toast.error(
-					`User with email ${filter} not found or disconnected.`,
-					topRightNotification
-				);
-				return;
-			}
-
-			conversation.selectOnLoad = true;
-
-			setConversations((prevState) => [conversation, ...prevState]);
-		} catch (error) {
-			toast.error(
-				'Failed to start conversation due to connection error. Refresh the page.',
 				topRightNotification
 			);
 		}
@@ -114,6 +78,21 @@ const useConversations = () => {
 	}, [connection, updateUserStatus]);
 
 	useEffect(() => {
+		if (connection) {
+			connection.on(clientMethod.startConversation, startConversation);
+		}
+
+		return () => {
+			if (connection) {
+				connection.off(
+					clientMethod.startConversation,
+					startConversation
+				);
+			}
+		};
+	}, [connection, startConversation]);
+
+	useEffect(() => {
 		if (conversations[0] && conversations[0].selectOnLoad) {
 			delete conversations[0].selectOnLoad;
 			setCurrentConversation({ ...conversations[0] });
@@ -135,7 +114,6 @@ const useConversations = () => {
 		currentConversation,
 		setCurrentConversation,
 		sendMessage,
-		startConversation,
 	};
 };
 
