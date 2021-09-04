@@ -19,7 +19,10 @@ const Contact = ({ userProfile, onSelect }) => {
 			role='button'
 			tabIndex={0}
 		>
-			<ProfilePicture picture={userProfile.picture} />
+			<ProfilePicture
+				picture={userProfile.picture}
+				status={userProfile.status}
+			/>
 			<div className='w-full h-full min-w-0 pt-1 ml-2 text-white'>
 				<h3 className='truncate'>{userProfile.email}</h3>
 				<div className='flex items-center flex-grow-0 flex-shrink-0'>

@@ -1,12 +1,19 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import getReceiveMessage from '../clientMethods/getReceiveMessage';
+import getUpdateUserStatus from '../clientMethods/getUpdateUserStatus';
+import clientMethod from '../enums/clientMethod';
+import serverMethod from '../enums/serverMethod';
 import { topRightNotification } from '../models/toastNotificationConfiguration';
 import { getConversationByUserEmail } from '../services/conversationService';
 import isValidEmail from '../utils/isValidEmail';
 import useFocus from './useFocus';
+import { useSignalR } from './useSignalR';
 
-const useConversations = (user, connection, getAccessTokenSilently) => {
+const useConversations = () => {
+	const { user, getAccessTokenSilently } = useAuth0();
+	const { connection } = useSignalR();
 	const [currentConversation, setCurrentConversation] = useState(null);
 	const [conversations, setConversations] = useState([]);
 	const hasFocus = useFocus();
@@ -20,6 +27,11 @@ const useConversations = (user, connection, getAccessTokenSilently) => {
 		hasFocus
 	);
 
+	const updateUserStatus = getUpdateUserStatus(
+		conversations,
+		setConversations
+	);
+
 	const sendMessage = async (content) => {
 		try {
 			const message = {
@@ -31,7 +43,7 @@ const useConversations = (user, connection, getAccessTokenSilently) => {
 				},
 				content,
 			};
-			await connection.invoke('SendMessage', message);
+			await connection.invoke(serverMethod.sendMessage, message);
 		} catch (error) {
 			toast.error(
 				'Failed to send message due to connection error. Refresh the page.',
@@ -79,18 +91,42 @@ const useConversations = (user, connection, getAccessTokenSilently) => {
 
 	useEffect(() => {
 		if (connection) {
-			connection.on('ReceiveMessage', receiveMessage);
+			connection.on(clientMethod.receiveMessage, receiveMessage);
 		}
 
 		return () => {
-			if (connection) connection.off('ReceiveMessage');
+			if (connection) {
+				connection.off(clientMethod.receiveMessage, receiveMessage);
+			}
 		};
 	}, [connection, receiveMessage]);
+
+	useEffect(() => {
+		if (connection) {
+			connection.on(clientMethod.updateUserStatus, updateUserStatus);
+		}
+
+		return () => {
+			if (connection) {
+				connection.off(clientMethod.updateUserStatus, updateUserStatus);
+			}
+		};
+	}, [connection, updateUserStatus]);
 
 	useEffect(() => {
 		if (conversations[0] && conversations[0].selectOnLoad) {
 			delete conversations[0].selectOnLoad;
 			setCurrentConversation({ ...conversations[0] });
+		}
+	}, [conversations]);
+
+	useEffect(() => {
+		if (currentConversation) {
+			const updatedCurrentConversation = conversations.find(
+				(c) => c.userId === currentConversation.userId
+			);
+
+			setCurrentConversation({ ...updatedCurrentConversation });
 		}
 	}, [conversations]);
 
