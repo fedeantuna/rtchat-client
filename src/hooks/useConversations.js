@@ -94,16 +94,6 @@ const useConversations = () => {
 		}
 	}, [conversations]);
 
-	useEffect(() => {
-		if (currentConversation) {
-			const updatedCurrentConversation = conversations.find(
-				(c) => c.userId === currentConversation.userId
-			);
-
-			setCurrentConversation({ ...updatedCurrentConversation });
-		}
-	}, [conversations]);
-
 	return {
 		conversations,
 		currentConversation,

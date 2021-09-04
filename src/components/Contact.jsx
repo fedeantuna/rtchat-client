@@ -23,7 +23,7 @@ const Contact = ({ userProfile, onSelect }) => {
 				picture={userProfile.picture}
 				status={userProfile.status}
 			/>
-			<div className='w-full h-full min-w-0 pt-1 ml-2 text-white'>
+			<div className='w-full h-full min-w-0 pt-1 ml-4 text-white'>
 				<h3 className='truncate'>{userProfile.email}</h3>
 				<div className='flex items-center flex-grow-0 flex-shrink-0'>
 					<div className='flex-grow truncate'>
