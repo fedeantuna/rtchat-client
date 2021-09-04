@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import ProfilePicture from './ProfilePicture';
 import { useSignalR } from '../hooks/useSignalR';
@@ -8,6 +8,7 @@ import serverMethod from '../enums/serverMethod';
 const UserProfileButton = () => {
 	const { user, logout } = useAuth0();
 	const { connection } = useSignalR();
+	const [status, setStatus] = useState(userStatus.online);
 
 	const handleLogout = () => {
 		logout({ returnTo: window.location.origin });
@@ -20,14 +21,15 @@ const UserProfileButton = () => {
 		}
 	};
 
-	const handleChangeStatus = (status) => {
-		connection.invoke(serverMethod.updateUserStatus, status);
+	const handleChangeStatus = (newStatus) => {
+		connection.invoke(serverMethod.updateUserStatus, newStatus);
+
+		setStatus(newStatus);
 	};
 
-	const handleChangeStatusKeyPress = (e, status) => {
-		e.preventDefault();
+	const handleChangeStatusKeyPress = (e, newStatus) => {
 		if (e.key === 'Enter' || e.key === ' ') {
-			handleChangeStatus(status);
+			handleChangeStatus(newStatus);
 		}
 	};
 
@@ -39,7 +41,7 @@ const UserProfileButton = () => {
 				aria-expanded='false'
 				aria-controls='profile-menu'
 			>
-				<ProfilePicture picture={user.picture} />
+				<ProfilePicture picture={user.picture} status={status} />
 			</button>
 			<div className='invisible transition-all duration-300 origin-top-right transform scale-95 -translate-y-2 opacity-0 dropdown-menu'>
 				<div
