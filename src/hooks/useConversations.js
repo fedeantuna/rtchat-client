@@ -36,12 +36,7 @@ const useConversations = () => {
 	const sendMessage = async (content) => {
 		try {
 			const message = {
-				receiver: {
-					user_id: currentConversation.userId,
-				},
-				sender: {
-					user_id: user.sub,
-				},
+				receiverId: currentConversation.userId,
 				content,
 			};
 			await connection.invoke(serverMethod.sendMessage, message);
