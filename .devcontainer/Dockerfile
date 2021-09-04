@@ -6,7 +6,7 @@ FROM mcr.microsoft.com/vscode/devcontainers/javascript-node:0-${VARIANT}
 
 # [Optional] Uncomment this section to install additional OS packages.
 RUN apt update && export DEBIAN_FRONTEND=noninteractive \
-    && apt -y install --no-install-recommends easy-rsa
+    && apt -y install --no-install-recommends easy-rsa vim
 
 # [Optional] Uncomment if you want to install an additional version of node using nvm
 # ARG EXTRA_NODE_VERSION=10
