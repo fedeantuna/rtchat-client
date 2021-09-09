@@ -4,7 +4,7 @@ import getObjectWithRenamedProperties from '../utils/getObjectWithRenamedPropert
 
 const getStartConversation = (setConversations) => {
 	const startConversation = (user) => {
-		if (!user.user_id) {
+		if (!user) {
 			toast.error(`User not found.`, topRightNotification);
 
 			return;

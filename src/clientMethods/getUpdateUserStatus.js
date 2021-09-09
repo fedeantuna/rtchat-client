@@ -5,7 +5,7 @@ const getUpdateUserStatus = (conversations, setConversations) => {
 		const updatedConversations = conversations.map((c) => ({ ...c }));
 
 		const updatedConversation = updatedConversations.find(
-			(uc) => uc.userId === user.id
+			(uc) => uc.userId === user.user_id
 		);
 
 		updatedConversation.status = userStatus[user.status];
