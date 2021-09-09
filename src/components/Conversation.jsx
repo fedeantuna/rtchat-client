@@ -4,6 +4,7 @@ import MessageBox from './MessageBox';
 import conversationPropType from '../propTypeModels/conversationPropType';
 import ConversationHeader from './ConversationHeader';
 import ConversationHistory from './ConversationHistory';
+import userStatus from '../enums/userStatus';
 
 const Conversation = ({ current, onSend }) => (
 	<div className='w-2/3 h-screen max-h-screen text-white bg-gray-900'>
@@ -15,7 +16,11 @@ const Conversation = ({ current, onSend }) => (
 					status={current.status}
 				/>
 				<ConversationHistory messages={current.messages} />
-				<MessageBox key={Date.now()} onSend={onSend} />
+				<MessageBox
+					key={Date.now()}
+					onSend={onSend}
+					enabled={current.status !== userStatus.offline}
+				/>
 			</div>
 		)}
 	</div>

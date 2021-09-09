@@ -16,7 +16,6 @@ const Chat = () => {
 		currentConversation,
 		setCurrentConversation,
 		sendMessage,
-		startConversation,
 	} = useConversations();
 	const { userProfiles, selectContact } = useUserProfiles(
 		conversations,
@@ -32,7 +31,6 @@ const Chat = () => {
 				<NavigationPanel
 					userProfiles={userProfiles}
 					onContactSelect={selectContact}
-					initializeConversation={startConversation}
 				/>
 				<Conversation
 					current={currentConversation}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import useMessageBox from '../hooks/useMessageBox';
 
-const MessageBox = ({ onSend }) => {
+const MessageBox = ({ onSend, enabled }) => {
 	const { messageBoxRef } = useMessageBox();
 	const [messageContent, setMessageContent] = useState('');
 
@@ -13,10 +13,10 @@ const MessageBox = ({ onSend }) => {
 	};
 
 	return (
-		<div className='items-center my-2 mx-2 text-white'>
+		<div className='items-center mx-2 my-2 text-white'>
 			<form className='flex w-full'>
 				<input
-					className='flex flex-grow px-2 mr-2 w-9/12 h-10 text-sm bg-gray-800 rounded-lg focus:outline-none'
+					className='flex flex-grow w-9/12 h-10 px-2 mr-2 text-sm bg-gray-800 rounded-lg focus:outline-none'
 					type='text'
 					name='message-box'
 					id='message-box'
@@ -32,12 +32,13 @@ const MessageBox = ({ onSend }) => {
 						}
 					}}
 					ref={messageBoxRef}
+					disabled={!enabled}
 				/>
 
 				<button
 					type='submit'
 					onClick={handleSendMessage}
-					disabled={messageContent.length === 0}
+					disabled={messageContent.length === 0 || !enabled}
 				>
 					{(messageContent.length > 0 && (
 						<svg
@@ -67,6 +68,7 @@ const MessageBox = ({ onSend }) => {
 };
 
 MessageBox.propTypes = {
+	enabled: PropTypes.bool.isRequired,
 	onSend: PropTypes.func.isRequired,
 };
 

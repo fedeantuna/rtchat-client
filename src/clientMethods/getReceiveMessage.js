@@ -28,6 +28,7 @@ const getReceiveMessage = (
 				userId: targetUser.user_id,
 				email: targetUser.email,
 				picture: targetUser.picture,
+				status: targetUser.status,
 				messages: [],
 			};
 		}
