@@ -96,8 +96,7 @@ const useConversations = () => {
 
 	useEffect(() => {
 		if (
-			!conversations[0] &&
-			!conversations[0].selectOnLoad &&
+			(!conversations[0] || !conversations[0].selectOnLoad) &&
 			currentConversation
 		) {
 			const updatedCurrentConversation = conversations.find(
