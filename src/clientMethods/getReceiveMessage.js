@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import notificationSound from '../sounds/notification_high-intensity.wav';
 
 const getReceiveMessage = (
-	user,
+	userId,
 	conversations,
 	currentConversation,
 	setConversations,
@@ -11,7 +11,7 @@ const getReceiveMessage = (
 ) => {
 	const getTargetUser = (message) => {
 		const targetUser =
-			message.sender.user_id === user.sub
+			message.sender.user_id === userId
 				? message.receiver
 				: message.sender;
 
@@ -56,19 +56,12 @@ const getReceiveMessage = (
 		return targetConversationWithUpdatedMessages;
 	};
 
-	const getOtherConversations = (userId) => {
+	const getOtherConversations = (targetUserId) => {
 		const otherConversations = conversations.filter(
-			(c) => c.userId !== userId
+			(c) => c.userId !== targetUserId
 		);
 
 		return otherConversations;
-	};
-
-	const playNotificationSound = (isCurrentChatReceivingMessages) => {
-		if (!hasFocus.current || !isCurrentChatReceivingMessages) {
-			const notificationAudio = new Audio(notificationSound);
-			notificationAudio.play();
-		}
 	};
 
 	const updateConversations = (
@@ -85,8 +78,19 @@ const getReceiveMessage = (
 		}
 	};
 
+	const playNotificationSound = async (isCurrentChatReceivingMessages) => {
+		if (!hasFocus.current || !isCurrentChatReceivingMessages) {
+			const notificationAudio = new Audio(notificationSound);
+			try {
+				await notificationAudio.play();
+			} catch (error) {
+				// log
+			}
+		}
+	};
+
 	const receiveMessage = (message) => {
-		const targetUser = getTargetUser(message);
+		const targetUser = getTargetUser(message); // sender
 		const targetConversationWithUpdatedMessages =
 			getTargetConversationWithUpdatedMessages(targetUser, message);
 		const otherConversations = getOtherConversations(targetUser.user_id);

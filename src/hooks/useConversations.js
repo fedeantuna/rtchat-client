@@ -18,7 +18,7 @@ const useConversations = () => {
 	const hasFocus = useFocus();
 
 	const receiveMessage = getReceiveMessage(
-		user,
+		user.sub,
 		conversations,
 		currentConversation,
 		setConversations,
@@ -31,7 +31,10 @@ const useConversations = () => {
 		setConversations
 	);
 
-	const startConversation = getStartConversation(setConversations);
+	const startConversation = getStartConversation(
+		conversations,
+		setConversations
+	);
 
 	const sendMessage = async (content) => {
 		try {

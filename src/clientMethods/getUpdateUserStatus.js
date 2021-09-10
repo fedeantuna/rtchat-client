@@ -2,6 +2,10 @@ import userStatus from '../enums/userStatus';
 
 const getUpdateUserStatus = (conversations, setConversations) => {
 	const updateUserStatus = (user) => {
+		if (!user) {
+			return;
+		}
+
 		const updatedConversations = conversations.map((c) => ({ ...c }));
 
 		const updatedConversation = updatedConversations.find(
