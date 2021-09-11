@@ -123,6 +123,7 @@ const useConversations = () => {
 	return {
 		conversations,
 		currentConversation,
+		setConversations,
 		setCurrentConversation,
 		sendMessage,
 	};

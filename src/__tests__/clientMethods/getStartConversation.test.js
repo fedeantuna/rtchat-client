@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import cloneDeep from 'lodash.clonedeep';
 import getStartConversation from '../../clientMethods/getStartConversation';
 import userStatus from '../../enums/userStatus';
 import { topRightNotification } from '../../models/toastNotificationConfiguration';
@@ -39,8 +40,8 @@ describe('getStartConversation', () => {
 	describe('startConversation', () => {
 		it('calls setConversations with the new conversation on top', () => {
 			// Arrange
-			const user = obiWanKenobi;
-			const conversations = [countDookuChat];
+			const user = cloneDeep(obiWanKenobi);
+			const conversations = [cloneDeep(countDookuChat)];
 			const userWithRenamedProperties = {
 				userId: obiWanKenobi.user_id,
 				email: obiWanKenobi.email,
@@ -73,7 +74,7 @@ describe('getStartConversation', () => {
 		it('shows an error using toastify and does not call setConversations', () => {
 			// Arrange
 			const user = null;
-			const conversations = [countDookuChat];
+			const conversations = [cloneDeep(countDookuChat)];
 
 			const startConversation = getStartConversation(
 				conversations,

@@ -5,17 +5,25 @@ const useSearch = (userProfiles) => {
 	const [filter, setFilter] = useState('');
 
 	useEffect(() => {
-		setFilteredProfiles([...userProfiles]);
+		const updateFilteredProfiles = () => {
+			setFilteredProfiles(userProfiles);
+		};
+
+		updateFilteredProfiles();
 	}, [userProfiles]);
 
 	useEffect(() => {
-		setFilteredProfiles(
-			userProfiles.filter(
-				(up) =>
-					!filter ||
-					up.email.toUpperCase().includes(filter.toUpperCase())
-			)
-		);
+		const updateFilteredProfilesWithFilter = () => {
+			setFilteredProfiles(
+				userProfiles.filter(
+					(up) =>
+						!filter ||
+						up.email.toUpperCase().includes(filter.toUpperCase())
+				)
+			);
+		};
+
+		updateFilteredProfilesWithFilter();
 	}, [filter]);
 
 	return { filter, filteredProfiles, setFilter };

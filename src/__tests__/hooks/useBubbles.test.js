@@ -6,8 +6,10 @@ jest.mock('react');
 jest.mock('../../utils/getRandomInt');
 
 describe('useBubbles', () => {
-	const useEffectDeps = [];
-	const setBubbles = jest.fn();
+	const generateBubblesDependencies = [];
+	const generateBubbles = jest.fn();
+
+	const setBubblesMock = jest.fn();
 
 	const bubbleCount = 3;
 
@@ -30,16 +32,40 @@ describe('useBubbles', () => {
 		animationDelay: 4,
 	};
 
+	const firstBubble = {
+		width: `${firstBubbleSpecs.diameter}px`,
+		height: `${firstBubbleSpecs.diameter}px`,
+		left: `${firstBubbleSpecs.left}%`,
+		animationDuration: `${firstBubbleSpecs.animationDuration}s`,
+		animationDelay: `${firstBubbleSpecs.animationDelay}s`,
+	};
+	const secondBubble = {
+		width: `${secondBubbleSpecs.diameter}px`,
+		height: `${secondBubbleSpecs.diameter}px`,
+		left: `${secondBubbleSpecs.left}%`,
+		animationDuration: `${secondBubbleSpecs.animationDuration}s`,
+		animationDelay: `${secondBubbleSpecs.animationDelay}s`,
+	};
+	const thirdBubble = {
+		width: `${thirdBubbleSpecs.diameter}px`,
+		height: `${thirdBubbleSpecs.diameter}px`,
+		left: `${thirdBubbleSpecs.left}%`,
+		animationDuration: `${thirdBubbleSpecs.animationDuration}s`,
+		animationDelay: `${thirdBubbleSpecs.animationDelay}s`,
+	};
+
 	beforeEach(() => {
 		process.env.REACT_APP_BUBBLE_COUNT = bubbleCount;
 
 		useState.mockImplementation((initialState) => [
 			initialState,
-			setBubbles,
+			setBubblesMock,
 		]);
-		useEffect.mockImplementation((func, deps) => {
-			func();
-			useEffectDeps.push(...deps);
+
+		useEffect.mockImplementation((method, dependencies) => {
+			generateBubbles();
+			method();
+			generateBubblesDependencies.push(...dependencies);
 		});
 
 		getRandomInt
@@ -62,18 +88,24 @@ describe('useBubbles', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
 
-		useEffectDeps.splice(0);
+		generateBubblesDependencies.splice(0);
 	});
 
-	it('returns state', () => {
+	it('returns array of bubbles', () => {
 		// Arrange
-		const initialState = [];
+		useState.mockReset();
+		useState.mockImplementation(() => [
+			[firstBubble, secondBubble, thirdBubble],
+			setBubblesMock,
+		]);
+
+		const bubbles = [firstBubble, secondBubble, thirdBubble];
 
 		// Act
 		const result = useBubbles();
 
 		// Assert
-		expect(result).toEqual(initialState);
+		expect(result).toEqual(bubbles);
 	});
 
 	it('calls useState with an empty array as initial state', () => {
@@ -90,40 +122,18 @@ describe('useBubbles', () => {
 
 	it('calls useEffect with an empty dependency array', () => {
 		// Assert
-		const dependencies = [];
+		const emptyDependencyArray = [];
 
 		// Act
 		useBubbles();
 
 		// Assert
-		expect(useEffect).toHaveBeenCalledTimes(1);
-		expect(useEffectDeps).toEqual(dependencies);
+		expect(generateBubbles).toHaveBeenCalledTimes(1);
+		expect(generateBubblesDependencies).toEqual(emptyDependencyArray);
 	});
 
 	it('useEffect adds styles to bubbles', () => {
 		// Assert
-		const firstBubble = {
-			width: `${firstBubbleSpecs.diameter}px`,
-			height: `${firstBubbleSpecs.diameter}px`,
-			left: `${firstBubbleSpecs.left}%`,
-			animationDuration: `${firstBubbleSpecs.animationDuration}s`,
-			animationDelay: `${firstBubbleSpecs.animationDelay}s`,
-		};
-		const secondBubble = {
-			width: `${secondBubbleSpecs.diameter}px`,
-			height: `${secondBubbleSpecs.diameter}px`,
-			left: `${secondBubbleSpecs.left}%`,
-			animationDuration: `${secondBubbleSpecs.animationDuration}s`,
-			animationDelay: `${secondBubbleSpecs.animationDelay}s`,
-		};
-		const thirdBubble = {
-			width: `${thirdBubbleSpecs.diameter}px`,
-			height: `${thirdBubbleSpecs.diameter}px`,
-			left: `${thirdBubbleSpecs.left}%`,
-			animationDuration: `${thirdBubbleSpecs.animationDuration}s`,
-			animationDelay: `${thirdBubbleSpecs.animationDelay}s`,
-		};
-
 		const styles = [firstBubble, secondBubble, thirdBubble];
 
 		// Act
@@ -131,7 +141,7 @@ describe('useBubbles', () => {
 
 		// Assert
 		expect(getRandomInt).toHaveBeenCalledTimes(12);
-		expect(setBubbles).toHaveBeenCalledTimes(1);
-		expect(setBubbles).toHaveBeenCalledWith(styles);
+		expect(setBubblesMock).toHaveBeenCalledTimes(1);
+		expect(setBubblesMock).toHaveBeenCalledWith(styles);
 	});
 });

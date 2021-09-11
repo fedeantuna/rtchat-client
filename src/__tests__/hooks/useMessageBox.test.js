@@ -4,7 +4,9 @@ import useMessageBox from '../../hooks/useMessageBox';
 jest.mock('react');
 
 describe('useMessageBox', () => {
-	const useEffectDeps = [];
+	const setFocusOnMessageBoxDependencies = [];
+	const setFocusOnMessageBox = jest.fn();
+
 	const focusMock = jest.fn();
 
 	const messageBoxRefMock = {
@@ -16,16 +18,17 @@ describe('useMessageBox', () => {
 	beforeEach(() => {
 		React.createRef.mockReturnValue(messageBoxRefMock);
 
-		useEffect.mockImplementation((func, deps) => {
-			func();
-			useEffectDeps.push(...deps);
+		useEffect.mockImplementation((method, dependencies) => {
+			setFocusOnMessageBox();
+			method();
+			setFocusOnMessageBoxDependencies.push(...dependencies);
 		});
 	});
 
 	afterEach(() => {
 		jest.clearAllMocks();
 
-		useEffectDeps.splice(0);
+		setFocusOnMessageBoxDependencies.splice(0);
 	});
 
 	it('returns a an object containing the message box ref', () => {
@@ -42,7 +45,7 @@ describe('useMessageBox', () => {
 		expect(messageBoxRef).toEqual(expectedMessageBoxRef);
 	});
 
-	it('calls useEffect with messageBoxRef dependency', () => {
+	it('setFocusOnMessageBox with messageBoxRef dependency', () => {
 		// Arrange
 		const dependencies = [messageBoxRefMock];
 
@@ -50,11 +53,11 @@ describe('useMessageBox', () => {
 		useMessageBox();
 
 		// Assert
-		expect(useEffect).toBeCalledTimes(1);
-		expect(useEffectDeps).toEqual(dependencies);
+		expect(setFocusOnMessageBox).toBeCalledTimes(1);
+		expect(setFocusOnMessageBoxDependencies).toEqual(dependencies);
 	});
 
-	it('useEffect calls sets focus on message box', () => {
+	it('setFocusOnMessageBox calls set focus on message box function', () => {
 		// Act
 		useMessageBox();
 
@@ -62,7 +65,7 @@ describe('useMessageBox', () => {
 		expect(focusMock).toHaveBeenCalledTimes(1);
 	});
 
-	it('useEffect does nothing if messageBoxRef is null', () => {
+	it('setFocusOnMessageBox does nothing if messageBoxRef is null', () => {
 		// Arrange
 		React.createRef.mockReturnValue(null);
 
@@ -73,7 +76,7 @@ describe('useMessageBox', () => {
 		expect(focusMock).toHaveBeenCalledTimes(0);
 	});
 
-	it('useEffect does nothing if messageBoxRef.current is null', () => {
+	it('setFocusOnMessageBox does nothing if messageBoxRef.current is null', () => {
 		// Arrange
 		React.createRef.mockReturnValue({ current: null });
 

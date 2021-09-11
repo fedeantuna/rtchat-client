@@ -14,12 +14,14 @@ const Chat = () => {
 	const {
 		conversations,
 		currentConversation,
+		setConversations,
 		setCurrentConversation,
 		sendMessage,
 	} = useConversations();
 	const { userProfiles, selectContact } = useUserProfiles(
 		conversations,
 		currentConversation,
+		setConversations,
 		setCurrentConversation
 	);
 

@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import cloneDeep from 'lodash.clonedeep';
 
 const getReceiveMessage = (
 	userId,
@@ -14,7 +15,7 @@ const getReceiveMessage = (
 				? message.receiver
 				: message.sender;
 
-		return targetUser;
+		return cloneDeep(targetUser);
 	};
 
 	const getTargetConversation = (targetUser) => {
@@ -32,12 +33,12 @@ const getReceiveMessage = (
 			};
 		}
 
-		return targetConversation;
+		return cloneDeep(targetConversation);
 	};
 
 	const getTargetConversationWithUpdatedMessages = (targetUser, message) => {
 		const targetConversation = getTargetConversation(targetUser);
-		const messages = [
+		targetConversation.messages = [
 			...targetConversation.messages,
 			{
 				id: uuidv4(),
@@ -47,12 +48,7 @@ const getReceiveMessage = (
 			},
 		];
 
-		const targetConversationWithUpdatedMessages = {
-			...targetConversation,
-			messages,
-		};
-
-		return targetConversationWithUpdatedMessages;
+		return targetConversation;
 	};
 
 	const getOtherConversations = (targetUserId) => {
@@ -60,20 +56,17 @@ const getReceiveMessage = (
 			(c) => c.userId !== targetUserId
 		);
 
-		return otherConversations;
+		return cloneDeep(otherConversations);
 	};
 
 	const updateConversations = (
-		targetConversationWithUpdatedMessages,
+		targetConversation,
 		otherConversations,
 		isCurrentChatReceivingMessages
 	) => {
-		setConversations([
-			targetConversationWithUpdatedMessages,
-			...otherConversations,
-		]);
+		setConversations([targetConversation, ...otherConversations]);
 		if (isCurrentChatReceivingMessages) {
-			setCurrentConversation(targetConversationWithUpdatedMessages);
+			setCurrentConversation(targetConversation);
 		}
 	};
 
@@ -91,18 +84,19 @@ const getReceiveMessage = (
 	};
 
 	const receiveMessage = (message) => {
-		const targetUser = getTargetUser(message); // sender
-		const targetConversationWithUpdatedMessages =
-			getTargetConversationWithUpdatedMessages(targetUser, message);
+		const targetUser = getTargetUser(message);
+		const targetConversation = getTargetConversationWithUpdatedMessages(
+			targetUser,
+			message
+		);
 		const otherConversations = getOtherConversations(targetUser.user_id);
 
 		const isCurrentChatReceivingMessages =
 			currentConversation &&
-			currentConversation.userId ===
-				targetConversationWithUpdatedMessages.userId;
+			currentConversation.userId === targetConversation.userId;
 
 		updateConversations(
-			targetConversationWithUpdatedMessages,
+			targetConversation,
 			otherConversations,
 			isCurrentChatReceivingMessages
 		);

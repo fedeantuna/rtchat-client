@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import cloneDeep from 'lodash.clonedeep';
 import getReceiveMessage from '../../clientMethods/getReceiveMessage';
 import userStatus from '../../enums/userStatus';
 
@@ -67,8 +68,8 @@ describe('getReceiveMessage', () => {
 			};
 
 			const message = {
-				sender: obiWanKenobi,
-				receiver: generalGrievous,
+				sender: cloneDeep(obiWanKenobi),
+				receiver: cloneDeep(generalGrievous),
 				content: 'Hello there!',
 			};
 
@@ -97,8 +98,8 @@ describe('getReceiveMessage', () => {
 			};
 
 			const message = {
-				sender: obiWanKenobi,
-				receiver: generalGrievous,
+				sender: cloneDeep(obiWanKenobi),
+				receiver: cloneDeep(generalGrievous),
 				content: 'Hello there!',
 			};
 
@@ -120,15 +121,15 @@ describe('getReceiveMessage', () => {
 
 		it('does not plays notification sound when user focus is on the current chat', () => {
 			// Arrange
-			const conversations = [obiWanKenobiChat];
-			const currentConversation = obiWanKenobiChat;
+			const conversations = [cloneDeep(obiWanKenobiChat)];
+			const currentConversation = cloneDeep(obiWanKenobiChat);
 			const hasFocus = {
 				current: true,
 			};
 
 			const message = {
-				sender: obiWanKenobi,
-				receiver: generalGrievous,
+				sender: cloneDeep(obiWanKenobi),
+				receiver: cloneDeep(generalGrievous),
 				content: 'Hello there!',
 			};
 
@@ -151,17 +152,17 @@ describe('getReceiveMessage', () => {
 		it('calls setConversations with the updated target conversation on top and the others bellow', () => {
 			// Arrange
 			const conversations = [
-				{ ...countDookuChat },
-				{ ...obiWanKenobiChat },
+				cloneDeep(countDookuChat),
+				cloneDeep(obiWanKenobiChat),
 			];
-			const currentConversation = { ...countDookuChat };
+			const currentConversation = cloneDeep(countDookuChat);
 			const hasFocus = {
 				current: true,
 			};
 
 			const message = {
-				sender: { ...obiWanKenobi },
-				receiver: { ...generalGrievous },
+				sender: cloneDeep(obiWanKenobi),
+				receiver: cloneDeep(generalGrievous),
 				content: 'Hello there!',
 			};
 
@@ -174,44 +175,46 @@ describe('getReceiveMessage', () => {
 				hasFocus
 			);
 
+			const expectedObiWanKenobiChat = cloneDeep(obiWanKenobiChat);
+			expectedObiWanKenobiChat.messages = [
+				{
+					content: message.content,
+					id: uuidv4(),
+					red: false,
+					sender: obiWanKenobi.user_id,
+				},
+			];
+			const expectedCountDookuChat = cloneDeep(countDookuChat);
+			const expectedConversations = [
+				expectedObiWanKenobiChat,
+				expectedCountDookuChat,
+			];
+
 			// Act
 			receiveMessage(message);
 
 			// Assert
 			expect(setConversations).toHaveBeenCalledTimes(1);
-			expect(setConversations).toHaveBeenCalledWith([
-				{
-					...obiWanKenobiChat,
-					messages: [
-						{
-							content: message.content,
-							id: uuidv4(),
-							red: false,
-							sender: obiWanKenobi.user_id,
-						},
-					],
-				},
-				{
-					...countDookuChat,
-				},
-			]);
+			expect(setConversations).toHaveBeenCalledWith(
+				expectedConversations
+			);
 			expect(setCurrentConversation).toHaveBeenCalledTimes(0);
 		});
 
 		it('does not call setCurrentConversation when the user does not have focus on the conversation receiving messages', () => {
 			// Arrange
 			const conversations = [
-				{ ...countDookuChat },
-				{ ...obiWanKenobiChat },
+				cloneDeep(countDookuChat),
+				cloneDeep(obiWanKenobiChat),
 			];
-			const currentConversation = { ...countDookuChat };
+			const currentConversation = cloneDeep(countDookuChat);
 			const hasFocus = {
 				current: true,
 			};
 
 			const message = {
-				sender: { ...obiWanKenobi },
-				receiver: { ...generalGrievous },
+				sender: cloneDeep(obiWanKenobiChat),
+				receiver: cloneDeep(generalGrievous),
 				content: 'Hello there!',
 			};
 
@@ -234,17 +237,17 @@ describe('getReceiveMessage', () => {
 		it('calls setCurrentConversation when user has focus on the conversation receiving messages', () => {
 			// Arrange
 			const conversations = [
-				{ ...countDookuChat },
-				{ ...obiWanKenobiChat },
+				cloneDeep(countDookuChat),
+				cloneDeep(obiWanKenobiChat),
 			];
-			const currentConversation = { ...obiWanKenobiChat };
+			const currentConversation = cloneDeep(obiWanKenobiChat);
 			const hasFocus = {
 				current: true,
 			};
 
 			const message = {
-				sender: { ...obiWanKenobi },
-				receiver: { ...generalGrievous },
+				sender: cloneDeep(obiWanKenobi),
+				receiver: cloneDeep(generalGrievous),
 				content: 'Hello there!',
 			};
 

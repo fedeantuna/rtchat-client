@@ -1,3 +1,4 @@
+import cloneDeep from 'lodash.clonedeep';
 import getUpdateUserStatus from '../../clientMethods/getUpdateUserStatus';
 import userStatus from '../../enums/userStatus';
 
@@ -39,14 +40,19 @@ describe('getUpdateUserStatus', () => {
 	describe('updateUserStatus', () => {
 		it('calls setConversations with the updated conversations', () => {
 			// Arrange
-			const user = obiWanKenobi;
+			const user = cloneDeep(obiWanKenobi);
 
+			const obiWanKenobiUpdatedChat = cloneDeep(obiWanKenobiChat);
+			obiWanKenobiUpdatedChat.status = userStatus.online;
 			const conversations = [
-				{ ...obiWanKenobiChat, status: userStatus.online },
-				countDookuChat,
+				obiWanKenobiUpdatedChat,
+				cloneDeep(countDookuChat),
 			];
 
-			const updatedCnversations = [obiWanKenobiChat, countDookuChat];
+			const updatedCnversations = [
+				cloneDeep(obiWanKenobiChat),
+				cloneDeep(countDookuChat),
+			];
 
 			const updateUserStatus = getUpdateUserStatus(
 				conversations,

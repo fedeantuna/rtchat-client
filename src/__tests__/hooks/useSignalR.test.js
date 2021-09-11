@@ -16,8 +16,6 @@ describe('useSignalR', () => {
 	});
 
 	it('calls React.useContext with SignalRContext', () => {
-		// Arrange
-
 		// Act
 		useSignalR();
 

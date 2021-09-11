@@ -4,7 +4,9 @@ import useFocus from '../../hooks/useFocus';
 jest.mock('react');
 
 describe('useFocus', () => {
-	const useEffectDeps = [];
+	const registerEventDependencies = [];
+	const registerEvent = jest.fn();
+
 	const addEventListenerMock = jest.fn();
 
 	beforeEach(() => {
@@ -14,16 +16,17 @@ describe('useFocus', () => {
 			current: initialValue,
 		}));
 
-		useEffect.mockImplementation((func, deps) => {
-			func();
-			useEffectDeps.push(...deps);
+		useEffect.mockImplementation((method, dependencies) => {
+			registerEvent();
+			method();
+			registerEventDependencies.push(...dependencies);
 		});
 	});
 
 	afterEach(() => {
 		jest.clearAllMocks();
 
-		useEffectDeps.splice(0);
+		registerEventDependencies.splice(0);
 	});
 
 	it('returns an object with a current property of boolean type', () => {
@@ -42,7 +45,7 @@ describe('useFocus', () => {
 		expect(result).toEqual(expectedRef);
 	});
 
-	it('calls useEffect with an empty dependency array', () => {
+	it('registerEvent is called with an empty dependency array', () => {
 		// Arrange
 		const dependencies = [];
 
@@ -50,11 +53,11 @@ describe('useFocus', () => {
 		useFocus();
 
 		// Assert
-		expect(useEffect).toHaveBeenCalledTimes(1);
-		expect(useEffectDeps).toEqual(dependencies);
+		expect(registerEvent).toHaveBeenCalledTimes(1);
+		expect(registerEventDependencies).toEqual(dependencies);
 	});
 
-	it('useEffect calls addEventListener on window with focus event and a handler', () => {
+	it('registerEvent calls addEventListener on window with focus event and a handler', () => {
 		// Act
 		useFocus();
 
@@ -66,7 +69,7 @@ describe('useFocus', () => {
 		);
 	});
 
-	it('useEffect calls addEventListener on window with focus event and a handler', () => {
+	it('registerEvent calls addEventListener on window with focus event and a handler', () => {
 		// Act
 		useFocus();
 
@@ -78,7 +81,7 @@ describe('useFocus', () => {
 		);
 	});
 
-	it('useEffect event handler for focus event changes hasFocus.current to true', () => {
+	it('event handler for focus event changes hasFocus.current to true', () => {
 		// Arrange
 		const expectedRef = {
 			current: true,
@@ -96,7 +99,7 @@ describe('useFocus', () => {
 		expect(result).toEqual(expectedRef);
 	});
 
-	it('useEffect event handler for blur event changes hasFocus.current to false', () => {
+	it('event handler for blur event changes hasFocus.current to false', () => {
 		// Arrange
 		const expectedRef = {
 			current: false,

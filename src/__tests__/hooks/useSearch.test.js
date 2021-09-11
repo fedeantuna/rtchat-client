@@ -5,14 +5,13 @@ import useSearch from '../../hooks/useSearch';
 jest.mock('react');
 
 describe('useSearch', () => {
-	const setFilteredProfilesUserProfilesDeps = [];
-	const setFilteredProfilesFilterDeps = [];
+	const updateFilteredProfilesDependencies = [];
+	const updateFilteredProfilesWithFilterDependencies = [];
+	const updateFilteredProfiles = jest.fn();
+	const updateFilteredProfilesWithFilter = jest.fn();
 
 	const setFilteredProfilesMock = jest.fn();
 	const setFilterMock = jest.fn();
-
-	const setFilteredProfilesUserProfilesMock = jest.fn();
-	const setFilteredProfilesFilterMock = jest.fn();
 
 	beforeEach(() => {
 		useState
@@ -26,26 +25,28 @@ describe('useSearch', () => {
 			]);
 
 		useEffect
-			.mockImplementationOnce((func, deps) => {
-				setFilteredProfilesUserProfilesMock();
-				func();
-				setFilteredProfilesUserProfilesDeps.push(...deps);
+			.mockImplementationOnce((method, dependencies) => {
+				updateFilteredProfiles();
+				method();
+				updateFilteredProfilesDependencies.push(...dependencies);
 			})
-			.mockImplementationOnce((func, deps) => {
-				setFilteredProfilesFilterMock();
-				func();
-				setFilteredProfilesFilterDeps.push(...deps);
+			.mockImplementationOnce((method, dependencies) => {
+				updateFilteredProfilesWithFilter();
+				method();
+				updateFilteredProfilesWithFilterDependencies.push(
+					...dependencies
+				);
 			});
 	});
 
 	afterEach(() => {
 		jest.clearAllMocks();
 
-		setFilteredProfilesUserProfilesDeps.splice(0);
-		setFilteredProfilesFilterDeps.splice(0);
+		updateFilteredProfilesDependencies.splice(0);
+		updateFilteredProfilesWithFilterDependencies.splice(0);
 	});
 
-	it('returns an object with filter, filteredProfiles and setFilter method', () => {
+	it('returns an object with filter, filtered profiles and set filter function', () => {
 		// Arrange
 		const userProfiles = [];
 		const expectedOutput = {
@@ -61,7 +62,7 @@ describe('useSearch', () => {
 		expect(result).toEqual(expectedOutput);
 	});
 
-	it('calls useState with initial state for filter and filteredProfiles', () => {
+	it('calls useState with initial state for filter and filtered profiles', () => {
 		// Arrange
 		const userProfiles = [];
 
@@ -80,7 +81,7 @@ describe('useSearch', () => {
 		expect(useState).toHaveBeenNthCalledWith(2, initialStateFilter);
 	});
 
-	it('calls useEffect with userProfiles dependency', () => {
+	it('updateFilteredProfiles is called with user profiles dependency', () => {
 		// Arrange
 		const userProfiles = [];
 
@@ -90,11 +91,11 @@ describe('useSearch', () => {
 		useSearch(userProfiles);
 
 		// Assert
-		expect(setFilteredProfilesUserProfilesMock).toHaveBeenCalledTimes(1);
-		expect(setFilteredProfilesUserProfilesDeps).toEqual(dependencies);
+		expect(updateFilteredProfiles).toHaveBeenCalledTimes(1);
+		expect(updateFilteredProfilesDependencies).toEqual(dependencies);
 	});
 
-	it('calls setFilteredProfiles with userProfiles', () => {
+	it('updateFilteredProfiles calls setFilteredProfiles with user profiles', () => {
 		// Arrange
 		const userProfiles = [
 			{
@@ -116,7 +117,7 @@ describe('useSearch', () => {
 		expect(setFilteredProfilesMock).toHaveBeenCalledWith([...userProfiles]);
 	});
 
-	it('calls useEffect with filter dependency', () => {
+	it('updateFilteredProfilesWithFilter is called with filter dependency', () => {
 		// Arrange
 		const userProfiles = [];
 		const filterInitialState = '';
@@ -127,11 +128,13 @@ describe('useSearch', () => {
 		useSearch(userProfiles);
 
 		// Assert
-		expect(setFilteredProfilesFilterMock).toHaveBeenCalledTimes(1);
-		expect(setFilteredProfilesFilterDeps).toEqual(dependencies);
+		expect(updateFilteredProfilesWithFilter).toHaveBeenCalledTimes(1);
+		expect(updateFilteredProfilesWithFilterDependencies).toEqual(
+			dependencies
+		);
 	});
 
-	it('calls setFilteredProfiles with filtered user profiles', () => {
+	it('updateFilteredProfilesWithFilter calls set filtered profiles function with filtered user profiles', () => {
 		// Arrange
 		const userProfiles = [
 			{
