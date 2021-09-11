@@ -61,6 +61,8 @@ describe('useBubbles', () => {
 
 	afterEach(() => {
 		jest.clearAllMocks();
+
+		useEffectDeps.splice(0);
 	});
 
 	it('returns state', () => {
