@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from 'uuid';
-import notificationSound from '../sounds/notification_high-intensity.wav';
 
 const getReceiveMessage = (
 	userId,
@@ -80,7 +79,9 @@ const getReceiveMessage = (
 
 	const playNotificationSound = async (isCurrentChatReceivingMessages) => {
 		if (!hasFocus.current || !isCurrentChatReceivingMessages) {
-			const notificationAudio = new Audio(notificationSound);
+			const notificationAudio = new Audio(
+				'/notification_high-intensity.wav'
+			);
 			try {
 				await notificationAudio.play();
 			} catch (error) {
