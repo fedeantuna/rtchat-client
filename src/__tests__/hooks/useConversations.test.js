@@ -101,12 +101,12 @@ describe('useConversations', () => {
 				registerStartConversationMethodDeps.push(...deps);
 			})
 			.mockImplementationOnce((func, deps) => {
-				selectConversationOnLoadMock();
+				updateCurrentConversationMock();
 				func();
 				selectConversationOnLoadDeps.push(...deps);
 			})
 			.mockImplementationOnce((func, deps) => {
-				updateCurrentConversationMock();
+				selectConversationOnLoadMock();
 				func();
 				updateCurrentConversationDeps.push(...deps);
 			});

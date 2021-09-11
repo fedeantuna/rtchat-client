@@ -5,7 +5,7 @@ const useSearch = (userProfiles) => {
 	const [filter, setFilter] = useState('');
 
 	useEffect(() => {
-		setFilteredProfiles(userProfiles.slice());
+		setFilteredProfiles([...userProfiles]);
 	}, [userProfiles]);
 
 	useEffect(() => {
