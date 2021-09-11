@@ -1,5 +1,7 @@
 # RTChat Client
 
+[![Coverage Status](https://coveralls.io/repos/github/fedeantuna/rtchat-client/badge.svg?branch=main)](https://coveralls.io/github/fedeantuna/rtchat-client?branch=main)
+
 ## Available Scripts
 
 In the project directory, you can run:
