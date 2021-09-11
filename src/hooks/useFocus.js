@@ -12,8 +12,12 @@ const useFocus = () => {
 	};
 
 	useEffect(() => {
-		window.addEventListener('focus', onFocus);
-		window.addEventListener('blur', onBlur);
+		const registerEvents = () => {
+			window.addEventListener('focus', onFocus);
+			window.addEventListener('blur', onBlur);
+		};
+
+		registerEvents();
 	}, []);
 
 	return hasFocus;

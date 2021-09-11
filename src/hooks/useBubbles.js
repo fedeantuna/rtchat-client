@@ -5,27 +5,31 @@ const useBubbles = () => {
 	const [bubbles, setBubbles] = useState([]);
 
 	useEffect(() => {
-		const styles = [];
+		const generateBubbles = () => {
+			const styles = [];
 
-		const bubbleCount = process.env.REACT_APP_BUBBLE_COUNT;
-		for (let i = 0; i < bubbleCount; i++) {
-			const diameter = getRandomInt(15, 90);
-			const left = getRandomInt(10, 80);
-			const animationDuration = getRandomInt(5, 12);
-			const animationDelay = getRandomInt(0, 4);
+			const bubbleCount = process.env.REACT_APP_BUBBLE_COUNT;
+			for (let i = 0; i < bubbleCount; i++) {
+				const diameter = getRandomInt(15, 90);
+				const left = getRandomInt(10, 80);
+				const animationDuration = getRandomInt(5, 12);
+				const animationDelay = getRandomInt(0, 4);
 
-			const bubbleStyle = {
-				width: `${diameter}px`,
-				height: `${diameter}px`,
-				left: `${left}%`,
-				animationDuration: `${animationDuration}s`,
-				animationDelay: `${animationDelay}s`,
-			};
+				const bubbleStyle = {
+					width: `${diameter}px`,
+					height: `${diameter}px`,
+					left: `${left}%`,
+					animationDuration: `${animationDuration}s`,
+					animationDelay: `${animationDelay}s`,
+				};
 
-			styles.push(bubbleStyle);
-		}
+				styles.push(bubbleStyle);
+			}
 
-		setBubbles(styles);
+			setBubbles(styles);
+		};
+
+		generateBubbles();
 	}, []);
 
 	return bubbles;

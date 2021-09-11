@@ -2,10 +2,10 @@ import { toast } from 'react-toastify';
 import { topRightNotification } from '../models/toastNotificationConfiguration';
 import getObjectWithRenamedProperties from '../utils/getObjectWithRenamedProperties';
 
-const getStartConversation = (setConversations) => {
+const getStartConversation = (conversations, setConversations) => {
 	const startConversation = (user) => {
 		if (!user) {
-			toast.error(`User not found.`, topRightNotification);
+			toast.error('User not found.', topRightNotification);
 
 			return;
 		}
@@ -21,7 +21,7 @@ const getStartConversation = (setConversations) => {
 		const conversation = { ...userWithRenamedProperties, messages: [] };
 		conversation.selectOnLoad = true;
 
-		setConversations((prevState) => [conversation, ...prevState]);
+		setConversations([conversation, ...conversations]);
 	};
 
 	return startConversation;

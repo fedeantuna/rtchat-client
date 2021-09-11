@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import ProfilePicture from './ProfilePicture';
-import { useSignalR } from '../hooks/useSignalR';
+import useSignalR from '../hooks/useSignalR';
 import userStatus from '../enums/userStatus';
 import serverMethod from '../enums/serverMethod';
 

@@ -5,7 +5,7 @@ import useSearch from '../hooks/useSearch';
 import ContactList from './ContactList';
 import UserBar from './UserBar';
 import userProfilePropType from '../propTypeModels/userProfilePropType';
-import { useSignalR } from '../hooks/useSignalR';
+import useSignalR from '../hooks/useSignalR';
 import serverMethod from '../enums/serverMethod';
 import isValidEmail from '../utils/isValidEmail';
 

@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
-import notificationSound from '../sounds/notification_high-intensity.wav';
+import cloneDeep from 'lodash.clonedeep';
 
 const getReceiveMessage = (
-	user,
+	userId,
 	conversations,
 	currentConversation,
 	setConversations,
@@ -11,11 +11,11 @@ const getReceiveMessage = (
 ) => {
 	const getTargetUser = (message) => {
 		const targetUser =
-			message.sender.user_id === user.sub
+			message.sender.user_id === userId
 				? message.receiver
 				: message.sender;
 
-		return targetUser;
+		return cloneDeep(targetUser);
 	};
 
 	const getTargetConversation = (targetUser) => {
@@ -33,12 +33,12 @@ const getReceiveMessage = (
 			};
 		}
 
-		return targetConversation;
+		return cloneDeep(targetConversation);
 	};
 
 	const getTargetConversationWithUpdatedMessages = (targetUser, message) => {
 		const targetConversation = getTargetConversation(targetUser);
-		const messages = [
+		targetConversation.messages = [
 			...targetConversation.messages,
 			{
 				id: uuidv4(),
@@ -48,56 +48,55 @@ const getReceiveMessage = (
 			},
 		];
 
-		const targetConversationWithUpdatedMessages = {
-			...targetConversation,
-			messages,
-		};
-
-		return targetConversationWithUpdatedMessages;
+		return targetConversation;
 	};
 
-	const getOtherConversations = (userId) => {
+	const getOtherConversations = (targetUserId) => {
 		const otherConversations = conversations.filter(
-			(c) => c.userId !== userId
+			(c) => c.userId !== targetUserId
 		);
 
-		return otherConversations;
-	};
-
-	const playNotificationSound = (isCurrentChatReceivingMessages) => {
-		if (!hasFocus.current || !isCurrentChatReceivingMessages) {
-			const notificationAudio = new Audio(notificationSound);
-			notificationAudio.play();
-		}
+		return cloneDeep(otherConversations);
 	};
 
 	const updateConversations = (
-		targetConversationWithUpdatedMessages,
+		targetConversation,
 		otherConversations,
 		isCurrentChatReceivingMessages
 	) => {
-		setConversations([
-			targetConversationWithUpdatedMessages,
-			...otherConversations,
-		]);
+		setConversations([targetConversation, ...otherConversations]);
 		if (isCurrentChatReceivingMessages) {
-			setCurrentConversation(targetConversationWithUpdatedMessages);
+			setCurrentConversation(targetConversation);
+		}
+	};
+
+	const playNotificationSound = async (isCurrentChatReceivingMessages) => {
+		if (!hasFocus.current || !isCurrentChatReceivingMessages) {
+			const notificationAudio = new Audio(
+				'/notification_high-intensity.wav'
+			);
+			try {
+				await notificationAudio.play();
+			} catch (error) {
+				// log
+			}
 		}
 	};
 
 	const receiveMessage = (message) => {
 		const targetUser = getTargetUser(message);
-		const targetConversationWithUpdatedMessages =
-			getTargetConversationWithUpdatedMessages(targetUser, message);
+		const targetConversation = getTargetConversationWithUpdatedMessages(
+			targetUser,
+			message
+		);
 		const otherConversations = getOtherConversations(targetUser.user_id);
 
 		const isCurrentChatReceivingMessages =
 			currentConversation &&
-			currentConversation.userId ===
-				targetConversationWithUpdatedMessages.userId;
+			currentConversation.userId === targetConversation.userId;
 
 		updateConversations(
-			targetConversationWithUpdatedMessages,
+			targetConversation,
 			otherConversations,
 			isCurrentChatReceivingMessages
 		);
