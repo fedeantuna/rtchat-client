@@ -17,7 +17,7 @@ describe('getUpdateUserStatus', () => {
 	const countDooku = {
 		user_id: 'count-dooku-user-id',
 		email: 'countdooku@sith.sep',
-		picture: 'some-angry-picture',
+		picture: 'some-beardy-picture',
 		status: userStatus.away,
 	};
 
