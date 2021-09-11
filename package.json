@@ -23,7 +23,8 @@
 	"scripts": {
 		"start": "HTTPS=true SSL_CRT_FILE=./.certs/localhost.crt SSL_KEY_FILE=./.certs/localhost.key craco start",
 		"build": "craco build",
-		"test": "craco test",
+		"test": "craco test --coverage --watchAll=false .",
+		"test:watch": "craco test --coverage .",
 		"eject": "react-scripts eject",
 		"certs": "chmod +x ./generate-certs.sh && ./generate-certs.sh",
 		"http": "craco start",
