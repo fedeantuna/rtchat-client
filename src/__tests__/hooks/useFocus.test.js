@@ -28,6 +28,7 @@ describe('useFocus', () => {
 
 	it('returns an object with a current property of boolean type', () => {
 		// Arrange
+		const initialRefState = true;
 		const expectedRef = {
 			current: true,
 		};
@@ -36,6 +37,8 @@ describe('useFocus', () => {
 		const result = useFocus();
 
 		// Assert
+		expect(useRef).toHaveBeenCalledTimes(1);
+		expect(useRef).toHaveBeenCalledWith(initialRefState);
 		expect(result).toEqual(expectedRef);
 	});
 
