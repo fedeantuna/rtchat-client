@@ -6,7 +6,7 @@ import getUpdateUserStatus from '../clientMethods/getUpdateUserStatus';
 import clientMethod from '../enums/clientMethod';
 import getSendMessage from '../serverMethods/getSendMessage';
 import useFocus from './useFocus';
-import { useSignalR } from './useSignalR';
+import useSignalR from './useSignalR';
 
 const useConversations = () => {
 	const { user } = useAuth0();

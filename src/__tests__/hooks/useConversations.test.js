@@ -8,7 +8,7 @@ import clientMethod from '../../enums/clientMethod';
 import userStatus from '../../enums/userStatus';
 import useConversations from '../../hooks/useConversations';
 import useFocus from '../../hooks/useFocus';
-import { useSignalR } from '../../hooks/useSignalR';
+import useSignalR from '../../hooks/useSignalR';
 import getSendMessage from '../../serverMethods/getSendMessage';
 
 jest.mock('@auth0/auth0-react');
