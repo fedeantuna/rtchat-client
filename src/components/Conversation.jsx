@@ -7,10 +7,14 @@ import ConversationHistory from './ConversationHistory';
 import userStatus from '../enums/userStatus';
 
 const Conversation = ({ current, onSend }) => (
-	<div className='w-2/3 h-screen max-h-screen text-white bg-gray-900'>
+	<div
+		data-testid='conversation'
+		className='w-2/3 h-screen max-h-screen text-white bg-gray-900'
+	>
 		{current && (
 			<div className='flex flex-col h-full'>
 				<ConversationHeader
+					userId={current.userId}
 					picture={current.picture}
 					email={current.email}
 					status={current.status}
