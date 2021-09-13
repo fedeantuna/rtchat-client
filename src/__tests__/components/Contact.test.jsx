@@ -30,11 +30,15 @@ describe('<Contact />', () => {
 			picture: user.picture,
 			lastMessage: null,
 		};
-		const onSelect = jest.fn();
+		const onSelectMock = jest.fn();
 
 		// Act
 		render(
-			<Contact id={id} userProfile={userProfile} onSelect={onSelect} />
+			<Contact
+				id={id}
+				userProfile={userProfile}
+				onSelect={onSelectMock}
+			/>
 		);
 
 		// Assert
@@ -50,11 +54,15 @@ describe('<Contact />', () => {
 			picture: user.picture,
 			lastMessage: null,
 		};
-		const onSelect = jest.fn();
+		const onSelectMock = jest.fn();
 
 		// Act
 		render(
-			<Contact id={id} userProfile={userProfile} onSelect={onSelect} />
+			<Contact
+				id={id}
+				userProfile={userProfile}
+				onSelect={onSelectMock}
+			/>
 		);
 
 		// Assert
@@ -70,11 +78,15 @@ describe('<Contact />', () => {
 			picture: user.picture,
 			lastMessage: null,
 		};
-		const onSelect = jest.fn();
+		const onSelectMock = jest.fn();
 
 		// Act
 		render(
-			<Contact id={id} userProfile={userProfile} onSelect={onSelect} />
+			<Contact
+				id={id}
+				userProfile={userProfile}
+				onSelect={onSelectMock}
+			/>
 		);
 
 		// Assert
@@ -96,11 +108,15 @@ describe('<Contact />', () => {
 				content: 'Hello there!',
 			},
 		};
-		const onSelect = jest.fn();
+		const onSelectMock = jest.fn();
 
 		// Act
 		render(
-			<Contact id={id} userProfile={userProfile} onSelect={onSelect} />
+			<Contact
+				id={id}
+				userProfile={userProfile}
+				onSelect={onSelectMock}
+			/>
 		);
 
 		// Assert
@@ -120,11 +136,15 @@ describe('<Contact />', () => {
 				content: 'General Kenobi...',
 			},
 		};
-		const onSelect = jest.fn();
+		const onSelectMock = jest.fn();
 
 		// Act
 		render(
-			<Contact id={id} userProfile={userProfile} onSelect={onSelect} />
+			<Contact
+				id={id}
+				userProfile={userProfile}
+				onSelect={onSelectMock}
+			/>
 		);
 
 		// Assert
@@ -140,18 +160,22 @@ describe('<Contact />', () => {
 			picture: user.picture,
 			lastMessage: null,
 		};
-		const onSelect = jest.fn();
+		const onSelectMock = jest.fn();
 
 		render(
-			<Contact id={id} userProfile={userProfile} onSelect={onSelect} />
+			<Contact
+				id={id}
+				userProfile={userProfile}
+				onSelect={onSelectMock}
+			/>
 		);
 
 		// Act
 		fireEvent.click(screen.getByTestId(`contact-${id}`));
 
 		// Assert
-		expect(onSelect).toHaveBeenCalledTimes(1);
-		expect(onSelect).toHaveBeenCalledWith(user.sub);
+		expect(onSelectMock).toHaveBeenCalledTimes(1);
+		expect(onSelectMock).toHaveBeenCalledWith(user.sub);
 	});
 
 	test('on key press call onSelect if key was Enter', () => {
@@ -163,10 +187,14 @@ describe('<Contact />', () => {
 			picture: user.picture,
 			lastMessage: null,
 		};
-		const onSelect = jest.fn();
+		const onSelectMock = jest.fn();
 
 		render(
-			<Contact id={id} userProfile={userProfile} onSelect={onSelect} />
+			<Contact
+				id={id}
+				userProfile={userProfile}
+				onSelect={onSelectMock}
+			/>
 		);
 
 		// Act
@@ -176,8 +204,8 @@ describe('<Contact />', () => {
 		});
 
 		// Assert
-		expect(onSelect).toHaveBeenCalledTimes(1);
-		expect(onSelect).toHaveBeenCalledWith(user.sub);
+		expect(onSelectMock).toHaveBeenCalledTimes(1);
+		expect(onSelectMock).toHaveBeenCalledWith(user.sub);
 	});
 
 	test('on key press call onSelect if key was Space', () => {
@@ -189,10 +217,14 @@ describe('<Contact />', () => {
 			picture: user.picture,
 			lastMessage: null,
 		};
-		const onSelect = jest.fn();
+		const onSelectMock = jest.fn();
 
 		render(
-			<Contact id={id} userProfile={userProfile} onSelect={onSelect} />
+			<Contact
+				id={id}
+				userProfile={userProfile}
+				onSelect={onSelectMock}
+			/>
 		);
 
 		// Act
@@ -202,8 +234,8 @@ describe('<Contact />', () => {
 		});
 
 		// Assert
-		expect(onSelect).toHaveBeenCalledTimes(1);
-		expect(onSelect).toHaveBeenCalledWith(user.sub);
+		expect(onSelectMock).toHaveBeenCalledTimes(1);
+		expect(onSelectMock).toHaveBeenCalledWith(user.sub);
 	});
 
 	test('on key press does nothing if key was not Enter nor Space', () => {
@@ -215,10 +247,14 @@ describe('<Contact />', () => {
 			picture: user.picture,
 			lastMessage: null,
 		};
-		const onSelect = jest.fn();
+		const onSelectMock = jest.fn();
 
 		render(
-			<Contact id={id} userProfile={userProfile} onSelect={onSelect} />
+			<Contact
+				id={id}
+				userProfile={userProfile}
+				onSelect={onSelectMock}
+			/>
 		);
 
 		// Act
@@ -228,6 +264,6 @@ describe('<Contact />', () => {
 		});
 
 		// Assert
-		expect(onSelect).toHaveBeenCalledTimes(0);
+		expect(onSelectMock).toHaveBeenCalledTimes(0);
 	});
 });
