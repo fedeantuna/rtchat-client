@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import userStatus from '../enums/userStatus';
 
-const ProfilePicture = ({ picture, status }) => {
+const ProfilePicture = ({ id, picture, status }) => {
 	const getStatusDiv = () => {
 		switch (status) {
 			case userStatus.online:
@@ -19,7 +19,7 @@ const ProfilePicture = ({ picture, status }) => {
 	};
 
 	return (
-		<div className='flex'>
+		<div data-testid={`profile-picture-${id}`} className='flex'>
 			<img
 				className='w-12 h-12 ml-2 -mr-3 rounded-full'
 				src={picture}
@@ -31,6 +31,7 @@ const ProfilePicture = ({ picture, status }) => {
 };
 
 ProfilePicture.propTypes = {
+	id: PropTypes.string.isRequired,
 	picture: PropTypes.string.isRequired,
 	status: PropTypes.string,
 };

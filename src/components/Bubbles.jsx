@@ -7,10 +7,14 @@ const Bubbles = () => {
 	const bubbles = useBubbles();
 
 	return (
-		<div className='overflow-hidden absolute top-0 left-0 z-0 w-full h-full'>
-			{bubbles.map((bs) => (
-				<Bubble key={uuidv4()} style={bs} />
-			))}
+		<div
+			data-testid='bubbles'
+			className='absolute top-0 left-0 z-0 w-full h-full overflow-hidden'
+		>
+			{bubbles.map((bs) => {
+				const id = uuidv4();
+				return <Bubble key={id} id={id} style={bs} />;
+			})}
 		</div>
 	);
 };
