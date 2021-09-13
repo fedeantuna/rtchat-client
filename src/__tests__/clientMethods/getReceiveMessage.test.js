@@ -57,6 +57,13 @@ describe('getReceiveMessage', () => {
 		status: countDooku.status,
 		messages: [],
 	};
+	const generalGrievousChat = {
+		userId: generalGrievous.user_id,
+		email: generalGrievous.email,
+		picture: generalGrievous.picture,
+		status: generalGrievous.status,
+		messages: [],
+	};
 
 	describe('receiveMessage', () => {
 		it('plays notification sound when user focus is not on the app', () => {
@@ -131,6 +138,39 @@ describe('getReceiveMessage', () => {
 				sender: cloneDeep(obiWanKenobi),
 				receiver: cloneDeep(generalGrievous),
 				content: 'Hello there!',
+			};
+
+			const receiveMessage = getReceiveMessage(
+				userId,
+				conversations,
+				currentConversation,
+				setConversations,
+				setCurrentConversation,
+				hasFocus
+			);
+
+			// Act
+			receiveMessage(message);
+
+			// Assert
+			expect(play).toHaveBeenCalledTimes(0);
+		});
+
+		it('does not plays notification sound when user focus chats itself', () => {
+			// Arrange
+			const conversations = [
+				cloneDeep(obiWanKenobiChat),
+				cloneDeep(generalGrievousChat),
+			];
+			const currentConversation = cloneDeep(generalGrievousChat);
+			const hasFocus = {
+				current: true,
+			};
+
+			const message = {
+				sender: cloneDeep(generalGrievous),
+				receiver: cloneDeep(generalGrievous),
+				content: 'Ahrg...',
 			};
 
 			const receiveMessage = getReceiveMessage(

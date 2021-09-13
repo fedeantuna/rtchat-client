@@ -207,6 +207,20 @@ describe('useConversations', () => {
 		expect(connection.on).toHaveBeenCalledTimes(0);
 	});
 
+	it('unregisterReceiveMessageMethod does nothing if connection is null', () => {
+		// Arrange
+		useSignalR.mockReturnValue({
+			connection: null,
+		});
+
+		// Act
+		useConversations();
+		unregisterReceiveMessageMethod();
+
+		// Assert
+		expect(connection.off).toHaveBeenCalledTimes(0);
+	});
+
 	it('registerUpdateUserStatusMethod is called and depends on connection and the update user status function', () => {
 		// Arrange
 		const expectedDependencies = [connection, updateUserStatusMock];
@@ -264,6 +278,20 @@ describe('useConversations', () => {
 		expect(connection.on).toHaveBeenCalledTimes(0);
 	});
 
+	it('unregisterUpdateUserStatusMethod does nothing if connection is null', () => {
+		// Arrange
+		useSignalR.mockReturnValue({
+			connection: null,
+		});
+
+		// Act
+		useConversations();
+		unregisterUpdateUserStatusMethod();
+
+		// Assert
+		expect(connection.off).toHaveBeenCalledTimes(0);
+	});
+
 	it('registerStartConversationMethod is called and depends on connection and the start conversation function', () => {
 		// Arrange
 		const expectedDependencies = [connection, startConversationMock];
@@ -319,6 +347,20 @@ describe('useConversations', () => {
 
 		// Assert
 		expect(connection.on).toHaveBeenCalledTimes(0);
+	});
+
+	it('unregisterStartConversationMethod does nothing if connection is null', () => {
+		// Arrange
+		useSignalR.mockReturnValue({
+			connection: null,
+		});
+
+		// Act
+		useConversations();
+		unregisterStartConversationMethod();
+
+		// Assert
+		expect(connection.off).toHaveBeenCalledTimes(0);
 	});
 
 	it('updateCurrentConversation is called and depends on conversations', () => {
