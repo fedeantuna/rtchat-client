@@ -1,46 +1,43 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { useAuth0 } from '@auth0/auth0-react';
+import { v4 } from 'uuid';
 import App from '../App';
 
 jest.mock('@auth0/auth0-react');
 
+const renderWithRouter = (ui, { route = '/' } = {}, title = 'Test page') => {
+	window.history.pushState({}, title, route);
+
+	return render(ui, { wrapper: BrowserRouter });
+};
+
 describe('App', () => {
-	beforeEach(() => {
-		useAuth0.mockReturnValue({
-			isAuthenticated: false,
-			isLoading: false,
-			loginWithRedirect: () => {},
+	beforeEach(() => {});
+
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
+	describe('when path is /', () => {
+		test('renders correctly when user is not authenticated', () => {
+			// Arrange
+			useAuth0.mockReturnValue({
+				user: {
+					sub: v4(),
+				},
+				getAccessTokenSilently: jest.fn(),
+				isAuthenticated: false,
+				isLoading: false,
+				loginWithRedirect: jest.fn(),
+			});
+
+			// Act
+			renderWithRouter(<App />);
+
+			// Assert
+			expect(screen.getByTestId('landing-page')).toBeInTheDocument();
 		});
-	});
-
-	it('renders RTChat title', () => {
-		// Arrange
-		// Act
-		render(<App />);
-		const rtChat = screen.getByText(/RTChat/);
-
-		// Assert
-		expect(rtChat).toBeInTheDocument();
-	});
-
-	it('renders Real Time Chat', () => {
-		// Arrange
-		// Act
-		render(<App />);
-		const realTimeChat = screen.getByText(/Real Time Chat/);
-
-		// Assert
-		expect(realTimeChat).toBeInTheDocument();
-	});
-
-	it('renders Sign In button', () => {
-		// Arrange
-		// Act
-		render(<App />);
-		const signIn = screen.getByText(/Sign In/);
-
-		// Assert
-		expect(signIn).toBeInTheDocument();
 	});
 });

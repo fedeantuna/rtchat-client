@@ -28,7 +28,10 @@ const Chat = () => {
 	if (isLoading) return <Loading />;
 
 	return (
-		<div className='bg-gradient-to-tr from-red-400 to-purple-500'>
+		<div
+			data-testid='chat'
+			className='bg-gradient-to-tr from-red-400 to-purple-500'
+		>
 			<div className='flex max-w-5xl ml-auto mr-auto bg-gray-800'>
 				<NavigationPanel
 					userProfiles={userProfiles}
