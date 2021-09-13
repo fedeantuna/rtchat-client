@@ -13,6 +13,12 @@ describe('<Contact />', () => {
 		picture: 'some-ugly-picture',
 	};
 
+	const obiWanKenobi = {
+		id: uuidv4(),
+		email: 'obiwankenobi@jediorder.rep',
+		picture: 'some-picture',
+	};
+
 	beforeEach(() => {
 		useAuth0.mockReturnValue({ user });
 	});
@@ -23,11 +29,10 @@ describe('<Contact />', () => {
 
 	test('renders contact', () => {
 		// Arrange
-		const id = user.sub;
 		const userProfile = {
-			userId: id,
-			email: user.email,
-			picture: user.picture,
+			userId: obiWanKenobi.id,
+			email: obiWanKenobi.email,
+			picture: obiWanKenobi.picture,
 			lastMessage: null,
 		};
 		const onSelectMock = jest.fn();
@@ -35,23 +40,24 @@ describe('<Contact />', () => {
 		// Act
 		render(
 			<Contact
-				id={id}
+				id={obiWanKenobi.id}
 				userProfile={userProfile}
 				onSelect={onSelectMock}
 			/>
 		);
 
 		// Assert
-		expect(screen.getByTestId(`contact-${id}`)).toBeInTheDocument();
+		expect(
+			screen.getByTestId(`contact-${obiWanKenobi.id}`)
+		).toBeInTheDocument();
 	});
 
 	test('calls useAuth0', () => {
 		// Arrange
-		const id = user.sub;
 		const userProfile = {
-			userId: id,
-			email: user.email,
-			picture: user.picture,
+			userId: obiWanKenobi.id,
+			email: obiWanKenobi.email,
+			picture: obiWanKenobi.picture,
 			lastMessage: null,
 		};
 		const onSelectMock = jest.fn();
@@ -59,7 +65,7 @@ describe('<Contact />', () => {
 		// Act
 		render(
 			<Contact
-				id={id}
+				id={obiWanKenobi.id}
 				userProfile={userProfile}
 				onSelect={onSelectMock}
 			/>
@@ -71,11 +77,10 @@ describe('<Contact />', () => {
 
 	test('renders profile picture', () => {
 		// Arrange
-		const id = user.sub;
 		const userProfile = {
-			userId: id,
-			email: user.email,
-			picture: user.picture,
+			userId: obiWanKenobi.id,
+			email: obiWanKenobi.email,
+			picture: obiWanKenobi.picture,
 			lastMessage: null,
 		};
 		const onSelectMock = jest.fn();
@@ -83,7 +88,7 @@ describe('<Contact />', () => {
 		// Act
 		render(
 			<Contact
-				id={id}
+				id={obiWanKenobi.id}
 				userProfile={userProfile}
 				onSelect={onSelectMock}
 			/>
@@ -91,21 +96,44 @@ describe('<Contact />', () => {
 
 		// Assert
 		expect(
-			screen.getByTestId(`profile-picture-contact-${id}`)
+			screen.getByTestId(`profile-picture-contact-${obiWanKenobi.id}`)
 		).toBeInTheDocument();
 	});
 
-	test('renders last message when present', () => {
+	test('displays user email', () => {
 		// Arrange
-		const id = user.sub;
 		const userProfile = {
-			userId: id,
-			email: user.email,
-			picture: user.picture,
+			userId: obiWanKenobi.id,
+			email: obiWanKenobi.email,
+			picture: obiWanKenobi.picture,
+			lastMessage: null,
+		};
+		const onSelectMock = jest.fn();
+
+		// Act
+		render(
+			<Contact
+				id={obiWanKenobi.id}
+				userProfile={userProfile}
+				onSelect={onSelectMock}
+			/>
+		);
+
+		// Assert
+		expect(screen.getByText(userProfile.email)).toBeInTheDocument();
+	});
+
+	test('displays last message when present', () => {
+		// Arrange
+		const userProfile = {
+			userId: obiWanKenobi.id,
+			email: obiWanKenobi.email,
+			picture: obiWanKenobi.picture,
 			lastMessage: {
 				id: uuidv4(),
-				sender: uuidv4(),
+				sender: obiWanKenobi.id,
 				content: 'Hello there!',
+				red: true,
 			},
 		};
 		const onSelectMock = jest.fn();
@@ -113,7 +141,7 @@ describe('<Contact />', () => {
 		// Act
 		render(
 			<Contact
-				id={id}
+				id={obiWanKenobi.id}
 				userProfile={userProfile}
 				onSelect={onSelectMock}
 			/>
@@ -123,17 +151,17 @@ describe('<Contact />', () => {
 		expect(screen.getByText(/hello there!/i)).toBeInTheDocument();
 	});
 
-	test('renders last message with "You: " before it when present and current user is sender', () => {
+	test('displays last message with "You: " before it when present and current user is sender', () => {
 		// Arrange
-		const id = user.sub;
 		const userProfile = {
-			userId: id,
-			email: user.email,
-			picture: user.picture,
+			userId: obiWanKenobi.id,
+			email: obiWanKenobi.email,
+			picture: obiWanKenobi.picture,
 			lastMessage: {
 				id: uuidv4(),
 				sender: user.sub,
 				content: 'General Kenobi...',
+				red: true,
 			},
 		};
 		const onSelectMock = jest.fn();
@@ -141,7 +169,7 @@ describe('<Contact />', () => {
 		// Act
 		render(
 			<Contact
-				id={id}
+				id={obiWanKenobi.id}
 				userProfile={userProfile}
 				onSelect={onSelectMock}
 			/>
@@ -151,114 +179,196 @@ describe('<Contact />', () => {
 		expect(screen.getByText(/you: general kenobi.../i)).toBeInTheDocument();
 	});
 
+	test('displays indicator for not red messages when last message has not been red', () => {
+		// Arrange
+		const userProfile = {
+			userId: obiWanKenobi.id,
+			email: obiWanKenobi.email,
+			picture: obiWanKenobi.picture,
+			lastMessage: {
+				id: uuidv4(),
+				sender: obiWanKenobi.id,
+				content: 'Hello there!',
+				red: false,
+			},
+		};
+		const onSelectMock = jest.fn();
+
+		// Act
+		render(
+			<Contact
+				id={obiWanKenobi.id}
+				userProfile={userProfile}
+				onSelect={onSelectMock}
+			/>
+		);
+
+		// Assert
+		expect(screen.getByTestId('red-indicator')).toBeInTheDocument();
+	});
+
+	test('does not display indicator for not red messages when last message has been red', () => {
+		// Arrange
+		const userProfile = {
+			userId: obiWanKenobi.id,
+			email: obiWanKenobi.email,
+			picture: obiWanKenobi.picture,
+			lastMessage: {
+				id: uuidv4(),
+				sender: obiWanKenobi.id,
+				content: 'Hello there!',
+				red: true,
+			},
+		};
+		const onSelectMock = jest.fn();
+
+		// Act
+		render(
+			<Contact
+				id={obiWanKenobi.id}
+				userProfile={userProfile}
+				onSelect={onSelectMock}
+			/>
+		);
+
+		// Assert
+		expect(screen.queryByTestId('red-indicator')).not.toBeInTheDocument();
+	});
+
+	test('displays profile picture with user picture', () => {
+		// Arrange
+		const userProfile = {
+			userId: obiWanKenobi.id,
+			email: obiWanKenobi.email,
+			picture: obiWanKenobi.picture,
+			lastMessage: {
+				id: uuidv4(),
+				sender: obiWanKenobi.id,
+				content: 'Hello there!',
+				red: true,
+			},
+		};
+		const onSelectMock = jest.fn();
+
+		// Act
+		render(
+			<Contact
+				id={obiWanKenobi.id}
+				userProfile={userProfile}
+				onSelect={onSelectMock}
+			/>
+		);
+
+		// Assert
+		expect(screen.getByAltText(/profile/i).getAttribute('src')).toBe(
+			userProfile.picture
+		);
+	});
+
 	test('on contact click calls onSelect', () => {
 		// Arrange
-		const id = user.sub;
 		const userProfile = {
-			userId: id,
-			email: user.email,
-			picture: user.picture,
+			userId: obiWanKenobi.id,
+			email: obiWanKenobi.email,
+			picture: obiWanKenobi.picture,
 			lastMessage: null,
 		};
 		const onSelectMock = jest.fn();
 
 		render(
 			<Contact
-				id={id}
+				id={obiWanKenobi.id}
 				userProfile={userProfile}
 				onSelect={onSelectMock}
 			/>
 		);
 
 		// Act
-		fireEvent.click(screen.getByTestId(`contact-${id}`));
+		fireEvent.click(screen.getByTestId(`contact-${obiWanKenobi.id}`));
 
 		// Assert
 		expect(onSelectMock).toHaveBeenCalledTimes(1);
-		expect(onSelectMock).toHaveBeenCalledWith(user.sub);
+		expect(onSelectMock).toHaveBeenCalledWith(obiWanKenobi.id);
 	});
 
 	test('on key press call onSelect if key was Enter', () => {
 		// Arrange
-		const id = user.sub;
 		const userProfile = {
-			userId: id,
-			email: user.email,
-			picture: user.picture,
+			userId: obiWanKenobi.id,
+			email: obiWanKenobi.email,
+			picture: obiWanKenobi.picture,
 			lastMessage: null,
 		};
 		const onSelectMock = jest.fn();
 
 		render(
 			<Contact
-				id={id}
+				id={obiWanKenobi.id}
 				userProfile={userProfile}
 				onSelect={onSelectMock}
 			/>
 		);
 
 		// Act
-		fireEvent.keyDown(screen.getByTestId(`contact-${id}`), {
+		fireEvent.keyDown(screen.getByTestId(`contact-${obiWanKenobi.id}`), {
 			key: 'Enter',
 			charCode: 13,
 		});
 
 		// Assert
 		expect(onSelectMock).toHaveBeenCalledTimes(1);
-		expect(onSelectMock).toHaveBeenCalledWith(user.sub);
+		expect(onSelectMock).toHaveBeenCalledWith(obiWanKenobi.id);
 	});
 
 	test('on key press call onSelect if key was Space', () => {
 		// Arrange
-		const id = user.sub;
 		const userProfile = {
-			userId: id,
-			email: user.email,
-			picture: user.picture,
+			userId: obiWanKenobi.id,
+			email: obiWanKenobi.email,
+			picture: obiWanKenobi.picture,
 			lastMessage: null,
 		};
 		const onSelectMock = jest.fn();
 
 		render(
 			<Contact
-				id={id}
+				id={obiWanKenobi.id}
 				userProfile={userProfile}
 				onSelect={onSelectMock}
 			/>
 		);
 
 		// Act
-		fireEvent.keyDown(screen.getByTestId(`contact-${id}`), {
+		fireEvent.keyDown(screen.getByTestId(`contact-${obiWanKenobi.id}`), {
 			key: ' ',
 			charCode: 32,
 		});
 
 		// Assert
 		expect(onSelectMock).toHaveBeenCalledTimes(1);
-		expect(onSelectMock).toHaveBeenCalledWith(user.sub);
+		expect(onSelectMock).toHaveBeenCalledWith(obiWanKenobi.id);
 	});
 
 	test('on key press does nothing if key was not Enter nor Space', () => {
 		// Arrange
-		const id = user.sub;
 		const userProfile = {
-			userId: id,
-			email: user.email,
-			picture: user.picture,
+			userId: obiWanKenobi.id,
+			email: obiWanKenobi.email,
+			picture: obiWanKenobi.picture,
 			lastMessage: null,
 		};
 		const onSelectMock = jest.fn();
 
 		render(
 			<Contact
-				id={id}
+				id={obiWanKenobi.id}
 				userProfile={userProfile}
 				onSelect={onSelectMock}
 			/>
 		);
 
 		// Act
-		fireEvent.keyDown(screen.getByTestId(`contact-${id}`), {
+		fireEvent.keyDown(screen.getByTestId(`contact-${obiWanKenobi.id}`), {
 			key: 'A',
 			charCode: 65,
 		});

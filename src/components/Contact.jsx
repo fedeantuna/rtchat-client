@@ -40,7 +40,10 @@ const Contact = ({ id, userProfile, onSelect }) => {
 					</div>
 					{userProfile.lastMessage &&
 						!userProfile.lastMessage.red && (
-							<div className='justify-end w-2 h-2 ml-2 mr-2 bg-gray-400 rounded-full' />
+							<div
+								data-testid='red-indicator'
+								className='justify-end w-2 h-2 ml-2 mr-2 bg-gray-400 rounded-full'
+							/>
 						)}
 				</div>
 			</div>

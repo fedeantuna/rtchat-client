@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Bubble from '../../components/Bubble';
 
 describe('<Bubble />', () => {
-	test('renders div with {style}', () => {
+	test('renders bubble with {style}', () => {
 		// Arrange
 		const bubbleId = uuidv4();
 		const style = {

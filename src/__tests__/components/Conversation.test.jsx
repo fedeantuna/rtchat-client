@@ -21,7 +21,7 @@ describe('<Conversation />', () => {
 		expect(screen.getByTestId('conversation')).toBeInTheDocument();
 	});
 
-	test('renders conversation header', () => {
+	test('renders conversation header when a conversation is selected', () => {
 		// Arrange
 		const current = {
 			userId: uuidv4(),
@@ -38,7 +38,7 @@ describe('<Conversation />', () => {
 		expect(screen.getByTestId('conversation-header')).toBeInTheDocument();
 	});
 
-	test('renders conversation history', () => {
+	test('renders conversation history when a conversation is selected', () => {
 		// Arrange
 		const current = {
 			userId: uuidv4(),
@@ -55,7 +55,7 @@ describe('<Conversation />', () => {
 		expect(screen.getByTestId('conversation-history')).toBeInTheDocument();
 	});
 
-	test('renders message box', () => {
+	test('renders message box when a conversation is selected', () => {
 		// Arrange
 		const current = {
 			userId: uuidv4(),
@@ -70,5 +70,23 @@ describe('<Conversation />', () => {
 
 		// Assert
 		expect(screen.getByTestId('message-box')).toBeInTheDocument();
+	});
+
+	test('does not render ConversationHeader, ConversationHistory and MessageBox when a conversation is not selected', () => {
+		// Arrange
+		const current = null;
+		const onSendMock = jest.fn();
+
+		// Act
+		render(<Conversation current={current} onSend={onSendMock} />);
+
+		// Assert
+		expect(
+			screen.queryByTestId('conversation-header')
+		).not.toBeInTheDocument();
+		expect(
+			screen.queryByTestId('conversation-history')
+		).not.toBeInTheDocument();
+		expect(screen.queryByTestId('message-box')).not.toBeInTheDocument();
 	});
 });
