@@ -23,8 +23,8 @@
 	"scripts": {
 		"start": "HTTPS=true SSL_CRT_FILE=./.certs/localhost.crt SSL_KEY_FILE=./.certs/localhost.key craco start",
 		"build": "craco build",
-		"test": "craco test --coverage --watchAll=false .",
-		"test:watch": "craco test --coverage .",
+		"test": "craco test --coverage --watchAll=false",
+		"test:watch": "craco test --coverage",
 		"eject": "react-scripts eject",
 		"certs": "chmod +x ./generate-certs.sh && ./generate-certs.sh",
 		"http": "craco start",
@@ -64,5 +64,13 @@
 		"prettier": "^2.3.2",
 		"rustywind": "^0.12.2",
 		"tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.7"
+	},
+	"jest": {
+		"collectCoverageFrom": [
+			"<rootDir>/src/**/*.{js,jsx}",
+			"!<rootDir>/src/__tests__/**",
+			"!<rootDir>/src/**/index.jsx",
+			"!<rootDir>/src/**/reportWebVitals.js"
+		]
 	}
 }
