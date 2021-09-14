@@ -41,7 +41,11 @@ const UserProfileButton = () => {
 				aria-expanded='false'
 				aria-controls='profile-menu'
 			>
-				<ProfilePicture picture={user.picture} status={status} />
+				<ProfilePicture
+					id={`user-profile-button-${user.sub}`}
+					picture={user.picture}
+					status={status}
+				/>
 			</button>
 			<div className='invisible transition-all duration-300 origin-top-right transform scale-95 -translate-y-2 opacity-0 dropdown-menu'>
 				<div
