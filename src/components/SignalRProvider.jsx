@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { HubConnectionBuilder, HubConnectionState } from '@microsoft/signalr';
+import { HubConnectionState } from '@microsoft/signalr';
 import { toast } from 'react-toastify';
 import { useAuth0 } from '@auth0/auth0-react';
 import { topRightNotification } from '../models/toastNotificationConfiguration';
+import buildHubConnection from '../utils/buildHubConnection';
 
 const SignalRContext = React.createContext(null);
 
@@ -18,12 +19,7 @@ const SignalRProvider = ({ children }) => {
 					const accessToken = await getAccessTokenSilently({
 						audience: process.env.REACT_APP_CHAT_AUDIENCE,
 					});
-					const newConnection = new HubConnectionBuilder()
-						.withUrl(process.env.REACT_APP_HUB_URL, {
-							accessTokenFactory: () => accessToken,
-						})
-						.withAutomaticReconnect()
-						.build();
+					const newConnection = buildHubConnection(accessToken);
 
 					setConnection(newConnection);
 				} catch (error) {
@@ -55,10 +51,7 @@ const SignalRProvider = ({ children }) => {
 			}
 		};
 		const stopConnection = () => {
-			if (
-				connection &&
-				connection.state !== HubConnectionState.Disconnected
-			) {
+			if (connection.state !== HubConnectionState.Disconnected) {
 				connection.stop();
 			}
 		};

@@ -24,8 +24,8 @@ describe('useConversations', () => {
 	const registerReceiveMessageDependencies = [];
 	const registerUpdateUserStatusMethodDependencies = [];
 	const registerStartConversationMethodDependencies = [];
-	const selectConversationOnLoadDependencies = [];
 	const updateCurrentConversationDependencies = [];
+	const selectConversationOnLoadDependencies = [];
 	const registerReceiveMessageMethod = jest.fn();
 	const registerUpdateUserStatusMethod = jest.fn();
 	const registerStartConversationMethod = jest.fn();
@@ -109,12 +109,12 @@ describe('useConversations', () => {
 			.mockImplementationOnce((method, dependencies) => {
 				updateCurrentConversation();
 				method();
-				selectConversationOnLoadDependencies.push(...dependencies);
+				updateCurrentConversationDependencies.push(...dependencies);
 			})
 			.mockImplementationOnce((method, dependencies) => {
 				selectConversationOnLoad();
 				method();
-				updateCurrentConversationDependencies.push(...dependencies);
+				selectConversationOnLoadDependencies.push(...dependencies);
 			});
 
 		getReceiveMessage.mockReturnValue(receiveMessageMock);
