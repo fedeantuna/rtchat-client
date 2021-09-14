@@ -6,15 +6,35 @@ const ProfilePicture = ({ id, picture, status }) => {
 	const getStatusDiv = () => {
 		switch (status) {
 			case userStatus.online:
-				return <div className='w-3 h-3 bg-green-600 rounded-full' />;
+				return (
+					<div
+						data-testid='profile-picture-status-online'
+						className='w-3 h-3 bg-green-600 rounded-full'
+					/>
+				);
 			case userStatus.away:
-				return <div className='w-3 h-3 bg-yellow-300 rounded-full' />;
+				return (
+					<div
+						data-testid='profile-picture-status-away'
+						className='w-3 h-3 bg-yellow-300 rounded-full'
+					/>
+				);
 			case userStatus.busy:
-				return <div className='w-3 h-3 bg-red-500 rounded-full' />;
+				return (
+					<div
+						data-testid='profile-picture-status-busy'
+						className='w-3 h-3 bg-red-500 rounded-full'
+					/>
+				);
 			case userStatus.offline:
-				return <div className='w-3 h-3 bg-gray-500 rounded-full' />;
+				return (
+					<div
+						data-testid='profile-picture-status-offline'
+						className='w-3 h-3 bg-gray-500 rounded-full'
+					/>
+				);
 			default:
-				return <div />;
+				return <div data-testid='profile-picture-status-hidden' />;
 		}
 	};
 
