@@ -51,7 +51,10 @@ const SignalRProvider = ({ children }) => {
 			}
 		};
 		const stopConnection = () => {
-			if (connection.state !== HubConnectionState.Disconnected) {
+			if (
+				connection !== null &&
+				connection.state !== HubConnectionState.Disconnected
+			) {
 				connection.stop();
 			}
 		};

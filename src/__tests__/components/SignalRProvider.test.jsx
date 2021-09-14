@@ -322,4 +322,17 @@ describe('<SignalRProvider />', () => {
 		// Assert
 		expect(connection.stop).toHaveBeenCalledTimes(0);
 	});
+
+	test('stop connection does nothing if connection state is null', () => {
+		// Arrange
+		const divTestId = 'signal-r-provider-test-div';
+		const div = <div data-testid={divTestId} />;
+
+		// Act
+		render(<SignalRProvider>{div}</SignalRProvider>);
+		stopConnection();
+
+		// Assert
+		expect(connection.stop).toHaveBeenCalledTimes(0);
+	});
 });
