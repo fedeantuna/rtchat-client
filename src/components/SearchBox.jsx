@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const SearchBox = ({ filter, setFilter, onKeyDown }) => (
-	<div className='flex flex-grow ml-1 mr-2'>
+	<div data-testid='search-box' className='flex flex-grow ml-1 mr-2'>
 		<input
 			className='w-full h-8 px-2 text-sm text-gray-800 bg-white rounded-lg focus:outline-none'
 			type='search'
 			name='search'
 			id='search'
 			placeholder='Search'
-			onChange={(e) => setFilter(e.target.value)}
 			value={filter}
+			onChange={(e) => setFilter(e.target.value)}
 			onKeyDown={onKeyDown}
 		/>
 

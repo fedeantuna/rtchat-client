@@ -25,10 +25,7 @@ const MessageBox = ({ onSend, enabled }) => {
 					id='message-box'
 					placeholder='Write a message...'
 					value={messageContent}
-					onChange={(e) => {
-						e.preventDefault();
-						setMessageContent(e.currentTarget.value);
-					}}
+					onChange={(e) => setMessageContent(e.target.value)}
 					onKeyDown={(e) => {
 						if (e.key === 'Enter') {
 							handleSendMessage();
