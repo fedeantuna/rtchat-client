@@ -29,7 +29,7 @@ const MessageBox = ({ onSend, enabled }) => {
 						e.preventDefault();
 						setMessageContent(e.currentTarget.value);
 					}}
-					onKeyPress={(e) => {
+					onKeyDown={(e) => {
 						if (e.key === 'Enter') {
 							handleSendMessage();
 						}
@@ -40,6 +40,7 @@ const MessageBox = ({ onSend, enabled }) => {
 
 				<button
 					type='submit'
+					title='Send message'
 					onClick={handleSendMessage}
 					disabled={messageContent.length === 0 || !enabled}
 				>

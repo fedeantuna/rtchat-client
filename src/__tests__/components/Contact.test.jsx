@@ -291,7 +291,7 @@ describe('<Contact />', () => {
 		expect(onSelectMock).toHaveBeenCalledWith(obiWanKenobi.id);
 	});
 
-	test('on key press call onSelect if key was Enter', () => {
+	test('on key down call onSelect if key was Enter', () => {
 		// Arrange
 		const userProfile = {
 			userId: obiWanKenobi.id,
@@ -320,7 +320,7 @@ describe('<Contact />', () => {
 		expect(onSelectMock).toHaveBeenCalledWith(obiWanKenobi.id);
 	});
 
-	test('on key press call onSelect if key was Space', () => {
+	test('on key down call onSelect if key was Space', () => {
 		// Arrange
 		const userProfile = {
 			userId: obiWanKenobi.id,
@@ -349,7 +349,7 @@ describe('<Contact />', () => {
 		expect(onSelectMock).toHaveBeenCalledWith(obiWanKenobi.id);
 	});
 
-	test('on key press does nothing if key was not Enter nor Space', () => {
+	test('on key down does nothing if key was not Enter nor Space', () => {
 		// Arrange
 		const userProfile = {
 			userId: obiWanKenobi.id,
