@@ -30,13 +30,16 @@ describe('<SignalRProvider />', () => {
 	const getAccessTokenSilentlyMock = jest.fn();
 	const setConnectionMock = jest.fn();
 
+	const start = jest.fn();
+	const stop = jest.fn();
+
 	const accessToken = uuidv4();
 	const chatAudience = 'chat-audience';
 	const hubUrl = 'http://localhost/hub/chat';
-	const connection = {
+	const connectionMock = {
 		state: HubConnectionState.Disconnected,
-		start: jest.fn(),
-		stop: jest.fn(),
+		start,
+		stop,
 	};
 
 	const toastError = jest.fn();
@@ -69,7 +72,7 @@ describe('<SignalRProvider />', () => {
 				startConnectionDependencies.push(...dependencies);
 			});
 
-		buildHubConnection.mockReturnValue(connection);
+		buildHubConnection.mockReturnValue(connectionMock);
 
 		toast.error = toastError;
 	});
@@ -149,7 +152,7 @@ describe('<SignalRProvider />', () => {
 
 		// Assert
 		expect(setConnectionMock).toHaveBeenCalledTimes(1);
-		expect(setConnectionMock).toHaveBeenCalledWith(connection);
+		expect(setConnectionMock).toHaveBeenCalledWith(connectionMock);
 	});
 
 	test('build does nothing when connection is not null', async () => {
@@ -158,7 +161,10 @@ describe('<SignalRProvider />', () => {
 		const div = <div data-testid={divTestId} />;
 
 		useState.mockReset();
-		useState.mockImplementationOnce(() => [connection, setConnectionMock]);
+		useState.mockImplementationOnce(() => [
+			connectionMock,
+			setConnectionMock,
+		]);
 
 		// Act
 		await render(<SignalRProvider>{div}</SignalRProvider>);
@@ -223,13 +229,16 @@ describe('<SignalRProvider />', () => {
 		const div = <div data-testid={divTestId} />;
 
 		useState.mockReset();
-		useState.mockImplementationOnce(() => [connection, setConnectionMock]);
+		useState.mockImplementationOnce(() => [
+			connectionMock,
+			setConnectionMock,
+		]);
 
 		// Act
 		render(<SignalRProvider>{div}</SignalRProvider>);
 
 		// Assert
-		expect(connection.start).toHaveBeenCalledTimes(1);
+		expect(start).toHaveBeenCalledTimes(1);
 	});
 
 	test('start connection does nothing if connection state is not disconnected', () => {
@@ -239,7 +248,7 @@ describe('<SignalRProvider />', () => {
 
 		useState.mockReset();
 		useState.mockImplementationOnce(() => [
-			{ ...connection, state: HubConnectionState.Connected },
+			{ ...connectionMock, state: HubConnectionState.Connected },
 			setConnectionMock,
 		]);
 
@@ -247,7 +256,7 @@ describe('<SignalRProvider />', () => {
 		render(<SignalRProvider>{div}</SignalRProvider>);
 
 		// Assert
-		expect(connection.start).toHaveBeenCalledTimes(0);
+		expect(start).toHaveBeenCalledTimes(0);
 	});
 
 	test('start connection does nothing if connection state is null', () => {
@@ -259,7 +268,7 @@ describe('<SignalRProvider />', () => {
 		render(<SignalRProvider>{div}</SignalRProvider>);
 
 		// Assert
-		expect(connection.start).toHaveBeenCalledTimes(0);
+		expect(start).toHaveBeenCalledTimes(0);
 	});
 
 	test('start connection displays error if start fails', () => {
@@ -268,16 +277,19 @@ describe('<SignalRProvider />', () => {
 		const div = <div data-testid={divTestId} />;
 
 		useState.mockReset();
-		connection.start.mockImplementation(() => {
+		start.mockImplementation(() => {
 			throw new Error();
 		});
-		useState.mockImplementationOnce(() => [connection, setConnectionMock]);
+		useState.mockImplementationOnce(() => [
+			connectionMock,
+			setConnectionMock,
+		]);
 
 		// Act
 		render(<SignalRProvider>{div}</SignalRProvider>);
 
 		// Assert
-		expect(connection.start).toHaveBeenCalledTimes(1);
+		expect(start).toHaveBeenCalledTimes(1);
 		expect(toastError).toHaveBeenCalledTimes(1);
 		expect(toastError).toHaveBeenCalledWith(
 			'Failed to start connection with server. Refresh the page.',
@@ -292,7 +304,7 @@ describe('<SignalRProvider />', () => {
 
 		useState.mockReset();
 		useState.mockImplementationOnce(() => [
-			{ ...connection, state: HubConnectionState.Connected },
+			{ ...connectionMock, state: HubConnectionState.Connected },
 			setConnectionMock,
 		]);
 
@@ -301,7 +313,7 @@ describe('<SignalRProvider />', () => {
 		stopConnection();
 
 		// Assert
-		expect(connection.stop).toHaveBeenCalledTimes(1);
+		expect(stop).toHaveBeenCalledTimes(1);
 	});
 
 	test('stop connection does nothing if connection state is disconnected', () => {
@@ -311,7 +323,7 @@ describe('<SignalRProvider />', () => {
 
 		useState.mockReset();
 		useState.mockImplementationOnce(() => [
-			{ ...connection, state: HubConnectionState.Disconnected },
+			{ ...connectionMock, state: HubConnectionState.Disconnected },
 			setConnectionMock,
 		]);
 
@@ -320,7 +332,7 @@ describe('<SignalRProvider />', () => {
 		stopConnection();
 
 		// Assert
-		expect(connection.stop).toHaveBeenCalledTimes(0);
+		expect(stop).toHaveBeenCalledTimes(0);
 	});
 
 	test('stop connection does nothing if connection state is null', () => {
@@ -333,6 +345,6 @@ describe('<SignalRProvider />', () => {
 		stopConnection();
 
 		// Assert
-		expect(connection.stop).toHaveBeenCalledTimes(0);
+		expect(stop).toHaveBeenCalledTimes(0);
 	});
 });

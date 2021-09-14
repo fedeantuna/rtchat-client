@@ -34,7 +34,10 @@ const UserProfileButton = () => {
 	};
 
 	return (
-		<div className='w-12 h-12 mr-2 dropdown'>
+		<div
+			data-testid='user-profile-button'
+			className='w-12 h-12 mr-2 dropdown'
+		>
 			<button
 				type='button'
 				aria-haspopup='true'
