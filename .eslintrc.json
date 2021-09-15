@@ -19,7 +19,7 @@
 		"import/no-extraneous-dependencies": [
 			"error",
 			{
-				"devDependencies": ["craco.config.js"],
+				"devDependencies": ["craco.config.js", "src/__tests__/**"],
 				"optionalDependencies": false,
 				"peerDependencies": false,
 				"bundledDependencies": false

@@ -13,7 +13,10 @@ const MessageBox = ({ onSend, enabled }) => {
 	};
 
 	return (
-		<div className='items-center mx-2 my-2 text-white'>
+		<div
+			data-testid='message-box'
+			className='items-center mx-2 my-2 text-white'
+		>
 			<form className='flex w-full'>
 				<input
 					className='flex flex-grow w-9/12 h-10 px-2 mr-2 text-sm bg-gray-800 rounded-lg focus:outline-none'
@@ -22,11 +25,8 @@ const MessageBox = ({ onSend, enabled }) => {
 					id='message-box'
 					placeholder='Write a message...'
 					value={messageContent}
-					onChange={(e) => {
-						e.preventDefault();
-						setMessageContent(e.currentTarget.value);
-					}}
-					onKeyPress={(e) => {
+					onChange={(e) => setMessageContent(e.target.value)}
+					onKeyDown={(e) => {
 						if (e.key === 'Enter') {
 							handleSendMessage();
 						}
@@ -37,6 +37,7 @@ const MessageBox = ({ onSend, enabled }) => {
 
 				<button
 					type='submit'
+					title='Send message'
 					onClick={handleSendMessage}
 					disabled={messageContent.length === 0 || !enabled}
 				>

@@ -1,7 +1,7 @@
 import getObjectWithRenamedProperties from '../../utils/getObjectWithRenamedProperties';
 
 describe('getObjectWithRenamedProperties', () => {
-	it('returns object with modified property', () => {
+	test('returns object with modified property', () => {
 		// Arrange
 		const obj = {
 			someProperty: 'someValue',
@@ -20,7 +20,7 @@ describe('getObjectWithRenamedProperties', () => {
 		expect(result[property.name]).toBeUndefined();
 	});
 
-	it('returns object with modified properties', () => {
+	test('returns object with modified properties', () => {
 		// Arrange
 		const obj = {
 			someProperty: 'someValue',
@@ -47,7 +47,7 @@ describe('getObjectWithRenamedProperties', () => {
 		expect(result[properties[1].name]).toBeUndefined();
 	});
 
-	it('returns a new object without modifying the original', () => {
+	test('returns a new object without modifying the original', () => {
 		// Arrange
 		const obj = {
 			someProperty: 'someValue',
@@ -75,7 +75,7 @@ describe('getObjectWithRenamedProperties', () => {
 		expect(obj[properties[1].newName]).toBeUndefined();
 	});
 
-	it('throws an error when object is undefined', () => {
+	test('throws an error when object is undefined', () => {
 		// Arrange
 		const obj = undefined;
 		const properties = [
@@ -96,7 +96,7 @@ describe('getObjectWithRenamedProperties', () => {
 		expect(execute).toThrowError('The object is mandatory.');
 	});
 
-	it('throws an error when object is null', () => {
+	test('throws an error when object is null', () => {
 		// Arrange
 		const obj = null;
 		const properties = [
@@ -117,7 +117,7 @@ describe('getObjectWithRenamedProperties', () => {
 		expect(execute).toThrowError('The object is mandatory.');
 	});
 
-	it('throws an error when properties are undefined', () => {
+	test('throws an error when properties are undefined', () => {
 		// Arrange
 		const obj = {
 			someProperty: 'someValue',
@@ -132,7 +132,7 @@ describe('getObjectWithRenamedProperties', () => {
 		expect(execute).toThrowError('The properties are mandatory.');
 	});
 
-	it('throws an error when properties are null', () => {
+	test('throws an error when properties are null', () => {
 		// Arrange
 		const obj = {
 			someProperty: 'someValue',
@@ -147,7 +147,7 @@ describe('getObjectWithRenamedProperties', () => {
 		expect(execute).toThrowError('The properties are mandatory.');
 	});
 
-	it('throws an error when properties at least one property has same name and new name', () => {
+	test('throws an error when properties at least one property has same name and new name', () => {
 		// Arrange
 		const obj = {
 			someProperty: 'someValue',
@@ -171,7 +171,7 @@ describe('getObjectWithRenamedProperties', () => {
 		expect(execute).toThrowError('Names and new names must be different.');
 	});
 
-	it('throws an error when properties at least one property name does not exist in the object properties', () => {
+	test('throws an error when properties at least one property name does not exist in the object properties', () => {
 		// Arrange
 		const obj = {
 			someProperty: 'someValue',
@@ -195,7 +195,7 @@ describe('getObjectWithRenamedProperties', () => {
 		expect(execute).toThrowError('Names must exist in the object.');
 	});
 
-	it('throws an error when properties at least one property new name does exist in the object properties', () => {
+	test('throws an error when properties at least one property new name does exist in the object properties', () => {
 		// Arrange
 		const obj = {
 			someProperty: 'someValue',

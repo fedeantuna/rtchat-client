@@ -46,7 +46,7 @@ describe('useSearch', () => {
 		updateFilteredProfilesWithFilterDependencies.splice(0);
 	});
 
-	it('returns an object with filter, filtered profiles and set filter function', () => {
+	test('returns an object with filter, filtered profiles and set filter function', () => {
 		// Arrange
 		const userProfiles = [];
 		const expectedOutput = {
@@ -62,7 +62,7 @@ describe('useSearch', () => {
 		expect(result).toEqual(expectedOutput);
 	});
 
-	it('calls useState with initial state for filter and filtered profiles', () => {
+	test('calls useState with initial state for filter and filtered profiles', () => {
 		// Arrange
 		const userProfiles = [];
 
@@ -81,7 +81,7 @@ describe('useSearch', () => {
 		expect(useState).toHaveBeenNthCalledWith(2, initialStateFilter);
 	});
 
-	it('updateFilteredProfiles is called with user profiles dependency', () => {
+	test('updateFilteredProfiles is called with user profiles dependency', () => {
 		// Arrange
 		const userProfiles = [];
 
@@ -95,7 +95,7 @@ describe('useSearch', () => {
 		expect(updateFilteredProfilesDependencies).toEqual(dependencies);
 	});
 
-	it('updateFilteredProfiles calls setFilteredProfiles with user profiles', () => {
+	test('updateFilteredProfiles calls setFilteredProfiles with user profiles', () => {
 		// Arrange
 		const userProfiles = [
 			{
@@ -117,7 +117,7 @@ describe('useSearch', () => {
 		expect(setFilteredProfilesMock).toHaveBeenCalledWith([...userProfiles]);
 	});
 
-	it('updateFilteredProfilesWithFilter is called with filter dependency', () => {
+	test('updateFilteredProfilesWithFilter is called with filter dependency', () => {
 		// Arrange
 		const userProfiles = [];
 		const filterInitialState = '';
@@ -134,7 +134,7 @@ describe('useSearch', () => {
 		);
 	});
 
-	it('updateFilteredProfilesWithFilter calls set filtered profiles function with filtered user profiles', () => {
+	test('updateFilteredProfilesWithFilter calls set filtered profiles function with filtered user profiles', () => {
 		// Arrange
 		const userProfiles = [
 			{

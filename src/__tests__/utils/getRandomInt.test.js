@@ -1,7 +1,7 @@
 import getRandomInt from '../../utils/getRandomInt';
 
 describe('getRandomInt', () => {
-	it('returns integer numbers', () => {
+	test('returns integer numbers', () => {
 		// Arrange
 		const min = 5;
 		const max = 1500;
@@ -13,7 +13,7 @@ describe('getRandomInt', () => {
 		expect(Number.isInteger(result)).toBeTruthy();
 	});
 
-	it('generates a random number greater than or equal to min', () => {
+	test('generates a random number greater than or equal to min', () => {
 		// Arrange
 		const min = 5;
 		const max = 1500;
@@ -27,7 +27,7 @@ describe('getRandomInt', () => {
 		}
 	});
 
-	it('generates a random number lower than or equal to max', () => {
+	test('generates a random number lower than or equal to max', () => {
 		// Arrange
 		const min = 5;
 		const max = 1500;
@@ -41,7 +41,7 @@ describe('getRandomInt', () => {
 		}
 	});
 
-	it('throws an error when min value is undefined', () => {
+	test('throws an error when min value is undefined', () => {
 		// Arrange
 		const min = undefined;
 		const max = 1500;
@@ -55,7 +55,7 @@ describe('getRandomInt', () => {
 		);
 	});
 
-	it('throws an error when min value is null', () => {
+	test('throws an error when min value is null', () => {
 		// Arrange
 		const min = null;
 		const max = 1500;
@@ -69,7 +69,7 @@ describe('getRandomInt', () => {
 		);
 	});
 
-	it('throws an error when min is a decimal', () => {
+	test('throws an error when min is a decimal', () => {
 		// Arrange
 		const min = 7.6;
 		const max = 1500;
@@ -83,7 +83,7 @@ describe('getRandomInt', () => {
 		);
 	});
 
-	it('throws an error when max value is undefined', () => {
+	test('throws an error when max value is undefined', () => {
 		// Arrange
 		const min = 7;
 		const max = undefined;
@@ -97,7 +97,7 @@ describe('getRandomInt', () => {
 		);
 	});
 
-	it('throws an error when max value is null', () => {
+	test('throws an error when max value is null', () => {
 		// Arrange
 		const min = 7;
 		const max = null;
@@ -111,7 +111,7 @@ describe('getRandomInt', () => {
 		);
 	});
 
-	it('throws an error when max is a decimal', () => {
+	test('throws an error when max is a decimal', () => {
 		// Arrange
 		const min = 7;
 		const max = 9.3;

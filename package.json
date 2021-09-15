@@ -6,9 +6,6 @@
 		"@auth0/auth0-react": "^1.6.0",
 		"@craco/craco": "^6.2.0",
 		"@microsoft/signalr": "^5.0.9",
-		"@testing-library/jest-dom": "^5.14.1",
-		"@testing-library/react": "^11.2.7",
-		"@testing-library/user-event": "^12.8.3",
 		"canvas": "^2.8.0",
 		"lodash.clonedeep": "^4.5.0",
 		"prop-types": "^15.7.2",
@@ -23,8 +20,8 @@
 	"scripts": {
 		"start": "HTTPS=true SSL_CRT_FILE=./.certs/localhost.crt SSL_KEY_FILE=./.certs/localhost.key craco start",
 		"build": "craco build",
-		"test": "craco test --coverage --watchAll=false .",
-		"test:watch": "craco test --coverage .",
+		"test": "craco test --coverage --watchAll=false",
+		"test:watch": "craco test --coverage",
 		"eject": "react-scripts eject",
 		"certs": "chmod +x ./generate-certs.sh && ./generate-certs.sh",
 		"http": "craco start",
@@ -50,6 +47,9 @@
 		]
 	},
 	"devDependencies": {
+		"@testing-library/jest-dom": "^5.14.1",
+		"@testing-library/react": "^11.2.7",
+		"@testing-library/user-event": "^12.8.3",
 		"autoprefixer": "^9.8.6",
 		"eslint": "^7.32.0",
 		"eslint-config-airbnb": "^18.2.1",
@@ -64,5 +64,13 @@
 		"prettier": "^2.3.2",
 		"rustywind": "^0.12.2",
 		"tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.7"
+	},
+	"jest": {
+		"collectCoverageFrom": [
+			"<rootDir>/src/**/*.{js,jsx}",
+			"!<rootDir>/src/__tests__/**",
+			"!<rootDir>/src/**/index.jsx",
+			"!<rootDir>/src/**/reportWebVitals.js"
+		]
 	}
 }

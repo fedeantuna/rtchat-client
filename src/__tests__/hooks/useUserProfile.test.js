@@ -63,7 +63,7 @@ describe('useUserProfile', () => {
 		updateUserProfilesDependencies.splice(0);
 	});
 
-	it('returns an object with user profiles and a function (select contact)', () => {
+	test('returns an object with user profiles and a function (select contact)', () => {
 		// Arrange
 		const conversations = [];
 		const currentConversation = null;
@@ -85,7 +85,7 @@ describe('useUserProfile', () => {
 		expect(result.selectContact).toEqual(expect.any(Function));
 	});
 
-	it('readMessages is called with current conversation dependency', () => {
+	test('readMessages is called with current conversation dependency', () => {
 		// Arrange
 		const conversations = [];
 		const currentConversation = null;
@@ -107,7 +107,7 @@ describe('useUserProfile', () => {
 		expect(readMessagesDependencies).toEqual(expectedDependencies);
 	});
 
-	it('select contact function finds a conversation based on user id and sets the current conversation to it', () => {
+	test('select contact function finds a conversation based on user id and sets the current conversation to it', () => {
 		// Arrange
 		const conversations = [cloneDeep(obiWanKenobi), cloneDeep(countDooku)];
 		const currentConversation = null;
@@ -127,7 +127,7 @@ describe('useUserProfile', () => {
 		expect(setCurrentConversationMock).toHaveBeenCalledWith(obiWanKenobi);
 	});
 
-	it('readMessages calls the set user profiles function with the updated user profiles', () => {
+	test('readMessages calls the set user profiles function with the updated user profiles', () => {
 		// Arrange
 		const conversations = [cloneDeep(obiWanKenobi), cloneDeep(countDooku)];
 		const currentConversation = cloneDeep(obiWanKenobi);
@@ -171,7 +171,7 @@ describe('useUserProfile', () => {
 		expect(setUserProfilesMock).toHaveBeenCalledWith(updatedUserProfiles);
 	});
 
-	it('readMessages calls the set conversations function with the updated conversations', () => {
+	test('readMessages calls the set conversations function with the updated conversations', () => {
 		// Arrange
 		const conversations = [cloneDeep(obiWanKenobi), cloneDeep(countDooku)];
 		const currentConversation = cloneDeep(obiWanKenobi);
@@ -223,7 +223,7 @@ describe('useUserProfile', () => {
 		expect(setConversationsMock).toHaveBeenCalledWith(updatedConversations);
 	});
 
-	it('updateUserProfiles is called with current conversation dependency', () => {
+	test('updateUserProfiles is called with current conversation dependency', () => {
 		// Arrange
 		const conversations = [];
 		const currentConversation = null;
@@ -245,7 +245,7 @@ describe('useUserProfile', () => {
 		expect(updateUserProfilesDependencies).toEqual(expectedDependencies);
 	});
 
-	it('updateUserProfiles calls set user profiles function with updated user profiles', () => {
+	test('updateUserProfiles calls set user profiles function with updated user profiles', () => {
 		// Arrange
 		const conversations = [cloneDeep(obiWanKenobi), cloneDeep(countDooku)];
 		const currentConversation = null;

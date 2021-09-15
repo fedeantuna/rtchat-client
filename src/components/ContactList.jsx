@@ -4,10 +4,11 @@ import Contact from './Contact';
 import userProfilePropType from '../propTypeModels/userProfilePropType';
 
 const ContactList = ({ filteredProfiles, handleContactSelect }) => (
-	<div className='overflow-y-auto max-h-screen'>
+	<div data-testid='contact-list' className='max-h-screen overflow-y-auto'>
 		{filteredProfiles.map((up) => (
 			<Contact
 				key={up.userId}
+				id={up.userId}
 				userProfile={up}
 				onSelect={handleContactSelect}
 			/>

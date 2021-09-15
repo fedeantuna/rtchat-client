@@ -13,34 +13,46 @@ const NavigationPanel = ({ userProfiles, onContactSelect }) => {
 	const { connection } = useSignalR();
 	const { filter, filteredProfiles, setFilter } = useSearch(userProfiles);
 
-	const handleContactSelect = (id) => {
-		setFilter('');
+	const selectContact = (id) => {
 		onContactSelect(id);
+		setFilter('');
 	};
 
-	const handleContactSelectWithKeyPress = (e) => {
+	const findContact = () => {
+		connection.invoke(serverMethod.startConversation, filter);
+		setFilter('');
+	};
+
+	const displayErrorMessage = () => {
+		toast.error(`${filter} is not a valid email.`);
+		setFilter('');
+	};
+
+	const selectContactWithKeyPress = (e) => {
 		if (e.key === 'Enter') {
 			if (filteredProfiles[0]) {
-				handleContactSelect(filteredProfiles[0].userId);
+				selectContact(filteredProfiles[0].userId);
 			} else if (isValidEmail(filter)) {
-				connection.invoke(serverMethod.startConversation, filter);
-				setFilter('');
+				findContact();
 			} else {
-				toast.error(`${filter} is not a valid email.`);
+				displayErrorMessage();
 			}
 		}
 	};
 
 	return (
-		<div className='flex flex-col w-1/3 h-screen'>
+		<div
+			data-testid='navigation-panel'
+			className='flex flex-col w-1/3 h-screen'
+		>
 			<UserBar
 				filter={filter}
 				setFilter={setFilter}
-				onKeyPress={handleContactSelectWithKeyPress}
+				onKeyDown={selectContactWithKeyPress}
 			/>
 			<ContactList
 				filteredProfiles={filteredProfiles}
-				handleContactSelect={handleContactSelect}
+				handleContactSelect={selectContact}
 			/>
 		</div>
 	);

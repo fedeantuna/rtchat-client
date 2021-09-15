@@ -4,14 +4,15 @@ import { useAuth0 } from '@auth0/auth0-react';
 import ProfilePicture from './ProfilePicture';
 import userProfilePropType from '../propTypeModels/userProfilePropType';
 
-const Contact = ({ userProfile, onSelect }) => {
+const Contact = ({ id, userProfile, onSelect }) => {
 	const { user } = useAuth0();
 
 	return (
 		<div
+			data-testid={`contact-${id}`}
 			className='flex items-center h-16 mt-2 bg-gray-800 cursor-pointer hover:bg-gray-600'
 			onClick={() => onSelect(userProfile.userId)}
-			onKeyPress={(e) => {
+			onKeyDown={(e) => {
 				if (e.key === 'Enter' || e.key === ' ') {
 					onSelect(userProfile.userId);
 				}
@@ -20,6 +21,7 @@ const Contact = ({ userProfile, onSelect }) => {
 			tabIndex={0}
 		>
 			<ProfilePicture
+				id={`contact-${id}`}
 				picture={userProfile.picture}
 				status={userProfile.status}
 			/>
@@ -38,7 +40,10 @@ const Contact = ({ userProfile, onSelect }) => {
 					</div>
 					{userProfile.lastMessage &&
 						!userProfile.lastMessage.red && (
-							<div className='justify-end w-2 h-2 ml-2 mr-2 bg-gray-400 rounded-full' />
+							<div
+								data-testid='red-indicator'
+								className='justify-end w-2 h-2 ml-2 mr-2 bg-gray-400 rounded-full'
+							/>
 						)}
 				</div>
 			</div>
@@ -47,6 +52,7 @@ const Contact = ({ userProfile, onSelect }) => {
 };
 
 Contact.propTypes = {
+	id: PropTypes.string.isRequired,
 	userProfile: userProfilePropType.isRequired,
 	onSelect: PropTypes.func.isRequired,
 };

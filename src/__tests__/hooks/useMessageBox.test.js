@@ -31,7 +31,7 @@ describe('useMessageBox', () => {
 		setFocusOnMessageBoxDependencies.splice(0);
 	});
 
-	it('returns a an object containing the message box ref', () => {
+	test('returns a an object containing the message box ref', () => {
 		// Arrange
 		const expectedMessageBoxRef = {
 			messageBoxRef: messageBoxRefMock,
@@ -45,7 +45,7 @@ describe('useMessageBox', () => {
 		expect(messageBoxRef).toEqual(expectedMessageBoxRef);
 	});
 
-	it('setFocusOnMessageBox with messageBoxRef dependency', () => {
+	test('setFocusOnMessageBox with messageBoxRef dependency', () => {
 		// Arrange
 		const dependencies = [messageBoxRefMock];
 
@@ -57,7 +57,7 @@ describe('useMessageBox', () => {
 		expect(setFocusOnMessageBoxDependencies).toEqual(dependencies);
 	});
 
-	it('setFocusOnMessageBox calls set focus on message box function', () => {
+	test('setFocusOnMessageBox calls set focus on message box function', () => {
 		// Act
 		useMessageBox();
 
@@ -65,7 +65,7 @@ describe('useMessageBox', () => {
 		expect(focusMock).toHaveBeenCalledTimes(1);
 	});
 
-	it('setFocusOnMessageBox does nothing if messageBoxRef is null', () => {
+	test('setFocusOnMessageBox does nothing if messageBoxRef is null', () => {
 		// Arrange
 		React.createRef.mockReturnValue(null);
 
@@ -76,7 +76,7 @@ describe('useMessageBox', () => {
 		expect(focusMock).toHaveBeenCalledTimes(0);
 	});
 
-	it('setFocusOnMessageBox does nothing if messageBoxRef.current is null', () => {
+	test('setFocusOnMessageBox does nothing if messageBoxRef.current is null', () => {
 		// Arrange
 		React.createRef.mockReturnValue({ current: null });
 
