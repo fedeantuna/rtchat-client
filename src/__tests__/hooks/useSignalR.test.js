@@ -15,7 +15,7 @@ describe('useSignalR', () => {
 		jest.clearAllMocks();
 	});
 
-	it('calls React.useContext with SignalRContext', () => {
+	test('calls React.useContext with SignalRContext', () => {
 		// Act
 		useSignalR();
 

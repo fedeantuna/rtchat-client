@@ -38,7 +38,7 @@ describe('getUpdateUserStatus', () => {
 	};
 
 	describe('updateUserStatus', () => {
-		it('calls setConversations with the updated conversations', () => {
+		test('calls setConversations with the updated conversations', () => {
 			// Arrange
 			const user = cloneDeep(obiWanKenobi);
 
@@ -67,7 +67,7 @@ describe('getUpdateUserStatus', () => {
 			expect(setConversations).toHaveBeenCalledWith(updatedCnversations);
 		});
 
-		it('does nothing when user is null', () => {
+		test('does nothing when user is null', () => {
 			// Arrange
 			const user = null;
 

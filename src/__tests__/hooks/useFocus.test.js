@@ -29,7 +29,7 @@ describe('useFocus', () => {
 		registerEventDependencies.splice(0);
 	});
 
-	it('returns an object with a current property of boolean type', () => {
+	test('returns an object with a current property of boolean type', () => {
 		// Arrange
 		const initialRefState = true;
 		const expectedRef = {
@@ -45,7 +45,7 @@ describe('useFocus', () => {
 		expect(result).toEqual(expectedRef);
 	});
 
-	it('registerEvent is called with an empty dependency array', () => {
+	test('registerEvent is called with an empty dependency array', () => {
 		// Arrange
 		const dependencies = [];
 
@@ -57,7 +57,7 @@ describe('useFocus', () => {
 		expect(registerEventDependencies).toEqual(dependencies);
 	});
 
-	it('registerEvent calls addEventListener on window with focus event and a handler', () => {
+	test('registerEvent calls addEventListener on window with focus event and a handler', () => {
 		// Act
 		useFocus();
 
@@ -69,7 +69,7 @@ describe('useFocus', () => {
 		);
 	});
 
-	it('registerEvent calls addEventListener on window with focus event and a handler', () => {
+	test('registerEvent calls addEventListener on window with focus event and a handler', () => {
 		// Act
 		useFocus();
 
@@ -81,7 +81,7 @@ describe('useFocus', () => {
 		);
 	});
 
-	it('event handler for focus event changes hasFocus.current to true', () => {
+	test('event handler for focus event changes hasFocus.current to true', () => {
 		// Arrange
 		const expectedRef = {
 			current: true,
@@ -99,7 +99,7 @@ describe('useFocus', () => {
 		expect(result).toEqual(expectedRef);
 	});
 
-	it('event handler for blur event changes hasFocus.current to false', () => {
+	test('event handler for blur event changes hasFocus.current to false', () => {
 		// Arrange
 		const expectedRef = {
 			current: false,

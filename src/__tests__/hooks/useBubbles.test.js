@@ -91,7 +91,7 @@ describe('useBubbles', () => {
 		generateBubblesDependencies.splice(0);
 	});
 
-	it('returns array of bubbles', () => {
+	test('returns array of bubbles', () => {
 		// Arrange
 		useState.mockReset();
 		useState.mockImplementation(() => [
@@ -108,7 +108,7 @@ describe('useBubbles', () => {
 		expect(result).toEqual(bubbles);
 	});
 
-	it('calls useState with an empty array as initial state', () => {
+	test('calls useState with an empty array as initial state', () => {
 		// Assert
 		const initialState = [];
 
@@ -120,7 +120,7 @@ describe('useBubbles', () => {
 		expect(useState).toHaveBeenCalledWith(initialState);
 	});
 
-	it('calls useEffect with an empty dependency array', () => {
+	test('calls useEffect with an empty dependency array', () => {
 		// Assert
 		const emptyDependencyArray = [];
 
@@ -132,7 +132,7 @@ describe('useBubbles', () => {
 		expect(generateBubblesDependencies).toEqual(emptyDependencyArray);
 	});
 
-	it('useEffect adds styles to bubbles', () => {
+	test('useEffect adds styles to bubbles', () => {
 		// Assert
 		const styles = [firstBubble, secondBubble, thirdBubble];
 

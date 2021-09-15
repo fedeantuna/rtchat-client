@@ -38,7 +38,7 @@ describe('getStartConversation', () => {
 	};
 
 	describe('startConversation', () => {
-		it('calls setConversations with the new conversation on top', () => {
+		test('calls setConversations with the new conversation on top', () => {
 			// Arrange
 			const user = cloneDeep(obiWanKenobi);
 			const conversations = [cloneDeep(countDookuChat)];
@@ -71,7 +71,7 @@ describe('getStartConversation', () => {
 			expect(toastError).toHaveBeenCalledTimes(0);
 		});
 
-		it('shows an error using toastify and does not call setConversations', () => {
+		test('shows an error using toastify and does not call setConversations', () => {
 			// Arrange
 			const user = null;
 			const conversations = [cloneDeep(countDookuChat)];

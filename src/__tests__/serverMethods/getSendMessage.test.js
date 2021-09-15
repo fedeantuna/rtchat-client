@@ -37,7 +37,7 @@ describe('getSendMessage', () => {
 	};
 
 	describe('sendMessage', () => {
-		it('calls sendMessage method on the server using invoke', () => {
+		test('calls sendMessage method on the server using invoke', () => {
 			// Arrange
 			const content = 'Count Dooku...';
 			const currentConversation = countDookuChat;
@@ -61,7 +61,7 @@ describe('getSendMessage', () => {
 			expect(toastError).toHaveBeenCalledTimes(0);
 		});
 
-		it('notifies the user that there has been en error when the invoke method fails', () => {
+		test('notifies the user that there has been en error when the invoke method fails', () => {
 			// Arrange
 			const content = 'Count Dooku...';
 			const currentConversation = countDookuChat;

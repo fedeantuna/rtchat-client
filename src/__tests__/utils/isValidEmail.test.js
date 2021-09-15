@@ -1,7 +1,7 @@
 import isValidEmail from '../../utils/isValidEmail';
 
 describe('isValidEmail', () => {
-	it('returns true when email is valid', () => {
+	test('returns true when email is valid', () => {
 		// Arrange
 		const email = 'obi_wan.kenobi@jedi-order.rep';
 
@@ -12,7 +12,7 @@ describe('isValidEmail', () => {
 		expect(result).toBeTruthy();
 	});
 
-	it('returns false when email is not valid', () => {
+	test('returns false when email is not valid', () => {
 		// Arrange
 		const email = 'ahsokatano';
 
@@ -23,7 +23,7 @@ describe('isValidEmail', () => {
 		expect(result).toBeFalsy();
 	});
 
-	it('throws an error when email is undefined', () => {
+	test('throws an error when email is undefined', () => {
 		// Arrange
 		const email = undefined;
 
@@ -34,7 +34,7 @@ describe('isValidEmail', () => {
 		expect(execute).toThrowError('The email is mandatory.');
 	});
 
-	it('throws an error when email is null', () => {
+	test('throws an error when email is null', () => {
 		// Arrange
 		const email = null;
 
@@ -45,7 +45,7 @@ describe('isValidEmail', () => {
 		expect(execute).toThrowError('The email is mandatory.');
 	});
 
-	it('throws an error when email is not a string', () => {
+	test('throws an error when email is not a string', () => {
 		// Arrange
 		const email = [];
 

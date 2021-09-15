@@ -66,7 +66,7 @@ describe('getReceiveMessage', () => {
 	};
 
 	describe('receiveMessage', () => {
-		it('plays notification sound when user focus is not on the app', () => {
+		test('plays notification sound when user focus is not on the app', () => {
 			// Arrange
 			const conversations = [];
 			const currentConversation = null;
@@ -96,7 +96,7 @@ describe('getReceiveMessage', () => {
 			expect(play).toHaveBeenCalledTimes(1);
 		});
 
-		it('plays notification sound when user focus is not on the current chat', () => {
+		test('plays notification sound when user focus is not on the current chat', () => {
 			// Arrange
 			const conversations = [];
 			const currentConversation = null;
@@ -126,7 +126,7 @@ describe('getReceiveMessage', () => {
 			expect(play).toHaveBeenCalledTimes(1);
 		});
 
-		it('does not plays notification sound when user focus is on the current chat', () => {
+		test('does not plays notification sound when user focus is on the current chat', () => {
 			// Arrange
 			const conversations = [cloneDeep(obiWanKenobiChat)];
 			const currentConversation = cloneDeep(obiWanKenobiChat);
@@ -156,7 +156,7 @@ describe('getReceiveMessage', () => {
 			expect(play).toHaveBeenCalledTimes(0);
 		});
 
-		it('does not plays notification sound when user focus chats itself', () => {
+		test('does not plays notification sound when user focus chats itself', () => {
 			// Arrange
 			const conversations = [
 				cloneDeep(obiWanKenobiChat),
@@ -189,7 +189,7 @@ describe('getReceiveMessage', () => {
 			expect(play).toHaveBeenCalledTimes(0);
 		});
 
-		it('calls setConversations with the updated target conversation on top and the others bellow', () => {
+		test('calls setConversations with the updated target conversation on top and the others bellow', () => {
 			// Arrange
 			const conversations = [
 				cloneDeep(countDookuChat),
@@ -241,7 +241,7 @@ describe('getReceiveMessage', () => {
 			expect(setCurrentConversation).toHaveBeenCalledTimes(0);
 		});
 
-		it('does not call setCurrentConversation when the user does not have focus on the conversation receiving messages', () => {
+		test('does not call setCurrentConversation when the user does not have focus on the conversation receiving messages', () => {
 			// Arrange
 			const conversations = [
 				cloneDeep(countDookuChat),
@@ -274,7 +274,7 @@ describe('getReceiveMessage', () => {
 			expect(setCurrentConversation).toHaveBeenCalledTimes(0);
 		});
 
-		it('calls setCurrentConversation when user has focus on the conversation receiving messages', () => {
+		test('calls setCurrentConversation when user has focus on the conversation receiving messages', () => {
 			// Arrange
 			const conversations = [
 				cloneDeep(countDookuChat),

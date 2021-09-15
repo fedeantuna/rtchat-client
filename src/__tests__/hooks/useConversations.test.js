@@ -133,7 +133,7 @@ describe('useConversations', () => {
 		updateCurrentConversationDependencies.splice(0);
 	});
 
-	it('returns object with conversations, current conversation, set conversations function, set current conversation function and send message function', () => {
+	test('returns object with conversations, current conversation, set conversations function, set current conversation function and send message function', () => {
 		// Arrange
 		const currentConversationInitialState = null;
 		const conversationsInitialState = [];
@@ -153,7 +153,7 @@ describe('useConversations', () => {
 		expect(result).toEqual(expectedResult);
 	});
 
-	it('registerReceiveMessageMethod is called and depends on connection and the receive message function', () => {
+	test('registerReceiveMessageMethod is called and depends on connection and the receive message function', () => {
 		// Arrange
 		const expectedDependencies = [connection, receiveMessageMock];
 
@@ -167,7 +167,7 @@ describe('useConversations', () => {
 		);
 	});
 
-	it('registerReceiveMessageMethod registers the receive message method', () => {
+	test('registerReceiveMessageMethod registers the receive message method', () => {
 		// Arrange
 		const method = clientMethod.receiveMessage;
 
@@ -182,7 +182,7 @@ describe('useConversations', () => {
 		);
 	});
 
-	it('registerReceiveMessageMethod returns unregister function for the receive message method', () => {
+	test('registerReceiveMessageMethod returns unregister function for the receive message method', () => {
 		// Arrange
 		const method = clientMethod.receiveMessage;
 
@@ -194,7 +194,7 @@ describe('useConversations', () => {
 		expect(connection.off).toHaveBeenCalledWith(method, receiveMessageMock);
 	});
 
-	it('registerReceiveMessageMethod does nothing if connection is null', () => {
+	test('registerReceiveMessageMethod does nothing if connection is null', () => {
 		// Arrange
 		useSignalR.mockReturnValue({
 			connection: null,
@@ -207,7 +207,7 @@ describe('useConversations', () => {
 		expect(connection.on).toHaveBeenCalledTimes(0);
 	});
 
-	it('unregisterReceiveMessageMethod does nothing if connection is null', () => {
+	test('unregisterReceiveMessageMethod does nothing if connection is null', () => {
 		// Arrange
 		useSignalR.mockReturnValue({
 			connection: null,
@@ -221,7 +221,7 @@ describe('useConversations', () => {
 		expect(connection.off).toHaveBeenCalledTimes(0);
 	});
 
-	it('registerUpdateUserStatusMethod is called and depends on connection and the update user status function', () => {
+	test('registerUpdateUserStatusMethod is called and depends on connection and the update user status function', () => {
 		// Arrange
 		const expectedDependencies = [connection, updateUserStatusMock];
 
@@ -235,7 +235,7 @@ describe('useConversations', () => {
 		);
 	});
 
-	it('registerUpdateUserStatusMethod registers the update user status method', () => {
+	test('registerUpdateUserStatusMethod registers the update user status method', () => {
 		// Arrange
 		const method = clientMethod.updateUserStatus;
 
@@ -250,7 +250,7 @@ describe('useConversations', () => {
 		);
 	});
 
-	it('registerUpdateUserStatusMethod returns unregister function for the update user status method', () => {
+	test('registerUpdateUserStatusMethod returns unregister function for the update user status method', () => {
 		// Arrange
 		const method = clientMethod.updateUserStatus;
 
@@ -265,7 +265,7 @@ describe('useConversations', () => {
 		);
 	});
 
-	it('registerUpdateUserStatusMethod does nothing if connection is null', () => {
+	test('registerUpdateUserStatusMethod does nothing if connection is null', () => {
 		// Arrange
 		useSignalR.mockReturnValue({
 			connection: null,
@@ -278,7 +278,7 @@ describe('useConversations', () => {
 		expect(connection.on).toHaveBeenCalledTimes(0);
 	});
 
-	it('unregisterUpdateUserStatusMethod does nothing if connection is null', () => {
+	test('unregisterUpdateUserStatusMethod does nothing if connection is null', () => {
 		// Arrange
 		useSignalR.mockReturnValue({
 			connection: null,
@@ -292,7 +292,7 @@ describe('useConversations', () => {
 		expect(connection.off).toHaveBeenCalledTimes(0);
 	});
 
-	it('registerStartConversationMethod is called and depends on connection and the start conversation function', () => {
+	test('registerStartConversationMethod is called and depends on connection and the start conversation function', () => {
 		// Arrange
 		const expectedDependencies = [connection, startConversationMock];
 
@@ -306,7 +306,7 @@ describe('useConversations', () => {
 		);
 	});
 
-	it('registerStartConversationMethod registers the start conversation method', () => {
+	test('registerStartConversationMethod registers the start conversation method', () => {
 		// Arrange
 		const method = clientMethod.startConversation;
 
@@ -321,7 +321,7 @@ describe('useConversations', () => {
 		);
 	});
 
-	it('registerStartConversationMethod returns unregister function for the start conversation method', () => {
+	test('registerStartConversationMethod returns unregister function for the start conversation method', () => {
 		// Arrange
 		const method = clientMethod.startConversation;
 
@@ -336,7 +336,7 @@ describe('useConversations', () => {
 		);
 	});
 
-	it('registerStartConversationMethod does nothing if connection is null', () => {
+	test('registerStartConversationMethod does nothing if connection is null', () => {
 		// Arrange
 		useSignalR.mockReturnValue({
 			connection: null,
@@ -349,7 +349,7 @@ describe('useConversations', () => {
 		expect(connection.on).toHaveBeenCalledTimes(0);
 	});
 
-	it('unregisterStartConversationMethod does nothing if connection is null', () => {
+	test('unregisterStartConversationMethod does nothing if connection is null', () => {
 		// Arrange
 		useSignalR.mockReturnValue({
 			connection: null,
@@ -363,7 +363,7 @@ describe('useConversations', () => {
 		expect(connection.off).toHaveBeenCalledTimes(0);
 	});
 
-	it('updateCurrentConversation is called and depends on conversations', () => {
+	test('updateCurrentConversation is called and depends on conversations', () => {
 		// Arrange
 		const conversationsInitialState = [];
 		const expectedDependencies = [conversationsInitialState];
@@ -378,7 +378,7 @@ describe('useConversations', () => {
 		);
 	});
 
-	it('updateCurrentConversation calls the set current conversation function when the current conversation is defined and selectOnLoad is false', () => {
+	test('updateCurrentConversation calls the set current conversation function when the current conversation is defined and selectOnLoad is false', () => {
 		// Arrange
 		const conversations = [
 			{
@@ -419,7 +419,7 @@ describe('useConversations', () => {
 		);
 	});
 
-	it('updateCurrentConversation does not call the set current conversation function when selectOnLoad is true', () => {
+	test('updateCurrentConversation does not call the set current conversation function when selectOnLoad is true', () => {
 		// Arrange
 		const conversations = [
 			{
@@ -457,7 +457,7 @@ describe('useConversations', () => {
 		expect(setCurrentConversationMock).toHaveBeenCalledTimes(1); // the one call comes from selectConversationOnLoad
 	});
 
-	it('updateCurrentConversation does not call the set current conversation when the current conversation is null', () => {
+	test('updateCurrentConversation does not call the set current conversation when the current conversation is null', () => {
 		// Arrange
 		const conversations = [
 			{
@@ -489,7 +489,7 @@ describe('useConversations', () => {
 		expect(setCurrentConversationMock).toHaveBeenCalledTimes(0);
 	});
 
-	it('selectConversationOnLoad is called and depends on conversations', () => {
+	test('selectConversationOnLoad is called and depends on conversations', () => {
 		// Arrange
 		const conversationsInitialState = [];
 		const expectedDependencies = [conversationsInitialState];
@@ -504,7 +504,7 @@ describe('useConversations', () => {
 		);
 	});
 
-	it('selectConversationOnLoad calls the set current conversation function', () => {
+	test('selectConversationOnLoad calls the set current conversation function', () => {
 		// Arrange
 		const conversations = [
 			{
@@ -545,7 +545,7 @@ describe('useConversations', () => {
 		);
 	});
 
-	it('selectConversationOnLoad does not call the set current conversation function when selectOnLoad is false', () => {
+	test('selectConversationOnLoad does not call the set current conversation function when selectOnLoad is false', () => {
 		// Arrange
 		const conversations = [
 			{
@@ -576,7 +576,7 @@ describe('useConversations', () => {
 		expect(setCurrentConversationMock).toHaveBeenCalledTimes(0);
 	});
 
-	it('selectConversationOnLoad does not call the set current conversation function when conversations is empty', () => {
+	test('selectConversationOnLoad does not call the set current conversation function when conversations is empty', () => {
 		// Act
 		useConversations();
 
