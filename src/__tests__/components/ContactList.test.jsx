@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { v4 as uuidv4 } from 'uuid';
 import ContactList from '../../components/ContactList';
+import userStatus from '../../enums/userStatus';
 
 describe('<ContactList />', () => {
 	const handleContactSelectMock = jest.fn();
@@ -9,12 +10,14 @@ describe('<ContactList />', () => {
 		userId: uuidv4(),
 		email: 'obiwankenobi@jediorder.rep',
 		picture: 'some-picture',
+		status: userStatus.online,
 		lastMessage: null,
 	};
 	const countDookuUserProfile = {
 		userId: uuidv4(),
 		email: 'countdooku@sith.sep',
 		picture: 'some-beardy-picture',
+		status: userStatus.online,
 		lastMessage: null,
 	};
 	const userProfiles = [obiWanKenobiUserProfile, countDookuUserProfile];

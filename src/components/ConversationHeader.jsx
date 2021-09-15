@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProfilePicture from './ProfilePicture';
-import userStatus from '../enums/userStatus';
 
 const ConversationHeader = ({ userId, picture, email, status }) => (
 	<div
@@ -21,11 +20,7 @@ ConversationHeader.propTypes = {
 	userId: PropTypes.string.isRequired,
 	picture: PropTypes.string.isRequired,
 	email: PropTypes.string.isRequired,
-	status: PropTypes.string,
-};
-
-ConversationHeader.defaultProps = {
-	status: userStatus.hidden,
+	status: PropTypes.string.isRequired,
 };
 
 export default ConversationHeader;

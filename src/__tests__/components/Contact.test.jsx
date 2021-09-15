@@ -3,6 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { v4 as uuidv4 } from 'uuid';
 import Contact from '../../components/Contact';
+import userStatus from '../../enums/userStatus';
 
 jest.mock('@auth0/auth0-react');
 
@@ -11,12 +12,14 @@ describe('<Contact />', () => {
 		sub: uuidv4(),
 		email: 'generalgrievous@droidarmy.sep',
 		picture: 'some-ugly-picture',
+		status: userStatus.online,
 	};
 
 	const obiWanKenobi = {
 		id: uuidv4(),
 		email: 'obiwankenobi@jediorder.rep',
 		picture: 'some-picture',
+		status: userStatus.online,
 	};
 
 	beforeEach(() => {
@@ -33,6 +36,7 @@ describe('<Contact />', () => {
 			userId: obiWanKenobi.id,
 			email: obiWanKenobi.email,
 			picture: obiWanKenobi.picture,
+			status: obiWanKenobi.status,
 			lastMessage: null,
 		};
 		const onSelectMock = jest.fn();
@@ -58,6 +62,7 @@ describe('<Contact />', () => {
 			userId: obiWanKenobi.id,
 			email: obiWanKenobi.email,
 			picture: obiWanKenobi.picture,
+			status: obiWanKenobi.status,
 			lastMessage: null,
 		};
 		const onSelectMock = jest.fn();
@@ -81,6 +86,7 @@ describe('<Contact />', () => {
 			userId: obiWanKenobi.id,
 			email: obiWanKenobi.email,
 			picture: obiWanKenobi.picture,
+			status: obiWanKenobi.status,
 			lastMessage: null,
 		};
 		const onSelectMock = jest.fn();
@@ -106,6 +112,7 @@ describe('<Contact />', () => {
 			userId: obiWanKenobi.id,
 			email: obiWanKenobi.email,
 			picture: obiWanKenobi.picture,
+			status: obiWanKenobi.status,
 			lastMessage: null,
 		};
 		const onSelectMock = jest.fn();
@@ -129,6 +136,7 @@ describe('<Contact />', () => {
 			userId: obiWanKenobi.id,
 			email: obiWanKenobi.email,
 			picture: obiWanKenobi.picture,
+			status: obiWanKenobi.status,
 			lastMessage: {
 				id: uuidv4(),
 				sender: obiWanKenobi.id,
@@ -157,6 +165,7 @@ describe('<Contact />', () => {
 			userId: obiWanKenobi.id,
 			email: obiWanKenobi.email,
 			picture: obiWanKenobi.picture,
+			status: obiWanKenobi.status,
 			lastMessage: {
 				id: uuidv4(),
 				sender: user.sub,
@@ -185,6 +194,7 @@ describe('<Contact />', () => {
 			userId: obiWanKenobi.id,
 			email: obiWanKenobi.email,
 			picture: obiWanKenobi.picture,
+			status: obiWanKenobi.status,
 			lastMessage: {
 				id: uuidv4(),
 				sender: obiWanKenobi.id,
@@ -213,6 +223,7 @@ describe('<Contact />', () => {
 			userId: obiWanKenobi.id,
 			email: obiWanKenobi.email,
 			picture: obiWanKenobi.picture,
+			status: obiWanKenobi.status,
 			lastMessage: {
 				id: uuidv4(),
 				sender: obiWanKenobi.id,
@@ -241,6 +252,7 @@ describe('<Contact />', () => {
 			userId: obiWanKenobi.id,
 			email: obiWanKenobi.email,
 			picture: obiWanKenobi.picture,
+			status: obiWanKenobi.status,
 			lastMessage: {
 				id: uuidv4(),
 				sender: obiWanKenobi.id,
@@ -271,6 +283,7 @@ describe('<Contact />', () => {
 			userId: obiWanKenobi.id,
 			email: obiWanKenobi.email,
 			picture: obiWanKenobi.picture,
+			status: obiWanKenobi.status,
 			lastMessage: null,
 		};
 		const onSelectMock = jest.fn();
@@ -297,6 +310,7 @@ describe('<Contact />', () => {
 			userId: obiWanKenobi.id,
 			email: obiWanKenobi.email,
 			picture: obiWanKenobi.picture,
+			status: obiWanKenobi.status,
 			lastMessage: null,
 		};
 		const onSelectMock = jest.fn();
@@ -326,6 +340,7 @@ describe('<Contact />', () => {
 			userId: obiWanKenobi.id,
 			email: obiWanKenobi.email,
 			picture: obiWanKenobi.picture,
+			status: obiWanKenobi.status,
 			lastMessage: null,
 		};
 		const onSelectMock = jest.fn();
@@ -355,6 +370,7 @@ describe('<Contact />', () => {
 			userId: obiWanKenobi.id,
 			email: obiWanKenobi.email,
 			picture: obiWanKenobi.picture,
+			status: obiWanKenobi.status,
 			lastMessage: null,
 		};
 		const onSelectMock = jest.fn();

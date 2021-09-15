@@ -8,6 +8,7 @@ import useSignalR from '../../hooks/useSignalR';
 import useSearch from '../../hooks/useSearch';
 import serverMethod from '../../enums/serverMethod';
 import isValidEmail from '../../utils/isValidEmail';
+import userStatus from '../../enums/userStatus';
 
 jest.mock('react');
 jest.mock('@auth0/auth0-react');
@@ -70,12 +71,14 @@ describe('<NavigationPanel />', () => {
 			userId: obiWanKenobi.id,
 			email: obiWanKenobi.email,
 			picture: obiWanKenobi.picture,
+			status: userStatus.online,
 			lastMessage: null,
 		};
 		const countDookuUserProfile = {
 			userId: countDooku.id,
 			email: countDooku.email,
 			picture: countDooku.picture,
+			status: userStatus.online,
 			lastMessage: null,
 		};
 		const userProfiles = [obiWanKenobiUserProfile, countDookuUserProfile];
@@ -99,12 +102,14 @@ describe('<NavigationPanel />', () => {
 			userId: obiWanKenobi.id,
 			email: obiWanKenobi.email,
 			picture: obiWanKenobi.picture,
+			status: userStatus.online,
 			lastMessage: null,
 		};
 		const countDookuUserProfile = {
 			userId: countDooku.id,
 			email: countDooku.email,
 			picture: countDooku.picture,
+			status: userStatus.online,
 			lastMessage: null,
 		};
 		const userProfiles = [obiWanKenobiUserProfile, countDookuUserProfile];
@@ -128,12 +133,14 @@ describe('<NavigationPanel />', () => {
 			userId: obiWanKenobi.id,
 			email: obiWanKenobi.email,
 			picture: obiWanKenobi.picture,
+			status: userStatus.online,
 			lastMessage: null,
 		};
 		const countDookuUserProfile = {
 			userId: countDooku.id,
 			email: countDooku.email,
 			picture: countDooku.picture,
+			status: userStatus.online,
 			lastMessage: null,
 		};
 		const userProfiles = [obiWanKenobiUserProfile, countDookuUserProfile];
@@ -157,12 +164,14 @@ describe('<NavigationPanel />', () => {
 			userId: obiWanKenobi.id,
 			email: obiWanKenobi.email,
 			picture: obiWanKenobi.picture,
+			status: userStatus.online,
 			lastMessage: null,
 		};
 		const countDookuUserProfile = {
 			userId: countDooku.id,
 			email: countDooku.email,
 			picture: countDooku.picture,
+			status: userStatus.online,
 			lastMessage: null,
 		};
 		const userProfiles = [obiWanKenobiUserProfile, countDookuUserProfile];
@@ -195,12 +204,14 @@ describe('<NavigationPanel />', () => {
 			userId: obiWanKenobi.id,
 			email: obiWanKenobi.email,
 			picture: obiWanKenobi.picture,
+			status: userStatus.online,
 			lastMessage: null,
 		};
 		const countDookuUserProfile = {
 			userId: countDooku.id,
 			email: countDooku.email,
 			picture: countDooku.picture,
+			status: userStatus.online,
 			lastMessage: null,
 		};
 		const userProfiles = [obiWanKenobiUserProfile, countDookuUserProfile];

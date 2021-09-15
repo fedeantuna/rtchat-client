@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { v4 as uuidv4 } from 'uuid';
 import Conversation from '../../components/Conversation';
+import userStatus from '../../enums/userStatus';
 
 describe('<Conversation />', () => {
 	test('renders conversation', () => {
@@ -10,6 +11,7 @@ describe('<Conversation />', () => {
 			userId: uuidv4(),
 			email: 'obiwankenobi@jediorder.rep',
 			picture: 'some-picture',
+			status: userStatus.online,
 			messages: [],
 		};
 		const onSendMock = jest.fn();
@@ -27,6 +29,7 @@ describe('<Conversation />', () => {
 			userId: uuidv4(),
 			email: 'obiwankenobi@jediorder.rep',
 			picture: 'some-picture',
+			status: userStatus.online,
 			messages: [],
 		};
 		const onSendMock = jest.fn();
@@ -44,6 +47,7 @@ describe('<Conversation />', () => {
 			userId: uuidv4(),
 			email: 'obiwankenobi@jediorder.rep',
 			picture: 'some-picture',
+			status: userStatus.online,
 			messages: [],
 		};
 		const onSendMock = jest.fn();
@@ -61,6 +65,7 @@ describe('<Conversation />', () => {
 			userId: uuidv4(),
 			email: 'obiwankenobi@jediorder.rep',
 			picture: 'some-picture',
+			status: userStatus.online,
 			messages: [],
 		};
 		const onSendMock = jest.fn();

@@ -4,6 +4,7 @@ import ProfilePicture from './ProfilePicture';
 import useSignalR from '../hooks/useSignalR';
 import userStatus from '../enums/userStatus';
 import serverMethod from '../enums/serverMethod';
+import StatusChangeButton from './StatusChangeButton';
 
 const UserProfileButton = () => {
 	const { user, logout } = useAuth0();
@@ -27,7 +28,7 @@ const UserProfileButton = () => {
 		setStatus(newStatus);
 	};
 
-	const handleChangeStatusKeyPress = (e, newStatus) => {
+	const handleChangeStatusKeyDown = (e, newStatus) => {
 		if (e.key === 'Enter' || e.key === ' ') {
 			handleChangeStatus(newStatus);
 		}
@@ -62,60 +63,23 @@ const UserProfileButton = () => {
 							{user.email}
 						</p>
 					</div>
-					<div
-						className='flex items-center p-2 hover:bg-gray-700'
-						role='button'
-						tabIndex={0}
-						onKeyPress={(e) =>
-							handleChangeStatusKeyPress(e, userStatus.online)
-						}
-						onClick={() => handleChangeStatus(userStatus.online)}
-					>
-						<div className='w-3 h-3 mr-2 bg-green-600 rounded-full' />
-						Appear online
-					</div>
-					<div
-						className='flex items-center p-2 hover:bg-gray-700'
-						role='button'
-						tabIndex={0}
-						onKeyPress={(e) =>
-							handleChangeStatusKeyPress(e, userStatus.away)
-						}
-						onClick={() => handleChangeStatus(userStatus.away)}
-					>
-						<div className='w-3 h-3 mr-2 bg-yellow-300 rounded-full' />
-						Appear away
-					</div>
-					<div
-						className='flex items-center p-2 hover:bg-gray-700'
-						role='button'
-						tabIndex={0}
-						onKeyPress={(e) =>
-							handleChangeStatusKeyPress(e, userStatus.busy)
-						}
-						onClick={() => handleChangeStatus(userStatus.busy)}
-					>
-						<div className='w-3 h-3 mr-2 bg-red-500 rounded-full' />
-						Appear busy
-					</div>
-					<div
-						className='flex items-center p-2 hover:bg-gray-700'
-						role='button'
-						tabIndex={0}
-						onKeyPress={(e) =>
-							handleChangeStatusKeyPress(e, userStatus.offline)
-						}
-						onClick={() => handleChangeStatus(userStatus.offline)}
-					>
-						<div className='w-3 h-3 mr-2 bg-gray-500 rounded-full' />
-						Appear offline
-					</div>
+					{Object.keys(userStatus).map((key) => (
+						<StatusChangeButton
+							key={`status-change-button-${key}`}
+							displayText={`Appear ${userStatus[key]}`}
+							userStatus={userStatus[key]}
+							onClick={() => handleChangeStatus(userStatus[key])}
+							onKeyDown={(e) =>
+								handleChangeStatusKeyDown(e, userStatus[key])
+							}
+						/>
+					))}
 					<div
 						className='p-2 border-t border-white hover:bg-gray-700'
 						role='button'
 						tabIndex={0}
-						onKeyPress={handleLogoutKeyPress}
 						onClick={handleLogout}
+						onKeyDown={handleLogoutKeyPress}
 					>
 						Sign out
 					</div>

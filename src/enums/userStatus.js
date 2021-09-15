@@ -3,7 +3,6 @@ const userStatus = {
 	offline: 'offline',
 	busy: 'busy',
 	away: 'away',
-	hidden: 'hidden',
 };
 
 export default userStatus;
