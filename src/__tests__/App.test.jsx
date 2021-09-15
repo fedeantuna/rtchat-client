@@ -6,6 +6,7 @@ import { render, screen } from '@testing-library/react';
 import App from '../App';
 import useConversations from '../hooks/useConversations';
 import useUserProfiles from '../hooks/useUserProfiles';
+import userStatus from '../enums/userStatus';
 
 jest.mock('react', () => {
 	const actualReact = jest.requireActual('react');
@@ -27,14 +28,17 @@ const renderWithRouter = (ui, { route = '/' } = {}, title = 'Test page') => {
 };
 
 describe('App', () => {
+	const user = {
+		sub: uuidv4(),
+		email: 'generalgrievous@droidarmy.sep',
+		picture: 'some-ugly-picture',
+		status: userStatus.online,
+	};
 	beforeEach(() => {
 		useAuth0.mockReturnValue({
 			isLoading: false,
 			getAccessTokenSilently: jest.fn(),
-			user: {
-				sub: uuidv4(),
-				picture: 'some-ugly-picture',
-			},
+			user,
 		});
 
 		withAuthenticationRequired.mockImplementation((component) => component);
