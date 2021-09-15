@@ -67,7 +67,7 @@ const UserProfileButton = () => {
 						<StatusChangeButton
 							key={`status-change-button-${key}`}
 							displayText={`Appear ${userStatus[key]}`}
-							userStatus={userStatus[key]}
+							status={userStatus[key]}
 							onClick={() => handleChangeStatus(userStatus[key])}
 							onKeyDown={(e) =>
 								handleChangeStatusKeyDown(e, userStatus[key])

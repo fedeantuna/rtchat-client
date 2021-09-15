@@ -7,33 +7,33 @@ const StatusDiv = ({ status }) => {
 			case userStatus.online:
 				return (
 					<div
-						data-testid='profile-picture-status-online'
+						data-testid='status-div-online'
 						className='w-3 h-3 mr-2 bg-green-600 rounded-full'
 					/>
 				);
 			case userStatus.away:
 				return (
 					<div
-						data-testid='profile-picture-status-away'
+						data-testid='status-div-away'
 						className='w-3 h-3 mr-2 bg-yellow-300 rounded-full'
 					/>
 				);
 			case userStatus.busy:
 				return (
 					<div
-						data-testid='profile-picture-status-busy'
+						data-testid='status-div-busy'
 						className='w-3 h-3 mr-2 bg-red-500 rounded-full'
 					/>
 				);
 			case userStatus.offline:
 				return (
 					<div
-						data-testid='profile-picture-status-offline'
+						data-testid='status-div-offline'
 						className='w-3 h-3 mr-2 bg-gray-500 rounded-full'
 					/>
 				);
 			default:
-				return <div data-testid='profile-picture-status-hidden' />;
+				return <div data-testid='status-div-hidden' />;
 		}
 	};
 

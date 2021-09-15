@@ -14,13 +14,9 @@ describe('<StatusDiv />', () => {
 		render(<StatusDiv status={status} />);
 
 		// Assert
+		expect(screen.getByTestId('status-div-online')).toBeInTheDocument();
 		expect(
-			screen.getByTestId('profile-picture-status-online')
-		).toBeInTheDocument();
-		expect(
-			screen
-				.getByTestId('profile-picture-status-online')
-				.classList.values()
+			screen.getByTestId('status-div-online').classList.values()
 		).toContain('bg-green-600');
 	});
 
@@ -32,11 +28,9 @@ describe('<StatusDiv />', () => {
 		render(<StatusDiv status={status} />);
 
 		// Assert
+		expect(screen.getByTestId('status-div-away')).toBeInTheDocument();
 		expect(
-			screen.getByTestId('profile-picture-status-away')
-		).toBeInTheDocument();
-		expect(
-			screen.getByTestId('profile-picture-status-away').classList.values()
+			screen.getByTestId('status-div-away').classList.values()
 		).toContain('bg-yellow-300');
 	});
 
@@ -48,11 +42,9 @@ describe('<StatusDiv />', () => {
 		render(<StatusDiv status={status} />);
 
 		// Assert
+		expect(screen.getByTestId('status-div-busy')).toBeInTheDocument();
 		expect(
-			screen.getByTestId('profile-picture-status-busy')
-		).toBeInTheDocument();
-		expect(
-			screen.getByTestId('profile-picture-status-busy').classList.values()
+			screen.getByTestId('status-div-busy').classList.values()
 		).toContain('bg-red-500');
 	});
 
@@ -64,13 +56,9 @@ describe('<StatusDiv />', () => {
 		render(<StatusDiv status={status} />);
 
 		// Assert
+		expect(screen.getByTestId('status-div-offline')).toBeInTheDocument();
 		expect(
-			screen.getByTestId('profile-picture-status-offline')
-		).toBeInTheDocument();
-		expect(
-			screen
-				.getByTestId('profile-picture-status-offline')
-				.classList.values()
+			screen.getByTestId('status-div-offline').classList.values()
 		).toContain('bg-gray-500');
 	});
 
@@ -82,11 +70,9 @@ describe('<StatusDiv />', () => {
 		render(<StatusDiv status={status} />);
 
 		// Assert
-		expect(
-			screen.getByTestId('profile-picture-status-hidden')
-		).toBeInTheDocument();
-		expect(
-			screen.getByTestId('profile-picture-status-hidden').classList.length
-		).toBe(0);
+		expect(screen.getByTestId('status-div-hidden')).toBeInTheDocument();
+		expect(screen.getByTestId('status-div-hidden').classList.length).toBe(
+			0
+		);
 	});
 });
