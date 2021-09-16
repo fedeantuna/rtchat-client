@@ -21,7 +21,6 @@ const Conversation = ({ current, onSend }) => (
 				/>
 				<ConversationHistory messages={current.messages} />
 				<MessageBox
-					key={Date.now()}
 					onSend={onSend}
 					enabled={current.status !== userStatus.offline}
 				/>

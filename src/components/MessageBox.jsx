@@ -1,15 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import useMessageBox from '../hooks/useMessageBox';
 
 const MessageBox = ({ onSend, enabled }) => {
 	const { messageBoxRef } = useMessageBox();
 	const [messageContent, setMessageContent] = useState('');
+	const [sendButtonIsDisabled, setSendButtonIsDisabled] = useState(true);
+
+	useEffect(() => {
+		const setButtonEnability = () => {
+			if (
+				messageContent.length === 0 ||
+				!enabled ||
+				/^\s+$/.test(messageContent)
+			) {
+				setSendButtonIsDisabled(true);
+			} else {
+				setSendButtonIsDisabled(false);
+			}
+		};
+
+		setButtonEnability();
+	}, [messageContent, enabled]);
 
 	const handleSendMessage = () => {
-		onSend(messageContent);
+		if (!sendButtonIsDisabled) {
+			onSend(messageContent.trim());
 
-		setMessageContent('');
+			setMessageContent('');
+		}
 	};
 
 	return (
@@ -39,12 +58,12 @@ const MessageBox = ({ onSend, enabled }) => {
 					type='submit'
 					title='Send message'
 					onClick={handleSendMessage}
-					disabled={messageContent.length === 0 || !enabled}
+					disabled={sendButtonIsDisabled}
 				>
-					{(messageContent.length > 0 && (
+					{(sendButtonIsDisabled && (
 						<svg
 							xmlns='http://www.w3.org/2000/svg'
-							className='w-6 h-6 text-blue-500 transform rotate-90 cursor-pointer'
+							className='w-6 h-6 text-gray-600 transform rotate-90'
 							viewBox='0 0 20 20'
 							fill='currentColor'
 							id='send-icon'
@@ -54,7 +73,7 @@ const MessageBox = ({ onSend, enabled }) => {
 					)) || (
 						<svg
 							xmlns='http://www.w3.org/2000/svg'
-							className='w-6 h-6 text-gray-600 transform rotate-90'
+							className='w-6 h-6 text-blue-500 transform rotate-90 cursor-pointer'
 							viewBox='0 0 20 20'
 							fill='currentColor'
 							id='send-icon'
