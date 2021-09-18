@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { v4 as uuidv4 } from 'uuid';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -6,18 +6,31 @@ import useSignalR from '../../hooks/useSignalR';
 import UserProfileButton from '../../components/UserProfileButton';
 import serverMethod from '../../enums/serverMethod';
 import userStatus from '../../enums/userStatus';
+import getSyncCurrentUserStatus from '../../clientMethods/getSyncCurrentUserStatus';
+import clientMethod from '../../enums/clientMethod';
 
 jest.mock('react');
 jest.mock('@auth0/auth0-react');
 jest.mock('../../hooks/useSignalR');
+jest.mock('../../clientMethods/getSyncCurrentUserStatus');
 
 describe('<UserProfileButton />', () => {
+	const registerSyncCurrentUserStatusDependencies = [];
+	const registerSyncCurrentUserStatusMethod = jest.fn();
+	const unregisterSyncCurrentUserStatusMethod = jest.fn();
+
+	const syncCurrentUserStatusMock = jest.fn();
 	const setStatusMock = jest.fn();
 	const logoutMock = jest.fn();
+
 	const invoke = jest.fn();
+	const on = jest.fn();
+	const off = jest.fn();
 
 	const connectionMock = {
 		invoke,
+		on,
+		off,
 	};
 
 	const user = {
@@ -29,12 +42,29 @@ describe('<UserProfileButton />', () => {
 	beforeEach(() => {
 		useSignalR.mockReturnValue({ connection: connectionMock });
 
+		useEffect.mockImplementationOnce((method, dependencies) => {
+			registerSyncCurrentUserStatusMethod();
+			const registerSyncCurrentUserStatusMethodResult = method();
+			unregisterSyncCurrentUserStatusMethod.mockImplementation(
+				registerSyncCurrentUserStatusMethodResult
+			);
+			registerSyncCurrentUserStatusDependencies.push(...dependencies);
+		});
+
 		useState.mockImplementationOnce((initialState) => [
 			initialState,
 			setStatusMock,
 		]);
 
 		useAuth0.mockReturnValue({ user, logout: logoutMock });
+
+		getSyncCurrentUserStatus.mockReturnValue(syncCurrentUserStatusMock);
+	});
+
+	afterEach(() => {
+		jest.clearAllMocks();
+
+		registerSyncCurrentUserStatusDependencies.splice(0);
 	});
 
 	test('renders user profile button', () => {
@@ -73,6 +103,53 @@ describe('<UserProfileButton />', () => {
 		expect(screen.getByTestId(offlineButtonTestId)).toBeInTheDocument();
 	});
 
+	test('registerSyncCurrentUserStatusMethod is called and depends on connection and the sync current user status function', () => {
+		// Arrange
+		const expectedDependencies = [
+			connectionMock,
+			syncCurrentUserStatusMock,
+		];
+
+		// Act
+		render(<UserProfileButton />);
+
+		// Assert
+		expect(registerSyncCurrentUserStatusMethod).toHaveBeenCalledTimes(1);
+		expect(registerSyncCurrentUserStatusDependencies).toEqual(
+			expectedDependencies
+		);
+	});
+
+	test('registerSyncCurrentUserStatusMethod registers the sync current user status method', () => {
+		// Arrange
+		const method = clientMethod.syncCurrentUserStatus;
+
+		// Act
+		render(<UserProfileButton />);
+
+		// Assert
+		expect(connectionMock.on).toHaveBeenNthCalledWith(
+			1,
+			method,
+			syncCurrentUserStatusMock
+		);
+	});
+
+	test('registerSyncCurrentUserStatusMethod returns unregister function for the sync current user status method', () => {
+		// Arrange
+		const method = clientMethod.syncCurrentUserStatus;
+
+		// Act
+		render(<UserProfileButton />);
+		unregisterSyncCurrentUserStatusMethod();
+
+		// Assert
+		expect(connectionMock.off).toHaveBeenCalledWith(
+			method,
+			syncCurrentUserStatusMock
+		);
+	});
+
 	test('change status when user clicks on the status change button', () => {
 		// Arrange
 		const onlineButtonTestId = 'status-change-button-online';
@@ -88,8 +165,6 @@ describe('<UserProfileButton />', () => {
 			serverMethod.updateUserStatus,
 			userStatus.online
 		);
-		expect(setStatusMock).toHaveBeenCalledTimes(1);
-		expect(setStatusMock).toHaveBeenCalledWith(userStatus.online);
 	});
 
 	test('change status when user presses enter on the status change button', () => {
@@ -110,8 +185,6 @@ describe('<UserProfileButton />', () => {
 			serverMethod.updateUserStatus,
 			userStatus.busy
 		);
-		expect(setStatusMock).toHaveBeenCalledTimes(1);
-		expect(setStatusMock).toHaveBeenCalledWith(userStatus.busy);
 	});
 
 	test('change status when user presses space on the status change button', () => {
@@ -132,8 +205,6 @@ describe('<UserProfileButton />', () => {
 			serverMethod.updateUserStatus,
 			userStatus.away
 		);
-		expect(setStatusMock).toHaveBeenCalledTimes(1);
-		expect(setStatusMock).toHaveBeenCalledWith(userStatus.away);
 	});
 
 	test('does nothing when user presses a different key than space and enter on the status change button', () => {

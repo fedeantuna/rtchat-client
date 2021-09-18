@@ -1,15 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import ProfilePicture from './ProfilePicture';
 import useSignalR from '../hooks/useSignalR';
 import userStatus from '../enums/userStatus';
 import serverMethod from '../enums/serverMethod';
 import StatusChangeButton from './StatusChangeButton';
+import getSyncCurrentUserStatus from '../clientMethods/getSyncCurrentUserStatus';
+import clientMethod from '../enums/clientMethod';
 
 const UserProfileButton = () => {
 	const { user, logout } = useAuth0();
 	const { connection } = useSignalR();
 	const [status, setStatus] = useState(userStatus.online);
+
+	const syncCurrentUserStatus = getSyncCurrentUserStatus(setStatus);
+
+	useEffect(() => {
+		const registerSyncCurrentUserStatus = () => {
+			if (connection) {
+				connection.on(
+					clientMethod.syncCurrentUserStatus,
+					syncCurrentUserStatus
+				);
+			}
+		};
+
+		const unregisterSyncCurrentUserStatus = () => {
+			if (connection) {
+				connection.off(
+					clientMethod.syncCurrentUserStatus,
+					syncCurrentUserStatus
+				);
+			}
+		};
+
+		registerSyncCurrentUserStatus();
+
+		return unregisterSyncCurrentUserStatus;
+	}, [connection, syncCurrentUserStatus]);
 
 	const handleLogout = () => {
 		logout({ returnTo: window.location.origin });
@@ -24,8 +52,6 @@ const UserProfileButton = () => {
 
 	const handleChangeStatus = (newStatus) => {
 		connection.invoke(serverMethod.updateUserStatus, newStatus);
-
-		setStatus(newStatus);
 	};
 
 	const handleChangeStatusKeyDown = (e, newStatus) => {
