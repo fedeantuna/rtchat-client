@@ -1,6 +1,6 @@
 # RTChat Client
 
-[![Coverage Status](https://coveralls.io/repos/github/fedeantuna/rtchat-client/badge.svg?branch=main)](https://coveralls.io/github/fedeantuna/rtchat-client?branch=main)
+[![codecov](https://codecov.io/gh/fedeantuna/rtchat-client/branch/main/graph/badge.svg?token=2JCJKM31BX)](https://codecov.io/gh/fedeantuna/rtchat-client)
 
 ## Available Scripts
 

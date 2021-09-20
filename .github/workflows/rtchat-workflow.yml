@@ -35,11 +35,11 @@ jobs:
     - name: Run tests
       run: npm test
 
-    - name: Publish Coverage Report to coveralls.io
-      uses: coverallsapp/github-action@master
+    - name: Upload Coverage Report to codecov
+      uses: codecov/codecov-action@v2
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: ./coverage/lcov.info
+        files: ./coverage/coverage.info
+        fail_ci_if_error: true
     
     - name: Upload artifact
       uses: actions/upload-artifact@v2
